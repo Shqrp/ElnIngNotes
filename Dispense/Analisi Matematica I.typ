@@ -133,7 +133,19 @@ Tutti quei numeri reali che non sono razionali si dicono *numeri irrazionali*, i
 
 Se si rappresentano i numeri razionali sulla retta, ci saranno sempre dei buchi (per es. ($sqrt(2) in RR$ ma $in.not QQ$). Invece i numeri reali, in quanto comprendono anche i non razionali, godono della *proprietà di continuità* (o *completezza*) *dei numeri reali*.
 
+== Estremo superiore ed inferiore
 
+Sia $E in RR$
+#definition([Sia $M in RR$, si dice _massimo_ di E se $cases(M in E, M >= x\, forall x in E)$ oppure _minimo_ se $cases(M in E, M >= x\,forall x in E)$])
+#example([$E = (0; 2] => max E = 2, exists.not min E$, $E = [0; 2) => exists.not max E, min E = 0$])
+#definition([$Lambda in RR$ si dice _maggiorante_ di E se $Lambda >= x, forall x in E$ \ $Lambda in RR$ si dice _minorante_ di E se $Lambda >= x, forall x in E$ ])
+#definition([Sia $E subset.eq RR, E != emptyset$. Si chiama _estremo superiore_ ($sup E$) di E il minimo dei maggioranti e si chiama _estremo inferiore_ ($inf E$) di E il massimo dei minoranti. ])
+#example($E = (0; 2] => sup E = 2 = max E, inf E = 0$)
+#note-box([Se $exists max E$ allora coincide con $sup E$])
 
-
-
+L'estremo superiore è caratterizzato da due proprietà:
+- $sup E$ è un maggiorante di E: $sup E >= x, forall x in E$
+- Qualunque numero $< sup E$ non è un maggiorante di E: $forall epsilon > 0 #" " exists x_epsilon in E : x_epsilon > sup E - epsilon $
+L'estremo inferiore di E è caratterizzato da:
+- $inf E$ è minorante di E: $inf E <= x, forall x in E$
+- Qualunque numero $> inf E$ non è minorante di E: $forall epsilon > 0 #" " exists x_epsilon in E : x_epsilon < inf E + epsilon$
