@@ -43,7 +43,7 @@ Esistono tre quattro diverse tipologie di teorema:
 Il *principio di induzione* è un principio dimostrativo che permette di dimostrare un teorema in $NN$ riducendo notevolmente il numero di passaggi necessari. \
 Sia $p(n)$ una proposizione logica che dipende dalla variabile $n in NN$. Se $p(n)$ è valida per $n = 0$ (*ipotesi* o *base induttiva*), allora sarà vera anche per $n = 0 + 1$ (*passo induttivo*), e così via. Secondo il principio di induzione, allora $p(n)$ è vera $forall n in NN$. Di seguito tre esempi di teoremi dimostrabili con il principio di induzione.
 
-#theorem(title: [Somma dei primi $n$-naturali], $ sum^n_(k=1) = n/2(n+1), forall x in NN $)
+#theorem(title: [Somma dei primi $n$-naturali], $ sum^n_(k=1)k = n/2(n+1), forall x in NN $)
 #proof([
   Sia $p(n)$ la suddetta relazione. \ 
   $p(0)$: $0 = 0/2(0+1), 0 = 0$. Pertanto $p(0)$ è vera. \
@@ -67,7 +67,7 @@ Sia $p(n)$ una proposizione logica che dipende dalla variabile $n in NN$. Se $p(
 ])
 
 #proposition(title: [Somma della progressione geometrica], [
-  Sia $q in RR, q != 1$. $sum^n_(k = 0)q^k = (1 - q^(n + 1))/(1 - q), forall x in NN$
+  Sia $q in RR, q != 1$. $sum^n_(k = 0)q^k = (1 - q^(n + 1))/(1 - q), forall n in NN$
 ])
 #proof([
   #set par(leading: 1.065em)
@@ -140,11 +140,13 @@ Se si rappresentano i numeri razionali sulla retta, ci saranno sempre dei buchi 
 #definition([
   #set par(leading:1.06em)
   Sia $E subset.eq RR$. \
-  + $M in RR$ si dice _massimo_ di E se $cases(M in E, M >= x\, forall x in E)$ \
-  + $m in RR$ si dice _minimo_ di E se $cases(m in E, m <= x\,forall x in E)$])
+  + $M in RR$ si dice _massimo_ ($max E$) di E se $cases(M in E, M >= x\, forall x in E)$ \
+  + $m in RR$ si dice _minimo_ ($min E$) di E se $cases(m in E, m <= x\,forall x in E)$])
 #example([$E = (0; 2] => max E = 2, exists.not min E$, $E = [0; 2) => exists.not max E, min E = 0$])
-#definition([+ $Lambda in RR$ si dice _maggiorante_ di E se $Lambda >= x, forall x in E$ \
-  + $lambda in RR$ si dice _minorante_ di E se $lambda >= x, forall x in E$ ])
+#definition([
+  Sia $E subset.eq RR$ \
+  + $Lambda in RR$ si dice _maggiorante_ di E se $Lambda >= x, forall x in E$ \
+  + $lambda in RR$ si dice _minorante_ di E se $lambda <= x, forall x in E$ ])
 #definition([Sia $E subset.eq RR, E != emptyset$.
   + Si dice _estremo superiore_ ($sup E$) di E il minimo dei maggioranti
   + Si dice _estremo inferiore_ ($inf E$) di E il massimo dei minoranti. ])
