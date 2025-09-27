@@ -84,6 +84,9 @@ $
 $
 Il *prodotto per uno scalare* è un'operazione binaria esterna che, dato un vettore e uno scalare, restituisce un nuovo vettore con ogni componente moltiplicata per il dato scalare.
 $ k dot vec(a, b, c) = vec(k a, k b, k c) $
+Il *prodotto scalare standard* è un'operazione binaria esterna valida solo nel campo reale ($RR^3 times RR^3 -> RR$) che, dati due vettori, restituisce uno scalare che corrisponde alla somma tra i prodotti delle componenti.
+$ vec(a, b, c) dot vec(d, e, f) = a dot d + a dot e + c dot f $
+Se il prodotto scalare tra due vettori è nullo, allora i due vettori sono perpendicolari fra loro.
 
 = Geometria nel piano e nello spazio
 
@@ -98,7 +101,7 @@ Due vettori si dicono *equipollenti* se con una traslazione posso sovrapporli, d
 
 #definition(
   title: [Insiemi di vettori],
-  [Fissato un punto $O$ di origine, denotiamo con $V_0^1$ l'_insieme dei vettori della retta_ con origine $O$, $V_0^2$ l'_insieme dei vettori del piano_ con origine $O$, e $V_0^3$ l'_insieme dei vettori dello spazio_ con origine $O$.],
+  [Fissato un punto $O$ di origine, denotiamo con $V_0^1$ l'_insieme dei vettori della retta affine_ con origine $O$, $V_0^2$ l'_insieme dei vettori del piano affine_ con origine $O$, e $V_0^3$ l'_insieme dei vettori dello spazio affine_ con origine $O$.],
 )
 #note-box([Ad ogni vettore corrisponde un vettore centrato nell'origine a lui equipollente. ($exists! O B' ~ A B, forall A B in RR^2$). \ Ogni punto appartenente al retta/piano/spazio affine può essere individuato da un vettore centrato nell'origine.])
 
@@ -111,6 +114,34 @@ Si dimostra dunque che $(V_0^2, +)$ è un gruppo commutativo:
 - esiste l'inverso: $(O, A) = -(O, -A)$ \
 
 Il prodotto per uno scalare si definisce come $RR times V_0^2 -> V_0^2$. Il vettore risultato del prodotto di $v in V_0^2$ per uno scalare $t in RR$ è il vettore con uguale direzione, norma moltiplicata per t e verso concorde per $t >= 0$ e discorde per $t <= 0$.
+
+== Il sistema di riferimento
+
+Per poter descrivere un punto $P$ su una retta è necessario avere un *sistema di riferimento*. Fissiamo dunque un qualsiasi punto $O$ sulla retta come *origine* del sistema e un qualsiasi vettore $v$ che indica la direzione del sistema di riferimento: come risultato otteniamo $R(O, v)$.\
+Dunque il punto $P$ può essere individuato tramite il vettore $O P in V_0^1 = 2 dot v$, dove il $2$ rappresenta l'unica coordinata del punto. Quindi, fissato $R(O, v)$, possiamo dire che $P = (3)$. \
+
+Nel caso del piano affine, bisogna aggiungere al sistema un secondo vettore $u$ che non sia parallelo a $v$ (ossia $v != t dot u, forall t in RR$), ottenendo quindi $R(O, v, u)$. \
+Dato un qualsiasi punto $Q$ nel piano con coordinate $(2, 2)$, esso sarà individuato dal vettore \ $O Q in V_0^2 = 2 dot v + 2 dot u$, ossia come *combinazione lineare* tra $vec(v, u)$ e $vec(2, 2)$. Analogamente, nel caso dello spazio affine va introdotto un terzo vettore $w$ tale che $v, u, w$ non siano complanari (ossia $w != t dot v + s dot u, forall t, s in RR$).
+
+=== Sistema di riferimento ortonormale
+
+Per poter semplificare i calcoli, si può introdurre un sistema di riferimento *ortonormale*, ossia con vettori lunghi $1$ e perpendicolari fra loro. Per esempio, ora è possibile calcolare la norma di un vettore utilizzando il teorema di Pitagora ($O A = (a, b, c), norm(O A)^2 = a^2 + b^2 + c^2$) oppure calcolare il coseno dell'angolo compreso tra due vettori ($O B = (d, e, f), cos theta = (O A dot O B)/(norm(O A) dot norm(O B))$).
+
+== Rette e piani in $AA_3$
+
+In generale, una retta è definita come l'insieme dei punti i cui vettori associati fissati nell'origine sono il risultato della somma tra un punto noto che appartiene alla retta e un *vettore direttore* moltiplicato per un parametro $t in RR$, dunque l'espressione è detta *equazione parametrica*.
+#definition(title: [Retta in $AA_3$], [
+  $ r := {P : O P tilde.eq vec(x, y, z) = vec(x_0, y_0, z_0) + t vec(x_v, y_v, z_v), forall t in RR} $
+])
+#note-box([L'equazione parametrica di una retta non è unica in quanto si possono considerare svariati punti diversi rispetto a $(x_0, y_0, z_0)$.])
+#definition(title: [Span lineare], [
+  Si dice _span lineare_ l'insieme di tutte le combinazioni lineari di un insieme di vettori.
+  $ cal(L)(v_1, ..., v_k) := {w : w = a_1 v_1 + ... + a_k v_k, forall a_n in RR} $
+])
+#definition(title: [Piano in $AA_3$], [
+  $ pi = {P : O P = vec(x, y, z) tilde.eq vec(x_0, y_0, z_0) + t vec(x_v, y_v, z_v) + s vec(x_u, y_u, z_u), v parallel.not u, forall t, s in RR} $
+  dove ${v, u}$ è detta _base della giacitura del piano $pi$_. 
+])
 
 #pagebreak()
 #outline(title: [Indice dei teoremi], target: figure.where(kind: "theorem"))
