@@ -1,9 +1,44 @@
 #import "@preview/theorion:0.3.3": *
 #import "@preview/cetz:0.3.4"
-#import "@preview/cetz-plot:0.1.1"
+#import "@preview/cetz-plot:0.1.1" 
 #import math: *
 
 #import cosmos.rainbow: *
+
+#let func(caption, size, domain, f, ..options) = {
+  figure(
+  cetz.canvas({
+    import cetz.draw: *
+    import cetz-plot: plot
+    plot.plot(size: size,
+              axis-style: "school-book",
+              x-tick-step: none,
+              y-tick-step: none,
+              ..options,
+    {
+      for fun in f {
+        plot.add(domain: domain, samples: 1000, fun)
+      }
+    })
+  }), numbering: none, gap: 1em, caption: caption)
+}
+#let inverseFunc(caption, size, domain, f, ..options) = {
+  figure(
+  cetz.canvas({
+    import cetz.draw: *
+    import cetz-plot: plot
+    plot.plot(size: size,
+              axis-style: "school-book",
+              x-tick-step: none,
+              y-tick-step: none,
+              ..options,
+    {
+      for fun in f {
+        plot.add(domain: domain, samples: 1000, axes: ("y", "x"), fun)
+      }
+    })
+  }), numbering: none, caption: caption)
+}
 
 #show: show-theorion
 
@@ -89,9 +124,7 @@ Sia $p(n)$ una proposizione logica che dipende dalla variabile $n in NN$. Se $p(
     Sia $q in RR, q != 1$. $sum^n_(k = 0)q^k = (1 - q^(n + 1))/(1 - q), forall n in NN$
   ],
 )
-#proof([
-  #set par(leading: 1.065em)
-  Sia $p(n)$ la suddetta proposizione. \
+#proof([#set par(leading: 1.065em); Sia $p(n)$ la suddetta proposizione. \
   $p(0)$: $q^0 = (1 - q^1)/(1 - q), 1 = cancel(1 - q)/cancel(1 - q), 1 = 1$. Pertanto $p(0)$ è vera. \
   $p(n + 1)$: $sum^(n + 1)_(k = 0)q^k = (1 - q^(n + 2))/(1 - q), sum^(n + 1)_(k = 0)q^k = sum^(n)_(k = 0)q^k + q^(n + 1) = (1 - q^(n + 1))/(1 - q) + q^(n + 1) =$ \
   $= (1 - cancel(q^(n + 1)) + cancel(q^(n + 1)) - q^(n + 2))/(1 - q) = (1 - q^(n + 2))/(1 - q)$. \ È verificato che $p(n) => p(n + 1)$, dunque, per il principio di induzione, $p(n)$ è vera $forall n in NN$.
@@ -150,8 +183,8 @@ I numeri razionali presentano lacune in materia di estrazione di radici.
   [$sqrt(2)$ non è un numero razionale.],
 )
 #proof([
-  Supponiamo, per assurdo, che $sqrt(2) in QQ$. Dunque \
-  $sqrt(2) = m/n$ essendo $m,n in ZZ, n != 0, m, n$ primi tra loro. Elevando al quadrato: \
+  Supponiamo, per assurdo, che $sqrt(2) in QQ$. Dunque 
+  $sqrt(2) = m/n$ con $m,n in ZZ, n != 0, m, n$ primi tra loro. Elevando al quadrato: \
   $2 = m^2/n^2 => m^2 = 2n^2$. Pertanto $m^2$ è pari e anche $m$ è pari. Dunque $exists k in Z : m = 2k$ \
   $2n^2 = m^2 = (2k)^2 = 4k^2 => 2n^2 = 4k^2 => n^2 = 2k^2$. Pertanto $n^2$ è pari, quindi anche $n$ è pari. \
   Questo è un assurdo, dal momento che $m$ e $n$ sono per definizione primi tra loro, quindi non possono essere entrambi pari.
@@ -163,8 +196,6 @@ L'insieme dei numeri reali rappresenta quell'insieme numerico che comprende *tut
 $ NN subset ZZ subset QQ subset RR $
 
 Tutti quei numeri reali che non sono razionali si dicono *numeri irrazionali*, i quali appartengono all'insieme $RR backslash QQ$.
-
-=== La rappresentazione geometria di $RR$
 
 Se si rappresentano i numeri razionali sulla retta, ci saranno sempre dei buchi (per es. ($sqrt(2) in RR$ ma $in.not QQ$). Invece i numeri reali, in quanto comprendono anche i non razionali, godono della *proprietà di continuità* (o *completezza*) *dei numeri reali*.
 \
@@ -314,27 +345,43 @@ $ z/w = z 1/w = z overline(w)/abs(w)^2 $
 #theorem(title: [Disuguaglianza triangolare in $CC$], [
   $ abs(z + w) <= abs(z) + abs(w), forall z, w in CC $
 ])
-
+\
 === Piano di Argand-Gauss
 
-Dato $z in CC, z = a + b i$ esso si può rappresentare nel cosiddetto *piano di Argand-Gauss* o, più comunemente, *piano di Gauss*. Basta far corrispondere all'ascissa la $Re z$ e all'ordinata la $Im z$.
+#grid(
+columns: 2,
+[Dato $z in CC, z = a + b i$ esso si può rappresentare nel cosiddetto *piano di Argand-Gauss* o, più comunemente, *piano di Gauss*. Basta far corrispondere all'ascissa la $Re z$ e all'ordinata la $Im z$.],
 
-// #cetz.canvas({
-//   import cetz.draw: *
-//   import cetz-plot: *
-//   plot.plot(size: (4, 4), axis-style: "school-book", {
-//     plot.add(())
-//   })
-// })
+cetz.canvas({
+    import cetz.draw: *
+    import cetz-plot: plot
+    plot.plot(size: (3, 3),
+              axis-style: "school-book",
+              x-tick-step: none,
+              y-tick-step: none,
+              y-min: -1,
+              y-max: 2,
+              x-min: -1,
+              x-max: 2,
+    {
+      plot.add(((0, 0), (calc.sqrt(3), 1)))
+      plot.add(((0, 0), (calc.sqrt(3), -1)))
+      plot.annotate({
+        mark((calc.sqrt(3), 1), 0deg, anchor: "center", symbol: "o", fill: black)
+        mark((calc.sqrt(3), -1), 0deg, anchor: "center", symbol: "o", fill: black)
+        content((calc.sqrt(3) + 0.3, 1.35), $z = (a, b)$)
+        content((calc.sqrt(3) + 0.3, -1.35), $overline(z) = (a, -b)$)
+      })
+    })
+  }))
 
 === Forma trigonometrica di $z$
 
 Dato $z = x + y i$, diciamo $theta$ l'angolo che si forma tra il segmento $z$ è l'asse $x$. Questo ci permette di individuare $z$ utilizzando solo $abs(z)$, ossia la distanza da $z$ all'origine, e $theta$, detto anche *argomento* di $z$. Per tornare alla forma algebrica, è necessario calcolare $x$ e $y$, i quali valgono:
 $ x = abs(z)cos theta, y = abs(z)sin theta => z = abs(z)cos theta + i abs(z)sin theta = abs(z)(cos theta + i sin theta) $
-Ogni coppia $(abs(z), theta)$ individua uno e uno solo $z$. \ \ \
-Per convertire dalla forma algebrica alla forma trigonometrica, è necessario calcolare $abs(z)$ e $theta$. Notare che $theta$ è determinato a meno di multipli di $2 pi$, dunque è più appropriato considerare quel $theta in [0; 2pi)$ oppure in un qualsiasi intervallo semiaperto $[a, b)$ dove $b - a =2pi$. Perciò si parla di *argomento principale*. \
+Ogni coppia $(abs(z), theta)$ individua uno e uno solo $z$.
 
-Per trovare $theta$ sappiamo che
+Per convertire dalla forma algebrica alla forma trigonometrica, è necessario calcolare $abs(z)$ e $theta$. Notare che $theta$ è determinato a meno di multipli di $2 pi$, dunque è più appropriato considerare quel $theta in [0; 2pi)$ oppure in un qualsiasi intervallo semiaperto $[a, b)$ dove $b - a =2pi$. Perciò si parla di *argomento principale*. Per trovare $theta$ sappiamo che
 $ y/x = (cancel(abs(z))sin theta)/(cancel(abs(z)) cos theta) = (sin theta)/(cos theta) = tan theta \ 
 "se" x > 0 => theta = arctan(y/x), "se" x < 0 => theta = arctan(y/x) + pi $
 
@@ -353,7 +400,7 @@ Grazie a questa caratteristica, è possibile ottenere una formula analoga per le
 #definition(title: [Formula di De Moivre], [
   Sia $z = r(cos theta + i sin theta), n in NN$. Allora $z^n = r^n (cos n theta + i sin n theta)$
 ])
-Questa formula rende comoda l'elevazione a potenza di numeri complessi, che in forma algebrica sarebbe invece molto tediosa.
+Questa formula rende comoda l'elevazione a potenza di numeri complessi, che in forma algebrica sarebbe invece molto tediosa. \ \ \ \ \
 
 === Forma esponenziale di $z$
 
@@ -381,7 +428,29 @@ z^n &= (r e^(i theta))^n = r^n e^(i n theta), forall n in NN $
 
 ==== Radici di 1
 
-In $RR$, esiste solo una radice $n$-esima di 1, mentre in $CC$ ne esistono $n$ per il @cpl:fond. Se le rappresentiamo sul piano di Gauss, esse si trovano sulla circonferenza unitaria e costituiscono un poligono regolare di $n$ lati.
+#grid(columns: 2, [In $RR$, esiste solo una radice $n$-esima di 1, mentre in $CC$ ne esistono $n$ per il @cpl:fond. Se le rappresentiamo sul piano di Gauss, esse si trovano sulla circonferenza unitaria e costituiscono un poligono regolare di $n$ lati.],
+cetz.canvas({
+    import cetz.draw: *
+    import cetz-plot: plot
+    plot.plot(size: (3, 3),
+              axis-style: "school-book",
+              x-tick-step: none,
+              y-tick-step: none,
+              y-min: -1.5,
+              y-max: 1.5,
+              x-min: -1.5,
+              x-max: 1.5,
+    {
+
+      for (index, root) in (((1, 0), (calc.cos(calc.pi / 3), calc.sin(calc.pi / 3)), (calc.cos(2 * calc.pi / 3), calc.sin(2 * calc.pi / 3)), (-1, 0), (calc.cos(4 * calc.pi / 3), calc.sin(4 * calc.pi / 3)), (calc.cos(5 * calc.pi / 3), (calc.sin(5 * calc.pi / 3))))).enumerate() {
+        plot.add(((0, 0), root), style: (stroke: black))
+        plot.annotate({ mark(root, 0deg, anchor: "center", symbol: "o", fill: black); content((root.at(0) + 0.25, root.at(1) + 0.25), $z_#(index + 1)$) })
+      }
+      plot.add(domain: (-2 * calc.pi, 2 * calc.pi), t => (calc.cos(t), calc.sin(t)))
+    })
+}))
+
+#pagebreak()
 
 = Funzioni
 
@@ -400,17 +469,23 @@ Siano $A, B$ due insiemi. Una funzione $f: A -> B$ è una *legge* che associa ad
 ])
 Dunque una funzione è iniettiva quando ad ogni $x$ corrisponde *una sola* $y$ ed è suriettiva quando ogni elemento del codominio è immagine di almeno un elemento del dominio. 
 
-Se $f$ è iniettiva, allora è invertibile su $f(A)$ e non su tutto $B$. In altre parole, è ben definita la *funzione inversa* $f^(-1): f(A) -> A$. Se $f$ è biiettiva, allora è invertibile su tutto $B$. Infatti $f^(-1): B -> A$.
+Se $f$ è iniettiva, allora è invertibile su $f(A)$ e non su tutto $B$, ossia è ben definita la *funzione inversa* $f^(-1): f(A) -> A$. Se $f$ è biiettiva, allora è invertibile su tutto $B$. Infatti $f^(-1): B -> A$.
 
 #definition(title: [Controimmagine], [
   Siano $f: A -> B, D subset.eq B$. Si dice _controimmagine_ (o _antiimmagine_) di D l'immagine della $f^(-1)$ con dominio $D$. In simboli:
   $ f^(-1)(D) := {x in A : f(x) in D} $
 ])
-Un'operazione che si può svolgere tra funzioni è la *composizione*.
+Un'operazione che si può svolgere tra funzioni è la *composizione*. Va notato che la composizione non è commutativa, dunque $g compose f != f compose g$.
 #definition(title: [Funzione composta], [
   Siano $f: A -> B, g: B -> C$. Allora $g compose f := g[f(x)]$ dove $g compose f: A -> C$.
 ])
-Va notato che la composizione non è commutativa, dunque $g compose f != f compose g$.
+
+#example([
+  Siano $f: A -> B, g: C -> D$ due funzioni, con $f(x) = x + 1, g(x) = x^2, A, B, C, D = RR$. \
+  $g compose f: A -> D => (g compose f)(x) = g[f(x)] = (x + 1)^2$ mentre \
+  $f compose g: C -> B => (f compose g)(x) = f[g(x)] = x^2 + 1$. Dunque $g compose f != f compose g$.
+])
+
 #note-box([
   Se una funzione $f: A -> B$ è iniettiva, allora:
   - $(f^(-1) compose f)(x) = f^(-1)[f(x)] = x, forall x in A$
@@ -442,6 +517,25 @@ In molti casi, una funzione è data da un'espressione analitica (es. $f(x) = sqr
   Se il rapporto incrementale di $f$ ($(f(x_1) + f(x_2))/(x_1 - x_2), forall x_1, x_2 in A, x_1 != x_2$) è positivo, allora $f$ è crescente. Viceversa, $f$ è decrescente.
 ])
 
+== Funzioni pari e dispari
+
+#definition(title: [Funzioni pari e dispari], [
+  Sia $f: RR -> RR$. $forall x in RR, f$ si dice:
+  - _pari_ se $f(x) = f(-x)$
+  - _dispari_ se $f(x) -f(x)$
+])
+In altre parole le funzioni pari e dispari presentano una *simmetria*, le prime rispetto all'asse delle ordinate e le seconde rispetto all'origine. \
+In generale, $f(x) = x^n, n in NN$ è pari per tutti gli $n$ pari e dispari per tutti gli $n$ dispari.
+
+== Funzioni periodiche
+
+#definition(title: [Funzioni periodiche], [
+  Siano $f: RR -> RR, T in RR$. $f$ si dice _periodica di periodo $T$_ se $f(x + T) = f(x), forall x in RR$.
+])
+Esempi di funzioni periodiche sono le funzioni goniometriche come $sin x, cos x$ e $tan x$.
+
+#pagebreak()
+
 == Grafico di una funzione
 
 #definition(title: [Grafico di $f$], [
@@ -449,7 +543,168 @@ In molti casi, una funzione è data da un'espressione analitica (es. $f(x) = sqr
 ])
 Se dominio e codominio di $f$ sono contenuti in $RR$, allora $G_f$ può essere rappresentato nel piano cartesiano $O x y$.
 
+== Estremi superiore ed inferiore
+
+#definition(title: [Funzione limitata], [
+  Siano $A subset.eq RR, f: A -> RR$. $f$ si dice:
+  - _limitata superiormente_ se $f(A)$ è limitato superiormente
+  - _limitata inferiormente_ se $f(A)$ è limitato inferiormente
+
+  In generale, $f$ si dice _limitata_ se è $f(A)$ è limitato.
+])
+#definition(title: [Estremi di una funzione], [
+  Sia $f: RR -> RR$. $sup f := sup f(A), max f := max f(A), inf f := inf f(A), min f := min f(A)$.
+])
+== Funzioni elementari
+
+#align(center, grid(
+  columns: 3,
+  gutter: 4pt,
+  align: center + horizon,
+  func($f(x) = x$, (4, 4), (-5, 5), ( x => x, )),
+  func($f(x) = x^n, \ forall n in NN$, (4, 4), (-1.2, 1.2), ( x => calc.pow(x, 2), x => calc.pow(x, 3) )),
+  func($f(x) = x^(p/q), \ forall p,q in NN, p,q "coprimi",q "pari" $, (4, 4), (0, 2), ( x => calc.root(x, 2), ), y-min: -2, y-max: 2, x-min: -2, x-max: 2),
+  func($f(x) = x^(p/q), \ forall p,q in NN, p,q "coprimi", q "dispari"$, (4, 4), (-2, 2), ( x => calc.root(x, 3), )),
+  func($f(x) = x^(-p/q), \ forall p,q in NN, p,q "coprimi", q "pari"$, (4, 4), (0.001, 100), ( x => calc.root(x + 0.05, -2), ), y-min: -2, y-max: 2, x-min: -16, x-max: 16),
+  func($f(x) = x^(-p/q), \ forall p,q in NN, p,q "coprimi", q "dispari"$, (4, 4), (-15, 15), ( x => calc.root(x, -3), )),
+))
+
+=== Funzioni circolari
+
+#align(center, grid(
+  columns: 4,
+  gutter: 4pt,
+  align: center + horizon,
+  func($f(x) = sin(x)$, (3, 3), (-2 * calc.pi, 2 * calc.pi), ( calc.sin, )),
+  func($f(x) = cos(x)$, (3, 3), (-2 * calc.pi, 2 * calc.pi), ( calc.cos, )),
+  func($f(x) = tan(x)$, (3, 3), (-calc.pi, calc.pi), ( calc.tan, ), y-max: 2, y-min: -2),
+  func($f(x) = "cotan"(x)$, (3, 3), (-calc.pi, calc.pi), ( x => calc.cos(x) / calc.sin(x), ), y-max: 2, y-min: -2),
+  inverseFunc($f(x) = arcsin(x)$, (3, 3), (-2 * calc.pi, 2 * calc.pi), ( calc.sin, )),
+  inverseFunc($f(x) = arccos(x)$, (3, 3), (-2 * calc.pi, 2 * calc.pi), ( calc.cos, )),
+  inverseFunc($f(x) = arctan(x)$, (3, 3), (-calc.pi / 2, calc.pi / 2), ( calc.tan, ), x-max: 2, x-min: -2, y-max: 3, y-min: -3),
+  inverseFunc($f(x) = "arccot"(x)$, (3, 3), (0.001, calc.pi), ( x => calc.cos(x) / calc.sin(x), ), x-max: 2, x-min: -2, y-max: 3, y-min: -3)
+))
+
+=== Funzioni esponenziali e logaritmi
+#align(center, grid(
+  columns: 4,
+  gutter: 4pt,
+  align: center + horizon,
+  func($f(x) = a^x \ forall a in RR, a > 0$, (3, 3), (-3, 3), ( x => calc.pow(calc.e, x), ), x-min: -1.5, x-max: 1.5, y-min: -2, y-max: 2),
+  func($f(x) = a^x \ forall a in RR, 0 < a < 1$, (3, 3), (-3, 3), ( x => calc.pow(1/2, x), ), x-min: -1.5, x-max: 1.5, y-min: -2, y-max: 2),
+  func($f(x) = log_a (x) \ forall a in RR, a > 0$, (3, 3), (0.001, 3), ( x => calc.ln(x), ), x-min: -3, x-max: 3, y-min: -3, y-max: 3),
+  func($f(x) = log_a (x) \ forall a in RR, 0 < a < 1$, (3, 3), (0.001, 3), ( x => calc.log(x, base: 1/2), ), x-min: -3, x-max: 3, y-min: -3, y-max: 3)
+
+))
+
+=== Funzioni iperboliche
+
+#align(center, grid(
+  columns: 3,
+  gutter: 4pt,
+  align: center + horizon,
+  func($f(x) = sinh(x) = (e^x - e^(-x))/2$, (4, 4), (-4, 4), ( calc.sinh, ), y-min: -5, y-max: 5),
+  func($f(x) = cosh(x) = (e^x + e^(-x))/2$, (4, 4), (-4, 4), ( calc.cosh, ), y-min: -5, y-max: 5),
+  func($f(x) = cosh(x) = (e^x + e^(-x))/2$, (4, 4), (-4, 4), ( calc.tanh, ), y-min: -5, y-max: 5),
+))
+
+Sono dette *iperboliche* perché il punto $P(cosh(x_0), sinh(x_0)) in x^2 + y^2 = 1, forall x_0 in RR$, quindi ogni punto con tali coordinate appartiene all'iperbole equilatera riferita agli assi.
+
+=== Funzioni varie
+
+#align(center, grid(
+  columns: 3,
+  gutter: 4pt,
+  align: center + horizon,
+  func($f(x) = abs(x)$, (4, 4), (-5, 5), ( calc.abs, ), y-min: -3, y-max: 3),
+  func($f(x) = \[x\]$, (4, 4), (-5, 5), ( calc.floor, ), y-min: -3, y-max: 3),
+  func($f(x) = "sgn"(x)$, (4, 4), (-5, 5), ( x => if x > 0 { 1 } else if x < 0 { - 1 } else { 0 }, ), y-min: -3, y-max: 3)
+  
+))
+
+= Successioni
+
+#definition(title: [Successione numerica], [
+  Una successione numerica è una funzione $a_n: NN -> RR$.
+])
+
+Ogni $a_n$ è detto un *elemento della successione*, mentre la scrittura ${a_n}$ indica la successione stessa e l'insieme dei suoi elementi ($Im a_n = {a_1, a_2, ... a_n, forall n in NN}$).
+
+#definition(title: [Successione limitata], [
+  Sia ${a_n}$ una successione. Essa si dice:
+  - _limitata superiormente_ $<=> exists M in RR : a_n <= M, forall n in NN$
+  - _limitata inferiormente_ $<=> exists m in RR : a_n >= m, forall n in NN$
+  Quindi una successione è limitata superiormente o inferiormente se anche la sua immagine lo è.
+])
+#definition(title: [Successione monotòna], [
+  Sia ${a_n}$ una successione. Essa si dice:
+  - _crescente_ se $a_n <= a_(n + 1), forall n in NN$
+  - _strettamente crescente_ se $a_n < a_(n + 1), forall n in NN$
+  - _decrescente_ se $a_n >= a_(n + 1), forall n in NN$
+  - _strettamente decrescente_ se $a_n > a_(n + 1), forall n in NN$
+  - _monotòna_ se è vera almeno una di queste condizioni
+  - _strettamente monotòna_ se sono vere la seconda o la quarta condizione
+])
+
+#definition(title: [Estremi di una successione], [
+  #set list(spacing: 1.065em)
+  Sia ${a_n}$ una successione. Allora
+  - $max {a_n} := max Im a_n := {exists n_0 in NN : a_n <= a_n_0, forall n in NN}$
+  - $min {a_n} := min Im a_n := {exists n_0 in NN : a_n >= a_n_0, forall n in NN}$
+  - $sup {a_n} := sup Im a_n := {exists Lambda in RR : cases(Lambda >= a_n\, forall n in NN, forall epsilon > 0 " " exists n_epsilon in NN : a_n_epsilon > Lambda - epsilon)}$
+  - $inf {a_n} := inf Im a_n := {exists lambda in RR : cases(lambda <= a_n\, forall n in NN, forall epsilon > 0 " " exists n_epsilon in NN : a_n_epsilon < lambda + epsilon)}$
+])
+
+== Limiti di successioni
+
+#definition(title: [Proprietà valida definitivamente], [
+  Sia $P(n)$ una proprietà di $NN$. Essa _vale definitivamente_ se $exists n_0 in NN : P(n) "vera" forall n in NN, n >= n_0$.
+])
+#definition(title: [Striscia], [
+  Sia $a,r in RR$. La _striscia_ di raggio $r$ attorno alla retta $y = a$ corrisponde a
+  $ S_(a,r) = {(x, y) in RR^2 : abs(y - a) < r} $
+])
+La striscia corrisponde dunque all'insieme dei punti la cui distanza dalla retta vale $r$.
+
+#definition(title: [Limite di successione], [
+  Sia $l in RR$. $l$ si dice _limite della successione_ ${a_n}$ se $forall epsilon > 0 " " exists nu_epsilon in NN : abs(a_n - l) < epsilon, forall n > nu_epsilon$. Si indica come $display(lim_(n-> infinity)) a_n = l$ o $display(op(a_n -> l, limits: #true)_(n -> infinity))$.
+])
+
+Se infatti consideriamo la striscia $S_(l, epsilon)$ possiamo dire la relazione $forall epsilon > 0 " " abs(a_n - l) < epsilon$ vale definitivamente, ossia sappiamo che, se il limite esiste, scegliendo un qualsiasi $epsilon > 0$ troveremo un punto $P_n(n, a_n)$ all'interno della striscia.
+
+#theorem(title: [Unicità del limite], [
+  Sia ${a_n}$ una successione. Se ${a_n}$ ammette limite, allora esso è unico.
+])
+#proof([
+  Supponiamo, per assurdo, che $display(lim_(n-> infinity)) a_n = l_1$ e che $display(lim_(n-> infinity)) a_n = l_2$ con $l_1 != l_2$. Allora:
+  1. $forall epsilon > 0 " " exists nu_(1,epsilon) in NN : abs(a_n - l_1) < epsilon, forall n > nu_(1,epsilon)$
+  2. $forall epsilon > 0 " " exists nu_(2,epsilon) in NN : abs(a_n - l_2) < epsilon, forall n > nu_(2,epsilon)$
+  Siano $nu_epsilon := max{nu_(1,epsilon), nu_(2,epsilon)}, epsilon = abs(l_1 - l_2)/2 = abs(l_1 - a_n + a_n - l_2)/2$. Allora avremmo che $abs(a_n - l_1) < epsilon, forall n > nu_epsilon$ e che $abs(a_n - l_2) < epsilon, forall n > nu_epsilon$, con $nu_epsilon >= nu_(1,epsilon)$ e $nu_epsilon >= nu_(2,epsilon)$. \ Dunque, per la disuguaglianza triangolare, $abs(l_1 - l_2) <= abs(a_n - l_1) + abs(a_n - l_2), forall n > nu_epsilon$. Ma essendo anche $abs(a_n - l_1) < epsilon$ e $abs(a_n - l_2) < epsilon$, allora $abs(l_1 - l_2) < 2epsilon => abs(l_1 - l_2)/2 < epsilon$. \ Questo è un assurdo perché $epsilon$ non può essere contemporaneamente minore ed uguale a $abs(l_1 - l_2)/2$.
+])
+
+#definition(title: [Successione convergente], [
+  Sia ${a_n}$ una successione. Essa si dice _convergente_ se $display(lim_(n -> infinity) a_n) = l$ per qualche $l in RR$.
+])
+
+#theorem(title: [Limitatezza di una successione convergente], [
+  Sia ${a_n}$ una successione. Se ${a_n}$ è convergente, allora è anche limitata.
+])
+#proof([
+  ${a_n}$ convergente $<=> exists l in RR : display(lim_(n -> infinity) a_n) = l$. Supponiamo dunque $epsilon = 1$, allora \
+  $exists nu in NN : abs(a_n - l) < 1, forall n > nu$. Inoltre $abs(a_n) = abs(a_n - l + l)$, dunque, per la disuguaglianza triangolare \
+  $abs(a_n - l + l) <= abs(a_n - l) + abs(l) < 1 + abs(l)$. Dunque, possiamo dire che $abs(a_n) <= k$ con \ $k := max{abs(a_1), abs(a_2), ..., abs(a_n), 1 + abs(l)}$, quindi ${a_n}$ è limitata.
+])
+=== Non esistenza del limite
+
+Se infiniti punti di una successione non appartengono alla striscia $S_(l, epsilon), forall epsilon > 0$, allora la successione non ammette limite finito $forall l in RR$.
+#warning-box([
+  ${a_n}$ limitata $arrow.r.double.not {a_n}$ convergente, nonostante valga il contrario. 
+])
+#note-box([
+  Se $display(lim_(k -> infinity) a_(2k)) = l_1, display(lim_(k -> infinity) a_(2k + 1)) = l_2, l_1 != l_2 => exists.not display(lim_(n -> infinity) a_n)$. 
+])
+
 #pagebreak()
-#outline(title: [Indice dei teoremi e dimostrazioni], target: figure.where(
+#outline(title: [Indice dei teoremi], target: figure.where(
   kind: "theorem",
 ))
