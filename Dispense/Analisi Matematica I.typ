@@ -1058,7 +1058,7 @@ Alcuni casi sono stati esclusi dal momento che non si possono determinare con ce
     Sia ${a_n}$ una successione. Essa si dice _infinitesima_ se $display(lim_(n -> infinity)) a_n = 0$.
   ],
 )
-#lemma([
+#lemma(title: [Limite del valore assoluto di una successione infinitesima], [
   Sia ${a_n}$ una successione. Allora $display(lim_(n -> infinity)) a_n = 0 <=> display(lim_(n -> infinity)) abs(a_n) = 0$
 ]) <lms:lmp>
 #proof([
@@ -1250,7 +1250,173 @@ $
   #"                    " Se $n >= 2$, allora $0 < (log_a (n))/n^(b/2) 1 / n^(b/2)< underbrace(2 / b log_a (2) 1 / n^(b/2), -> 0)$. Per il @lms:tdc, $display(lim_(n -> infinity)) a_n = 0$.
 ])
 
+#pagebreak()
 
+== Confronti e stime asintotiche
+
+#definition(
+  title: [Ordini di infiniti],
+  [
+    Siano ${a_n}, {b_n}$ due successioni divergenti, con $b_n != 0$ definitivamente. Allora:
+    - Se $display(lim_(n -> infinity)) a_n / b_n = plus.minus infinity$ allora $a_n$ è un _infinito di ordine superiore_ rispetto a $b_n$
+    - Se $display(lim_(n -> infinity)) a_n / b_n = 0$ allora $a_n$ è un _infinito di ordine inferiore_ rispetto a $b_n$
+    - Se $display(lim_(n -> infinity)) a_n / b_n = l$ con $l in RR, l != 0$ allora $a_n$ e $b_n$ sono _infiniti dello stesso ordine_
+    - Se $exists.not display(lim_(n -> infinity)) a_n / b_n$ allora $a_n$ e $b_n$ sono _non paragonabili_
+
+    In notazione, $a_n succ b_n$ indica che $a_n$ è un infinito di ordine superiore rispetto a $b_n$.
+  ],
+)
+#definition(
+  title: [Ordini di infinitesimi],
+  [
+    Siano ${a_n}, {b_n}$ due successioni infinitesime, con $b_n != 0$ definitivamente. Allora:
+    - Se $display(lim_(n -> infinity)) a_n / b_n = 0$ allora $a_n$ è un _infinitesimo di ordine superiore_ rispetto a $b_n$
+    - Se $display(lim_(n -> infinity)) a_n / b_n = plus.minus infinity$ allora $a_n$ è un _infinitesimo di ordine inferiore_ rispetto a $b_n$
+    - Se $display(lim_(n -> infinity)) a_n / b_n = l$ con $l in RR, l != 0$ allora $a_n$ e $b_n$ sono _infinitesimi dello stesso ordine_
+    - Se $exists.not display(lim_(n -> infinity)) a_n / b_n$ allora $a_n$ e $b_n$ sono _non paragonabili_
+  ],
+)
+
+#definition(
+  title: [Equivalenza asintotica],
+  [
+    Siano ${a_n}, {b_n}$ due successioni. Se $display(lim_(n -> infinity)) a_n / b_n = 1$ allora $a_n$ è _asintotica_ o _asintoticamente equivalente_ a $b_n$. Tale relazione si indica $a_n tilde b_n$.
+  ],
+)
+#definition(
+  title: [O-piccolo],
+  [
+    Siano ${a_n}, {b_n}$ due successioni. ${a_n}$ è un _o-piccolo_ di ${b_n}$ se $display(lim_(n -> infinity)) a_n / b_n = 0$, ossia $a_n = o(b_n)$.
+  ],
+)
+
+Se consideriamo le successioni $n^n, n!, alpha^n, n^b, log_a (n)$ con $alpha > 1, a > 1, b > 0$, allora si può dire che
+$
+  n^n succ n! succ alpha^n succ n^b succ log_a (n) \
+  log_a (n) = o(n^b), n^b = o(alpha^n), alpha^n = o(n!), n! = o(n^n)
+$
+
+L'equivalenza asintotica possiede le seguenti proprietà:
+- *riflessione*: $a_n tilde a_n$
+- *transitività*: $a_n tilde b_n, b_n tilde c_n => a_n tilde c_n$
+- *simmetria*: $a_n tilde b_n <=> b_n tilde a_n$
+In virtù di queste tre proprietà, l'equivalenza asintotica è una *relazione di equivalenza*. Inoltre possiede queste altre proprietà:
+- $a_n tilde b_n <=> a_n = b_n + o(b_n)$
+- $a_n tilde a_n ', b_n tilde b_n ' => a_n b_n tilde a_n ' b_n '$
+- $a_n tilde a_n ', b_n tilde b_n ' => a_n / b_n tilde (a_n ') / (b_n '),$ con $b_n != 0, b_n ' != 0$ definitivamente
+- $a_n -> a_n ', alpha in RR => a_n^alpha tilde (a_n ')^alpha$ \ \
+#warning-box([
+  L'equivalenza non si conserva in tutti i casi, in particolare:
+  - Somma: $a_n tilde a_n ', b_n tilde b_n ' arrow.r.double.not (a_n + b_n) tilde (a_n ' + b_n ')$
+  - Esponenziale: $a_n tilde a_n ' arrow.r.double.not e^(a_n) tilde e^(a_n ')$
+  - Logaritmi: $a_n tilde a_n ' arrow.r.double.not log(a_n) tilde log(a_n ')$
+  - Elevazione a potenza: $a_n tilde a_n ', b_n tilde b_n ' arrow.r.double.not a_n^(b_n) tilde (a_n ')^(b_n ')$
+  - Annullamento: $a_n tilde b_n arrow.r.double.not a_n - b_n tilde 0$ oppure $display(lim_(n -> infinity)) (a_n - b_n) = 0 arrow.r.double.not a_n - b_n tilde 0$
+
+  In realtà, l'asintoticità si conserva nel caso dei logaritmi, ma solo se $display(lim_(n -> infinity)) a_n != 1, display(lim_(n -> infinity)) a_n ' != 1$.
+])
+
+L'o-piccolo possiede le seguenti proprietà:
+- $o(a_n) = o(-a_n) = -o(a_n)$
+- $co(a_n) = o(c a_n) = o(a_n), forall c in RR \\ {0}$
+- $a_n o(b_n) = o(a_n b_n)$
+- $o(a_n) + o(b_n) = o(a_n)$ se $a_n succ b_n$ oppure se $a_n$ è un infinitesimo di ordine inferiore rispetto a $b_n$
+
+In virtù di questo, i limiti notevoli si possono riformulare in una forma alternativa, con ${a_n}$ infinitesima:
+$
+      sin(a_n) tilde a_n & => sin(a_n) = a_n + o(a_n)     \
+   e^(a_n) - 1 tilde a_n & => e^(a_n) = a_n + o(a_n)      \
+  log(1 + a_n) tilde a_n & => log(1 + a_n) = a_n + o(a_n) \
+         "e così via..."                                  \
+$
+#note-box([
+  È possibile sfruttare l'equivalenza asintotica anche per calcolare i limiti di funzioni composte, partendo dalla funzione più esterna.
+])
+#example([
+  $display(lim_(n -> infinity)) (e^sin(log(1 + 1/n)) - 1) / (1/n)$. Sia $a_n := e^sin(log(1 + 1/n)) - 1$. \
+  Allora $a_n tilde sin(log(1 + 1/n)) tilde log(1 + 1/n) tilde 1/n => a_n tilde 1/n$. Dunque $display(lim_(n -> infinity)) a_n / (1/n) = cancel(1/n) / cancel(1/n) = 1$
+])
+
+= Serie numeriche
+
+Consideriamo due successioni ${a_n}, {s_n}$ tali per cui $s_1 = a_1, s_2 = a_1 + a_2, s_3 = a_1 + a_2 + a_3, ...$, quindi, in generale, $s_n = s_(n - 1) + a_n = display(sum^n_(k = 1)) a_k$. ${s_n}$ è una *serie numerica* di termine generale $a_n$. Allora $display(lim_(n -> infinity)) s_n = display(lim_(n -> infinity)) display(sum^n_(k = 1)) = display(sum^infinity_(k = 1)) a_k$, scrittura detta *somma della serie* o più comunemente *serie*. Se tale limite esiste e vale un certo $l$, allora se $l in RR$ la serie si dice *convergente*, se $l = plus.minus infinity$ si dice *divergente* (*positivamente* o *negativamente*), e se $l$ non esiste allora si dice *indeterminata*. Se la serie converge o diverge allora è detta *regolare*. Il *carattere* di una serie è la sua qualità di essere convergente, divergente o indeterminata.
+
+Esistono casi in cui, data una successione ${a_n}$, la serie ${s_n}$ può essere espressa da una formula:
+- *Serie di Mengoli*: converge a $1$
+$
+  a_k = 1/k - 1/(k + 1) => s_n = display(sum^n_(k = 1)) a_k = display(sum^n_(k = 1)) (1/k - 1/(k + 1)) = underbracket(1 - cancel(1/2), k = 1) + underbracket(cancel(1/2) - cancel(1/3), k = 2) + underbracket(cancel(1/3) - 1/4, k = 3) + ... = 1
+$
+- *Serie telescopica*: se $display(lim_(n -> infinity)) b_k = 0$ converge a $-b_1$
+$
+  a_k = b_(k + 1) - b_k => s_n = display(sum^n_(k = 1)) a_k = display(sum^n_(k = 1)) (b_(k + 1) - b_k) = cancel(b_2) - b_1 + cancel(b_3) - cancel(b_2) + b_4 - cancel(b_3) + ... = -b_1
+$
+- *Serie armonica generalizzata*: se $alpha > 1$ converge, se invece $0 < alpha <= 1$ diverge
+$
+  alpha = 1, a_k = 1/k^alpha => s_n = display(sum^n_(k = 1)) a_k = display(sum^n_(k = 1)) 1/k^alpha = 1 + 1/2 + 1/3 + 1/4 + ...
+$
+- *Serie geometrica*: il suo risultato dipende da una certa $x in RR$ detta *ragione*
+$
+  a_k = x^k, x != 1 => s_n = display(sum^n_(k = 1)) a_k = display(sum^n_(k = 1)) x^k = x + x^2 + x^3 + x^4 + ... = (1 - x^(n + 1)) / (1 - x) \
+  => display(lim_(n -> infinity)) s_n = cases(exists.not &"se" x <= -1, 1 / (1 - x) &"se" -1 < x < 1, +infinity &"se" x >= 1)
+$
+
+#theorem(title: [Condizione necessaria per la convergenza di una serie], [
+  $display(sum^infinity_(k = 1)) a_k$ convergente $=> display(lim_(n -> infinity)) a_k = 0$
+])
+#proof([
+  Sia $display(lim_(n -> infinity)) s_n =: s$, con $s in RR$ poiché ${s_n}$ convergente per ipotesi. \
+  $s_n = s_(n - 1) + a_n <=> a_n = s_n - s_(n - 1)$. In questo caso $display(lim_(n -> infinity)) s_n = s$ e $display(lim_(n -> infinity)) s_(n - 1) = s$. \
+  $=> display(lim_(n -> infinity)) a_n = display(lim_(n -> infinity)) (s_(n - 1) - s_n) = s - s = 0$.
+])
+#warning-box([
+  $display(lim_(n -> infinity)) a_n = 0 arrow.r.double.not display(sum^infinity_(k = 1)) a_k$ convergente.
+])
+
+#proposition(title: [Proprietà di una serie], [
+  - Se $display(sum^infinity_(k = 1)) a_k$ e $display(sum^infinity_(k = 1))$ sono regolari e la somma $display(sum^infinity_(k = 1)) a_k + display(sum^infinity_(k = 1)) b_k$ ha significato, allora \ $display(sum^infinity_(k = 1)) (a_k + b_k) = display(sum^infinity_(k = 1)) a_k + display(sum^infinity_(k = 1)) b_k$.
+  - Se $display(sum^infinity_(k = 1)) a_k$ è regolare, allora $display(sum^infinity_(k = 1)) c a_k = c display(sum^infinity_(k = 1)) a_k, forall c in RR$.
+])
+#theorem(title: [Carattere di una serie a termini non negativi], [
+  Una serie $display(sum^infinity_(k = 1)) a_k$ con $a_k >= 0, forall k in NN$ è convergente o divergente positivamente.
+])
+#proof([
+  Sia $s_n := display(sum^n_(k = 1)) a_k$. Dunque $s_n = a_1 + a_2 + ... + a_n$ e $s_(n + 1) = a_1 + ... + a_n + a_(n + 1)$ \
+  $=> s_(n + 1) >= s_n$. Poiché $a_k >= 0, forall k in NN => s_n$ crescente. \
+  Per il @lms:reg, $exists display(lim_(n -> infinity)) s_n$, il quale può essere un certo $l in RR$ oppure $+infinity$.
+])
+
+#theorem(title: [Criterio del confronto di serie], [
+  Siano ${a_n}, {b_n}$ due successioni tali che $0 <= a_n <= b_n, forall n in NN$. Allora:
+  #set par(leading: 2em)
+  - $display(sum^infinity_(k = 1)) b_k$ convergente $=> display(sum^infinity_(k = 1)) a_k$ convergente
+  - $display(sum^infinity_(k = 1)) a_k$ divergente $=> display(sum^infinity_(k = 1)) b_k$ divergente
+]) <srs:cfr>
+#proof([
+  Siano $s_n := display(sum^infinity_(k = 1)) a_k, t_n := display(sum^infinity_(k = 1)) b_k$. $a_k <= b_k, forall k in NN => s_n <= t_n, forall n in NN$. \
+  Poiché $a_k >= 0, b_k >= 0, forall k in NN => s_n, t_n$ crescenti. \
+  Per il @lms:reg $exists display(lim_(n -> infinity)) s_n = s, display(lim_(n -> infinity)) t_n = t$. Dunque:
+  - $t_n$ convergente $=> t in RR$ \
+    Poiché $s_n <= t_n$, per il @lms:cprm $=> s <= t => s in RR => s_n$ convergente
+  - $s_n$ divergente $=> s = +infinity$ \
+    Poiché $s_n <= t_n$, per il @lms:cprm $=> s <= t => t = +infinity => t_n$ divergente
+])
+#theorem(title: [Criterio del confronto asintotico], [
+  Siano ${a_n}, {b_n}$ due successioni tali che $a_n >= 0, b_n > 0, forall n in NN$ e $display(lim_(n -> infinity)) a_n / b_n = l$, con $l in [0; + infinity]$:
+  #set par(leading: 2em)
+  - $display(sum^infinity_(k = 1)) b_k$ convergente e $l in [0; +infinity) => display(sum^infinity_(k = 1)) a_k$ convergente
+  - $display(sum^infinity_(k = 1)) b_k$ divergente e $l in (0; +infinity] => display(sum^infinity_(k = 1)) a_k$ divergente
+])
+#proof([
+  Per definizione, $display(lim_(n -> infinity)) a_n / b_n <=> forall epsilon > 0 " " exists nu_epsilon in NN : abs(a_n / b_n - l) < epsilon, forall n > nu_epsilon$ \
+  $<=> l - epsilon < a_n / b_n < l + epsilon, forall n > nu_epsilon$. Poiché $b_n > 0 => b_n (l - epsilon) < a_n < b_n (l + epsilon), forall n > nu_epsilon$.
+  - Se $display(sum^infinity_(k = 1)) b_k$ converge, allora, grazie alla relazione $a_n < b_n (l + epsilon)$, per il @srs:cfr $display(sum^infinity_(k = 1)) a_k$ converge
+  - Sia $l in (0; +infinity)$. Scegliamo $epsilon = l/2 => a_n > b_n (l - l/2) <=> a_n > l/2 b_n$ \
+    Dunque, se $display(sum^infinity_(k = 1)) b_k$ diverge, grazie alla precedente relazione, per il @srs:cfr $display(sum^infinity_(k = 1)) a_k$ diverge \
+    Ora sia $l = +infinity$. Per definizione, $forall M > 0 " " exists nu_M in NN : a_n / b_n > M, forall n > nu_M <=> a_n > M b_n$. Dunque, per il @srs:cfr, se $display(sum^infinity_(k = 1)) b_k$ diverge, anche $display(sum^infinity_(k = 1)) a_k$ diverge
+])
+#note-box([
+  Se $a_n tilde b_n$, allora $l = 1$.
+])
 #pagebreak()
 #outline(title: [Indice dei dimostrabili], target: figure
   .where(kind: "theorem")
