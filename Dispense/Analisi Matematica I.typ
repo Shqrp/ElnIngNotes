@@ -132,13 +132,13 @@ Sia $p(n)$ una proposizione logica che dipende dalla variabile $n in NN$. Se $p(
 #proposition(
   title: [Somma della progressione geometrica],
   [
-    Sia $q in RR, q != 1$. $sum^n_(k = 0)q^k = (1 - q^(n + 1))/(1 - q), forall n in NN$
+    Sia $q in RR, q != 1$. $display(sum^n_(k = 0)) q^k = (1 - q^(n + 1))/(1 - q), forall n in NN$
   ],
 )
 #proof([#set par(leading: 1.065em); Sia $p(n)$ la suddetta proposizione. \
   $p(0)$: $q^0 = (1 - q^1)/(1 - q), 1 = cancel(1 - q)/cancel(1 - q), 1 = 1$. Pertanto $p(0)$ è vera. \
-  $p(n + 1)$: $sum^(n + 1)_(k = 0)q^k = (1 - q^(n + 2))/(1 - q), sum^(n + 1)_(k = 0)q^k = sum^(n)_(k = 0)q^k + q^(n + 1) = (1 - q^(n + 1))/(1 - q) + q^(n + 1) =$ \
-  $= (1 - cancel(q^(n + 1)) + cancel(q^(n + 1)) - q^(n + 2))/(1 - q) = (1 - q^(n + 2))/(1 - q)$. \ È verificato che $p(n) => p(n + 1)$, dunque, per il principio di induzione, $p(n)$ è vera $forall n in NN$.
+
+  $p(n + 1)$: $display(sum^(n + 1)_(k = 0)) q^k = (1 - q^(n + 2))/(1 - q), display(sum^(n + 1)_(k = 0)) q^k = display(sum^(n)_(k = 0)) q^k + q^(n + 1) = (1 - q^(n + 1))/(1 - q) + q^(n + 1) = (1 - cancel(q^(n + 1)) + cancel(q^(n + 1)) - q^(n + 2))/(1 - q) = (1 - q^(n + 2))/(1 - q)$. \ È verificato che $p(n) => p(n + 1)$, dunque, per il principio di induzione, $p(n)$ è vera $forall n in NN$.
 ])
 
 = I numeri
@@ -151,7 +151,7 @@ $ ZZ := {..., -2, -1, 0, 1, 2, ...} $
 - *Numeri razionali*: comprende tutti i numeri esprimibili come rapporto tra due interi
 $ QQ := { m/n : m,n in italic(ZZ), n != 0 } $
 
-Quindi, in sintesi, $NN subset ZZ subset QQ$. \ \
+Quindi, in sintesi, $NN subset ZZ subset QQ$.
 
 == I numeri razionali
 
@@ -954,7 +954,7 @@ Se infatti consideriamo la striscia $S_(l, epsilon)$ possiamo dire la relazione 
 ])
 === Non esistenza del limite
 
-Se infiniti punti di una successione non appartengono alla striscia $S_(l, epsilon), forall epsilon > 0$, allora la successione non ammette limite finito $forall l in RR$.
+Se infiniti punti di una successione non appartengono alla striscia $S_(l, epsilon), forall epsilon > 0$, allora la successione non ammette limite finito.
 #warning-box([
   ${a_n}$ limitata $arrow.r.double.not {a_n}$ convergente, nonostante valga il contrario.
 ])
@@ -968,8 +968,8 @@ Se infiniti punti di una successione non appartengono alla striscia $S_(l, epsil
   title: [Successione divergente],
   [
     Sia ${a_n}$ una successione. Essa ha limite:
-    - $+infinity$ o _diverge positivamente_ se $forall M > 0 " " exists nu_m in NN : a_n > M, forall M > nu_M$
-    - $-infinity$ o _diverge negativamente_ se $forall M > 0 " " exists nu_m in NN : a_n < -M, forall M > nu_M$
+    - $+infinity$ o _diverge positivamente_ se $forall M > 0 " " exists nu_M in NN : a_n > M, forall n > nu_M$
+    - $-infinity$ o _diverge negativamente_ se $forall M > 0 " " exists nu_M in NN : a_n < -M, forall n > nu_M$
   ],
 )
 
@@ -988,7 +988,7 @@ Siano ${a_n}, {b_n}$ due successioni tali che $display(lim_(n -> infinity)) a_n 
 
 $
   display(lim_(n -> infinity)) (a_n + b_n) &= cases(a + b &"se" a != plus.minus infinity \, b != plus.minus infinity, plus.minus infinity &"se" b = plus.minus infinity, plus.minus infinity &"se" a = b = plus.minus infinity) \
-  display(lim_(n -> infinity)) (a_n b_n) &= cases(a dot b &"se" a != plus.minus infinity \, b != plus.minus infinity, plus.minus infinity &"se" a > 0 \, b = plus.minus infinity, minus.plus infinity &"se" a < 0 \, b = plus.minus infinity, plus.minus infinity &"se" a = b = plus.minus infinity, minus infinity &"se" a = plus.minus infinity \, b = minus.plus infinity) \
+  display(lim_(n -> infinity)) (a_n b_n) &= cases(a dot b &"se" a != plus.minus infinity \, b != plus.minus infinity, plus.minus infinity &"se" a > 0 \, b = plus.minus infinity, minus.plus infinity &"se" a < 0 \, b = plus.minus infinity, +infinity &"se" a = b = plus.minus infinity, minus infinity &"se" a = plus.minus infinity \, b = minus.plus infinity) \
   display(lim_(n -> infinity)) a_n / b_n &= cases(a / b &"se" a != plus.minus infinity \, b != plus.minus infinity, 0 &"se" b = plus.minus infinity, plus.minus infinity &"se" a = plus.minus infinity \, b > 0, minus.plus infinity &"se" a = plus.minus infinity \, b < 0, +infinity &"se" a > 0 \, b = 0 \, b_n > 0 "definitivamente", -infinity &"se" a < 0 \, b = 0 \, b_n > 0 "definitivamente", +infinity &"se" a < 0 \, b = 0 \, b_n < 0 "definitivamente", -infinity &"se" a > 0 \, b = 0 \, b_n < 0 "definitivamente", exists.not) "   con" b_n != 0 "definitivamente"
 $
 $
@@ -1023,7 +1023,7 @@ Alcuni casi sono stati esclusi dal momento che non si possono determinare con ce
 ])
 #corollary([
   Se $display(lim_(n -> infinity)) a_n = a, a_n >= 0 " " forall n in NN$ allora $a >= 0$. Invece se $a_n <= 0$ allora $a <= 0$.
-])
+]) <lms:cprm>
 #proof([
   Supponiamo, per assurdo, che $a < 0$. Allora, per il @lms:prm si avrebbe $a_n < 0$ definitivamente, il che è un assurdo.
 ])
@@ -1032,7 +1032,7 @@ Alcuni casi sono stati esclusi dal momento che non si possono determinare con ce
   [
     Se $display(lim_(n -> infinity)) a_n = a, display(lim_(n -> infinity)) b_n = b, a_n >= b_n, forall n in NN$ allora $a >= b$.
   ],
-) <lms:cprm>
+) <lms:pcfr>
 #proof([
   $c_n := a_n - b_n => c_n >= 0 " " forall n in NN$. Secondo l'algebra dei limiti, $display(lim_(n -> infinity)) c_n = a - b$. \
   Grazie al @lms:cprm $display(lim_(n -> infinity)) c_n >= 0 => a - b >= 0 => a >= b$.
@@ -1058,9 +1058,12 @@ Alcuni casi sono stati esclusi dal momento che non si possono determinare con ce
     Sia ${a_n}$ una successione. Essa si dice _infinitesima_ se $display(lim_(n -> infinity)) a_n = 0$.
   ],
 )
-#lemma(title: [Limite del valore assoluto di una successione infinitesima], [
-  Sia ${a_n}$ una successione. Allora $display(lim_(n -> infinity)) a_n = 0 <=> display(lim_(n -> infinity)) abs(a_n) = 0$
-]) <lms:lmp>
+#lemma(
+  title: [Limite del valore assoluto di una successione infinitesima],
+  [
+    Sia ${a_n}$ una successione. Allora $display(lim_(n -> infinity)) a_n = 0 <=> display(lim_(n -> infinity)) abs(a_n) = 0$
+  ],
+) <lms:lmp>
 #proof([
   Sia ${b_n}$ una successione tale che $display(lim_(n -> infinity)) b_n = 0$. Dunque, per la @lms:lms \
   $forall epsilon > 0 " " exists nu_epsilon in NN : abs(b_n) < epsilon, forall n > nu_epsilon$. Se consideriamo $b_n = abs(a_n)$ allora $abs(b_n) = abs(abs(a_n)) = abs(a_n)$ \
@@ -1074,7 +1077,7 @@ Alcuni casi sono stati esclusi dal momento che non si possono determinare con ce
 )
 #proof([
   Per il @lms:lmp $display(lim_(n -> infinity)) abs(b_n) = 0$. \
-  $abs(a_n b_n) >= 0 <=> abs(a_n)abs(b_n) >= 0, forall n in NN$. Visto che $display(lim_(n -> infinity)) = M => abs(a_n) <= M <=> abs(a_n)abs(b_n) <= underbrace(M abs(b_n), -> 0)$ \
+  $abs(a_n b_n) >= 0 <=> abs(a_n)abs(b_n) >= 0, forall n in NN$. Visto che $display(lim_(n -> infinity)) a_n = M => abs(a_n) <= M <=> abs(a_n)abs(b_n) <= underbrace(M abs(b_n), -> 0)$ \
   $=> 0 <= abs(a_n b_n) = abs(a_n)abs(b_n) <= M abs(b_n).$ Per il @lms:tdc, $display(lim_(n -> infinity)) (a_n b_n) = 0$.
 ])
 #theorem(
@@ -1099,12 +1102,12 @@ $
 $
 #proof([
   Per il @ind:brn, $(1 + x)^n >= 1 + n x, forall x >= 1 forall n in NN$ \
-  - $a > 1$: $x = a - 1 => a^n >= 1 + n(a - 1), display(lim_(n -> infinity)) (1 + n(a - 1)) = +infinity$ \ #"          " Per il @lms:cprm, $display(lim_(n -> infinity)) a_n$
+  - $a > 1$: $x = a - 1 => a^n >= 1 + n(a - 1), display(lim_(n -> infinity)) (1 + n(a - 1)) = +infinity$ \ #"          " Per il @lms:pcfr, $display(lim_(n -> infinity)) a_n = +infinity$
   - $a = 1$: $1^n = 1, forall n in NN <=> display(lim_(n -> infinity)) 1^n = 1$
-  - $-1 < a < 1$: $abs(a^n) = abs(a)^n = 1/underbrace((1/abs(a))^n, -> 1) => display(lim_(n -> infinity)) a^n = 0$
+  - $-1 < a < 1$: $abs(a^n) = abs(a)^n = 1/underbrace((1/abs(a))^n, -> +infinity) => display(lim_(n -> infinity)) a^n = 0$
   #set par(leading: 2em)
   - $a = 0$: $0^n = 0, forall n in NN => display(lim_(n -> infinity)) 0^n = 0$
-  - $a <= -1$: $cases(display(lim_(k -> infinity)) a^(2k) &= cases(1 &"se" a = -1, -infinity &"se" a < -1), display(lim_(k -> infinity)) a^(2k + 1) &= cases(-1 &"se" a = -1, -infinity &"se" a < -1), reverse: #true) => exists.not display(lim_(n -> infinity)) a_n$
+  - $a <= -1$: $cases(display(lim_(k -> infinity)) a^(2k) &= cases(1 &"se" a = -1, +infinity &"se" a < -1), display(lim_(k -> infinity)) a^(2k + 1) &= cases(-1 &"se" a = -1, -infinity &"se" a < -1), reverse: #true) => exists.not display(lim_(n -> infinity)) a_n$
 ])
 - *Radici*
 $
@@ -1113,7 +1116,7 @@ $
 #proof([
   - $a > 1$: Sia $b_n := root(n, a) - 1$, dunque $b_n >= 0, forall n in NN$ \ #"          " Per il @ind:brn, $(1 + b_n)^n >= 1 + b_n n => (root(n, a))^n >= 1 + b_n n$ \ #"          " $<=> a >= 1 + b_n n => 0 <= b_n <= (a - 1)/n$ \ #"          " Per il @lms:tdc, $display(lim_(n -> infinity)) b_n = 0 => display(lim_(n -> infinity)) root(n, a) = 1$
   #set par(leading: 1em)
-  - $0 < a < 1$: $root(n, a) = 1 / underbrace(root(n, 1 / a), -> 1) -> 1 / 1 => display(lim_(n -> infinity)) root(n, a) = 1$
+  - $0 < a < 1$: $root(n, a) = 1 / underbrace(root(n, 1 / a), -> 1) -> 1 / 1 = 1 => display(lim_(n -> infinity)) root(n, a) = 1$
 ])
 - *Funzioni goniometriche* dove ${a_n}$ è una successione tale che $display(lim_(n -> infinity)) a_n = 0$
 $
@@ -1125,7 +1128,7 @@ $
     [
       #set par(leading: 1.065em)
       Prima di tutto dimostriamo che $cos x < (sin x) / x < tan x$ se $0 < abs(x) <= pi/2$. \
-      $overline(A B) = 1, overline(B C) =: x, overline(C E) = sin x, overline(B D) = tan x$ \
+      $overline(A B) = 1, accent(B C, paren.t) =: x, overline(C E) = sin x, overline(B D) = tan x$ \
       $=> A_(Delta A B C) = (sin x)/2, A_(Delta A B D) = (tan x)/2, A_accent(A B C, paren.t) = x / 2$ \
       $=> Delta A B C subset accent(A B C, paren.t) subset Delta A B D$ \
       $=> (sin x) / 2 < x / 2 < (tan x) / 2 display(op(=>, limits: #true)_(dot 2/(sin x))) 1 < x / (sin x) < 1 / (cos x) display(op(=>, limits: #true)_(x^-1)) cos x < (sin x) / x < 1$
@@ -1168,6 +1171,10 @@ $
           ))
           plot.add(((0, 0), (1, calc.tan(calc.pi / 4))))
           plot.add(
+            ((calc.cos(calc.pi / 4), calc.sin(calc.pi / 4)), (1, 0)),
+            style: (stroke: (paint: red)),
+          )
+          plot.add(
             (
               (calc.cos(calc.pi / 4), calc.sin(calc.pi / 4)),
               (calc.cos(calc.pi / 4), 0),
@@ -1189,6 +1196,7 @@ $
   #"   " $1 - cos(a_n) = (1 - cos(a_n)) dot (1 + cos(a_n))/(1 + cos(a_n)) = (1 - cos^2 (a_n))/(1 + cos(a_n)) = (sin^2 (a_n))/(1 + cos(a_n))$. Poiché $1 + cos(a_n) > 1$ allora \
   #"   " $(sin^2 (a_n))/(1 + cos(a_n)) < sin^2 (a_n)$. \
   #"   " Per il @lms:tdc, $display(lim_(n -> infinity)) (1 - cos(a_n)) = 0 <=> display(lim_(n -> infinity)) cos(a_n) = 1$.
+
   3. Poiché $underbrace(cos(a_n), -> 1) < sin(a_n)/a_n < 1$, allora, per il @lms:tdc, $display(lim_(n -> infinity)) sin(a_n)/a_n = 1$.
   4. $(1 - cos(a_n))/a^2_n = (1 - cos(a_n))/a^2_n dot (1 + cos(a_n))/(1 + cos(a_n)) = (1 - cos^2 (a_n))/(a^2_n (1 + cos(a_n))) = (sin^2 (a_n))/(a^2_n (1 + cos(a_n))) = underbrace((sin(a_n)/(a_n))^2, -> 1) 1 / underbrace(1 + cos(a_n), -> 2)$ \
   #"   " $=> display(lim_(n -> infinity)) (1 - cos(a_n))/(a^2_n) = 1/2$.
@@ -1199,10 +1207,10 @@ $
   display(lim_(n -> infinity)) log(1 + a_n)/a_n = 1, display(lim_(n -> infinity)) (e^(a_n) - 1)/a_n = 1 "con" display(lim_(n -> infinity)) a_n = 0
 $
 #proof([
-  1. $log(1 + a_n)/a_n = 1/a_n log(1 + a_n) = log(1 + a_n)^(1/a_n)$. Sia ora $b_n := 1/a_n$, dunque $display(lim_(n -> infinity)) b_n = 0$. \
+  1. $log(1 + a_n)/a_n = 1/a_n log(1 + a_n) = log((1 + a_n)^(1/a_n))$. Sia ora $b_n := 1/a_n$, dunque $display(lim_(n -> infinity)) b_n = 0$. \
   #"   " $<=> display(lim_(n -> infinity)) log(underbrace((1 + 1/b_n)^(b_n), -> e)) = log e = 1$
   2. Sia $c_n := e^(a_n) - 1$, dunque $display(lim_(n -> infinity)) c_n = 0$. Poiché il limite precedente vale per una qualsiasi $a_n$\
-  #"   " $log(1 + c_n)/c_n = log(cancel(1) + e^(a_n) - cancel(1))/a_n = a^n / (e^(a_n) - 1)$. Dunque $(e^(a_n) - 1)/a_n = 1 / underbrace(a_n / (e^(a_n) - 1), -> 1) => display(lim_(n -> infinity)) (e^(a_n) - 1)/a_n = 1$
+  #"   " $log(1 + c_n)/c_n = log(cancel(1) + e^(a_n) - cancel(1))/c_n = (a^n log(e)) / (e^(a_n) - 1) = a^n / (e^(a_n) - 1)$. Dunque $(e^(a_n) - 1)/a_n = 1 / underbrace(a_n / (e^(a_n) - 1), -> 1) => display(lim_(n -> infinity)) (e^(a_n) - 1)/a_n = 1$
 ])
 - *Vari limiti notevoli*
 $
@@ -1230,23 +1238,26 @@ $
   Per il @lms:reg, $exists display(lim_(n -> infinity)) a_n := a$. Per il @lms:prm, $a >= 0$. \
   Supponiamo, per assurdo, che $a != 0$. Si avrebbe $display(lim_(n -> infinity)) b_n = display(lim_(n -> infinity)) a_(n + 1) / a_n = a / a = 1$, il che è un assurdo poiché $display(lim_(n -> infinity)) b_n < 1$ per ipotesi. Dunque $a = 0$.
 ]) \ \
-Siano $alpha, a, b in RR, b > 0, alpha > 1$. Allora
-$
-  display(lim_(n -> infinity)) n^b / alpha^n &= 0 "poiché" alpha^n -> +infinity "prima di" n^b \
-  display(lim_(n -> infinity)) alpha^n / n! &= 0 "poiché" n! -> +infinity "prima di" alpha^n \
-  display(lim_(n -> infinity)) n! / n^n &= 0 "poiché" n^n -> +infinity "prima di" n! \
-  display(lim_(n -> infinity)) log_a (n) / n^b &= 0 "poiché" n^b -> +infinity "prima di" log_a (n), "con" a > 0, a != 1, b > 0
-$
+#theorem(
+  title: [Gerarchia degli infiniti],
+  [Siano $alpha, a, b in RR, b > 0, alpha > 1$. Allora
+    $
+      &display(lim_(n -> infinity)) n^b / alpha^n &= 0 &"poiché" alpha^n -> +infinity "prima di" n^b \
+      &display(lim_(n -> infinity)) alpha^n / n! &= 0 &"poiché" n! -> +infinity "prima di" alpha^n \
+      &display(lim_(n -> infinity)) n! / n^n &= 0 &"poiché" n^n -> +infinity "prima di" n! \
+      &display(lim_(n -> infinity)) (log_a (n)) / n^b &= 0 &"poiché" n^b -> +infinity "prima di" log_a (n), "con" a > 0, a != 1, b > 0
+    $],
+)
 #proof([
   1. $b_n := a_(n + 1) / a_n = (n + 1)^b / alpha^(n + 1) dot 1 / (n^b / alpha^n) = (n + 1)^b/(alpha^(n + 1)) dot alpha^n / n^b = underbrace(((n + 1) / n)^b, -> 1) dot 1 / alpha => display(lim_(n -> infinity)) b_n = 1 / alpha = b$. Poiché $b < 1$, allora, per il @lms:crs, $display(lim_(n -> infinity)) a_n = 0$
-  #set par(leading: 1.9em)
-  2. $b_n := a_(n + 1) / a_n = alpha^(n + 1) / (n + 1)! dot 1 / (alpha^n / n!) = alpha^(n + 1) / (n + 1)! dot n! / alpha^n = alpha dot n! / ((n + 1)n!) = underbrace(alpha / (n + 1), -> 0) => display(lim_(n -> infinity)) b_n = 0 => display(lim_(n -> infinity)) a_n = 0$
-  3. $b_n := a_(n + 1) / a_n = (n + 1)! / (n + 1)^n dot n^n / n! = (cancel((n + 1))cancel(n!)) / cancel(n!) dot n^n / ((n + 1)^n cancel((n + 1))) = (n / (n + 1))^n = 1 / ((n + 1) / n)^n = 1 / underbrace((1 + 1 / n)^n, -> e) => display(lim_(n -> infinity)) b_n = 1 / e$ \ $=> display(lim_(n -> infinity)) a_n = 0$
-  #set par(leading: 1em)
+  2. $b_n := a_(n + 1) / a_n = alpha^(n + 1) / (n + 1)! dot 1 / (alpha^n / n!) = alpha^(n + 1) / (n + 1)! dot n! / alpha^n = alpha dot n! / ((n + 1)n!) = underbrace(alpha / (n + 1), -> 0) => display(lim_(n -> infinity)) b_n = 0 = b$. Poiché $b < 1$, per il @lms:crs, $display(lim_(n -> infinity)) a_n = 0$
+
+  3. $b_n := a_(n + 1) / a_n = (n + 1)! / (n + 1)^n dot n^n / n! = (cancel((n + 1))cancel(n!)) / cancel(n!) dot n^n / ((n + 1)^n cancel((n + 1))) = (n / (n + 1))^n = 1 / ((n + 1) / n)^n = 1 / underbrace((1 + 1 / n)^n, -> e)$ \ $=> display(lim_(n -> infinity)) b_n = 1 / e$. Poiché $b < 1$, per il @lms:crs, $display(lim_(n -> infinity)) a_n = 0$
   4. Se $a > 1$: Per il @ind:brn, $(1 + t)^n >= 1 + n t, forall t in RR, forall n in NN$ \
   #"                    " $2^x >= 2^[x], forall x > 0 => (1 + 1)^[x] >= 1 + [x] >= x$. Inoltre \
   #"                    " $log_a (x) < log_a (2^x), log_a (2^x) = x log_a (2)$. Se $x = n^(b/2) => log_a (n^(b/2)) < n^(b/2) log_a (2)$ \
   #"                    " $=> (log_a (n))/n^(b/2) < 2 / b log_a (2)$. $(log_a (n))/(n^b) = 1 / n^(b/2) (log_a (n))/n^(b/2) => (log_a (n))/n^(b/2) 1 / n^(b/2) < 2 / b log_a (n) 1 / n^(b/2)$. \
+
   #"                    " Se $n >= 2$, allora $0 < (log_a (n))/n^(b/2) 1 / n^(b/2)< underbrace(2 / b log_a (2) 1 / n^(b/2), -> 0)$. Per il @lms:tdc, $display(lim_(n -> infinity)) a_n = 0$.
 ])
 
@@ -1352,7 +1363,7 @@ $
 $
 - *Serie armonica generalizzata*: se $alpha > 1$ converge, se invece $0 < alpha <= 1$ diverge
 $
-  alpha = 1, a_k = 1/k^alpha => s_n = display(sum^n_(k = 1)) a_k = display(sum^n_(k = 1)) 1/k^alpha = 1 + 1/2 + 1/3 + 1/4 + ...
+  alpha = 1, a_k = 1/k^alpha => s_n = display(sum^n_(k = 1)) a_k = display(sum^n_(k = 1)) 1/k^alpha = 1 + 1/2^alpha + 1/3^alpha + 1/4^alpha + ...
 $
 - *Serie geometrica*: il suo risultato dipende da una certa $x in RR$ detta *ragione*
 $
@@ -1360,9 +1371,12 @@ $
   => display(lim_(n -> infinity)) s_n = cases(exists.not &"se" x <= -1, 1 / (1 - x) &"se" -1 < x < 1, +infinity &"se" x >= 1)
 $
 
-#theorem(title: [Condizione necessaria per la convergenza di una serie], [
-  $display(sum^infinity_(k = 1)) a_k$ convergente $=> display(lim_(n -> infinity)) a_k = 0$
-])
+#theorem(
+  title: [Condizione necessaria per la convergenza di una serie],
+  [
+    $display(sum^infinity_(k = 1)) a_k$ convergente $=> display(lim_(n -> infinity)) a_n = 0$
+  ],
+)
 #proof([
   Sia $display(lim_(n -> infinity)) s_n =: s$, con $s in RR$ poiché ${s_n}$ convergente per ipotesi. \
   $s_n = s_(n - 1) + a_n <=> a_n = s_n - s_(n - 1)$. In questo caso $display(lim_(n -> infinity)) s_n = s$ e $display(lim_(n -> infinity)) s_(n - 1) = s$. \
@@ -1372,51 +1386,448 @@ $
   $display(lim_(n -> infinity)) a_n = 0 arrow.r.double.not display(sum^infinity_(k = 1)) a_k$ convergente.
 ])
 
-#proposition(title: [Proprietà di una serie], [
-  - Se $display(sum^infinity_(k = 1)) a_k$ e $display(sum^infinity_(k = 1))$ sono regolari e la somma $display(sum^infinity_(k = 1)) a_k + display(sum^infinity_(k = 1)) b_k$ ha significato, allora \ $display(sum^infinity_(k = 1)) (a_k + b_k) = display(sum^infinity_(k = 1)) a_k + display(sum^infinity_(k = 1)) b_k$.
-  - Se $display(sum^infinity_(k = 1)) a_k$ è regolare, allora $display(sum^infinity_(k = 1)) c a_k = c display(sum^infinity_(k = 1)) a_k, forall c in RR$.
-])
-#theorem(title: [Carattere di una serie a termini non negativi], [
-  Una serie $display(sum^infinity_(k = 1)) a_k$ con $a_k >= 0, forall k in NN$ è convergente o divergente positivamente.
-])
+#proposition(
+  title: [Proprietà di una serie],
+  [
+    - Se $display(sum^infinity_(k = 1)) a_k$ e $display(sum^infinity_(k = 1)) b_k$ sono regolari e la somma $display(sum^infinity_(k = 1)) a_k + display(sum^infinity_(k = 1)) b_k$ ha significato, allora \ $display(sum^infinity_(k = 1)) (a_k + b_k) = display(sum^infinity_(k = 1)) a_k + display(sum^infinity_(k = 1)) b_k$.
+    - Se $display(sum^infinity_(k = 1)) a_k$ è regolare, allora $display(sum^infinity_(k = 1)) c a_k = c display(sum^infinity_(k = 1)) a_k, forall c in RR$.
+  ],
+)
+#theorem(
+  title: [Carattere di una serie a termini non negativi],
+  [
+    Una serie $display(sum^infinity_(k = 1)) a_k$ con $a_k >= 0, forall k in NN$ è convergente o divergente positivamente.
+  ],
+)
 #proof([
   Sia $s_n := display(sum^n_(k = 1)) a_k$. Dunque $s_n = a_1 + a_2 + ... + a_n$ e $s_(n + 1) = a_1 + ... + a_n + a_(n + 1)$ \
   $=> s_(n + 1) >= s_n$. Poiché $a_k >= 0, forall k in NN => s_n$ crescente. \
   Per il @lms:reg, $exists display(lim_(n -> infinity)) s_n$, il quale può essere un certo $l in RR$ oppure $+infinity$.
 ])
 
-#theorem(title: [Criterio del confronto di serie], [
-  Siano ${a_n}, {b_n}$ due successioni tali che $0 <= a_n <= b_n, forall n in NN$. Allora:
-  #set par(leading: 2em)
-  - $display(sum^infinity_(k = 1)) b_k$ convergente $=> display(sum^infinity_(k = 1)) a_k$ convergente
-  - $display(sum^infinity_(k = 1)) a_k$ divergente $=> display(sum^infinity_(k = 1)) b_k$ divergente
-]) <srs:cfr>
+== Criteri di convergenza
+
+#theorem(
+  title: [Criterio del confronto di serie],
+  [
+    #set list(spacing: 1em)
+    Siano ${a_n}, {b_n}$ due successioni tali che $0 <= a_n <= b_n, forall n in NN$. Allora:
+    - $display(sum^infinity_(k = 1)) b_k$ convergente $=> display(sum^infinity_(k = 1)) a_k$ convergente
+    - $display(sum^infinity_(k = 1)) a_k$ divergente $=> display(sum^infinity_(k = 1)) b_k$ divergente
+  ],
+) <srs:cfr>
 #proof([
   Siano $s_n := display(sum^infinity_(k = 1)) a_k, t_n := display(sum^infinity_(k = 1)) b_k$. $a_k <= b_k, forall k in NN => s_n <= t_n, forall n in NN$. \
   Poiché $a_k >= 0, b_k >= 0, forall k in NN => s_n, t_n$ crescenti. \
   Per il @lms:reg $exists display(lim_(n -> infinity)) s_n = s, display(lim_(n -> infinity)) t_n = t$. Dunque:
-  - $t_n$ convergente $=> t in RR$ \
-    Poiché $s_n <= t_n$, per il @lms:cprm $=> s <= t => s in RR => s_n$ convergente
-  - $s_n$ divergente $=> s = +infinity$ \
-    Poiché $s_n <= t_n$, per il @lms:cprm $=> s <= t => t = +infinity => t_n$ divergente
+  - $t_n$ convergente $=> t in RR$. Per il @lms:pcfr, $s_n <= t_n => s <= t => s in RR => s_n$ convergente
+  - $s_n$ divergente $=> s = +infinity$. Per il @lms:pcfr, $s_n <= t_n => s <= t => t = +infinity => t_n$ divergente
 ])
-#theorem(title: [Criterio del confronto asintotico], [
-  Siano ${a_n}, {b_n}$ due successioni tali che $a_n >= 0, b_n > 0, forall n in NN$ e $display(lim_(n -> infinity)) a_n / b_n = l$, con $l in [0; + infinity]$:
-  #set par(leading: 2em)
-  - $display(sum^infinity_(k = 1)) b_k$ convergente e $l in [0; +infinity) => display(sum^infinity_(k = 1)) a_k$ convergente
-  - $display(sum^infinity_(k = 1)) b_k$ divergente e $l in (0; +infinity] => display(sum^infinity_(k = 1)) a_k$ divergente
-])
+#theorem(
+  title: [Criterio del confronto asintotico],
+  [
+    #set list(spacing: 1em)
+    Siano ${a_n}, {b_n}$ due successioni tali che $a_n >= 0, b_n > 0, forall n in NN$ e $display(lim_(n -> infinity)) a_n / b_n = l$, con $l in [0; + infinity]$:
+    - $display(sum^infinity_(k = 1)) b_k$ convergente e $l in [0; +infinity) => display(sum^infinity_(k = 1)) a_k$ convergente
+    - $display(sum^infinity_(k = 1)) b_k$ divergente e $l in (0; +infinity] => display(sum^infinity_(k = 1)) a_k$ divergente
+  ],
+)
 #proof([
   Per definizione, $display(lim_(n -> infinity)) a_n / b_n <=> forall epsilon > 0 " " exists nu_epsilon in NN : abs(a_n / b_n - l) < epsilon, forall n > nu_epsilon$ \
   $<=> l - epsilon < a_n / b_n < l + epsilon, forall n > nu_epsilon$. Poiché $b_n > 0 => b_n (l - epsilon) < a_n < b_n (l + epsilon), forall n > nu_epsilon$.
-  - Se $display(sum^infinity_(k = 1)) b_k$ converge, allora, grazie alla relazione $a_n < b_n (l + epsilon)$, per il @srs:cfr $display(sum^infinity_(k = 1)) a_k$ converge
+  - Se $display(sum^infinity_(k = 1)) b_k$ converge, allora, grazie a $a_n < b_n (l + epsilon)$, per il @srs:cfr $display(sum^infinity_(k = 1)) a_k$ converge
   - Sia $l in (0; +infinity)$. Scegliamo $epsilon = l/2 => a_n > b_n (l - l/2) <=> a_n > l/2 b_n$ \
     Dunque, se $display(sum^infinity_(k = 1)) b_k$ diverge, grazie alla precedente relazione, per il @srs:cfr $display(sum^infinity_(k = 1)) a_k$ diverge \
     Ora sia $l = +infinity$. Per definizione, $forall M > 0 " " exists nu_M in NN : a_n / b_n > M, forall n > nu_M <=> a_n > M b_n$. Dunque, per il @srs:cfr, se $display(sum^infinity_(k = 1)) b_k$ diverge, anche $display(sum^infinity_(k = 1)) a_k$ diverge
 ])
 #note-box([
-  Se $a_n tilde b_n$, allora $l = 1$.
+  Se $a_n tilde b_n$, allora $l = 1$, quindi le serie $display(sum^infinity_(k = 1)) a_k$ e $display(sum^infinity_(k = 1)) b_k$ hanno lo stesso carattere.
 ])
+#theorem(
+  title: [Criterio del rapporto],
+  [
+    #set list(spacing: 1em)
+    Sia ${a_n}$ una successione tale che $a_n > 0, forall n in NN$ e $display(lim_(n -> infinity)) a_(n + 1) / a_n = l$ con $l in RR$. Allora
+    - $l < 1 => display(sum^infinity_(k = 1)) a_k$ convergente
+    - $l > 1 => display(sum^infinity_(k = 1)) a_k$ divergente
+  ],
+)
+#proof([
+  - Sia $x$ tale che $l < x < 1$ e $epsilon = x - l$, dunque $epsilon > 0$. \
+    $exists nu in NN : 0 < a_(n + 1) / a_n < x, forall n > nu$. Poiché $l + epsilon = x$, si può dire $0 < a_(n + 1) / a_n < l + epsilon$. \
+    Supponiamo che $nu = 1$. Allora si ha che:
+    - $n = 1 => a_2 / a_1 < x <=> a_2 < a_1 x$
+    - $n = 2 => a_3 / a_2 < x <=> a_3 < a_2 x <=> a_3 < a_2 x < a_1 x^2$
+    $=> a_n < a_1 x^(n - 1)$. Sia ora $b_n := a_1 x^(n - 1)$. Dunque \
+    $display(sum^infinity_(k = 1)) b_k = display(sum^infinity_(k = 1)) a_1 x^(k - 1) = a_1 display(sum^infinity_(k = 1)) x^(k - 1)$. Stabiliamo $s = k - 1$, quindi $display(sum^infinity_(s = 0)) x^s$. Questa è una serie geometrica, ed, essendo $0 < x < 1$, sappiamo che converge. Quindi anche $display(sum^infinity_(k = 1)) b_k$ converge. \
+    Per il @srs:cfr, anche $display(sum^infinity_(k = 1)) a_k$ converge.
+  - Per definizione, $forall epsilon > 0 " " exists nu_epsilon in NN : abs(a_(n + 1) / a_n - l) < epsilon, forall n > nu_epsilon <=> l - epsilon < a_(n + 1) / a_n < l + epsilon$. \
+    Scegliamo $epsilon = l - 1$, quindi $epsilon > 0$ e $l - epsilon = 1$. Dunque $a_(n + 1) / a_n > 1, forall n > nu_epsilon <=> a_(n + 1) > a_n$ \
+    $=> {a_n}$ definitivamente crescente. Poiché ${a_n}$ è crescente e positiva, non può essere infinitesima \
+    #set par(leading: 1.2em)
+    $=> display(sum^infinity_(k = 1)) a_k$ divergente
+])
+#theorem(
+  title: [Criterio della radice],
+  [
+    Sia ${a_n}$ una successione tale che $a_n >= 0, forall n in NN$ e $display(lim_( -> infinity)) root(n, a_n) = l$ con $l in RR$. Allora:
+    - $l < 1 => display(sum^infinity_(k = 1)) a_k$ convergente
+    - $l > 1 => display(sum^infinity_(k = 1)) a_k$ divergente
+  ],
+)
+#theorem(
+  title: [Criterio di Leibnitz],
+  [
+    Sia ${a_n}$ una successione tale che $a_n > 0, display(lim_(n -> infinity)) a_n = 0$ e ${a_n}$ decrescente. Allora $display(sum^infinity_(k = 1)) (-1)^k a_k$ converge. Inoltre $abs(s_n - s) <= a_(n + 1)$, dove $s_n$ è la somma parziale della suddetta serie e $display(lim_(n -> infinity)) s_n = s$.
+  ],
+)
+
+== Convergenza assoluta
+
+#definition(
+  title: [Convergenza assoluta],
+  [
+    Sia ${a_n}$ una successione. Allora $display(sum^infinity_(k = 1)) a_k$ _converge assolutamente_ se anche $display(sum^infinity_(k = 1)) abs(a_k)$ converge.
+  ],
+)
+#theorem(title: [Carattere di una serie assolutamente convergente], [
+  Una serie assolutamente convergente è anche convergente.
+])
+#warning-box([
+  La convergenza non implica la convergenza assoluta.
+])
+
+= Limiti di funzioni
+
+
+
+#definition(
+  title: [Limiti di funzioni all'infinito],
+  [
+    Siano $f: A -> RR$ con $(a, +infinity) subset.eq A subset.eq RR, l in RR$. Allora:
+    - $forall epsilon > 0 " " exists nu_epsilon > 0 : abs(f(x) - l) < epsilon, forall x > nu_epsilon, x in A => display(lim_(x -> +infinity)) f(x) = l$
+
+    - $forall M > 0 " " exists nu_M > 0 : f(x) > M, forall x > nu_M, x in A => display(lim_(x -> +infinity)) f(x) = +infinity$
+
+    - $forall M > 0 " " exists nu_M > 0 : f(x) < -M, forall x > nu_M, x in A => display(lim_(x -> +infinity)) f(x) = -infinity$
+
+    - $forall epsilon > 0 " " exists nu_epsilon > 0 : abs(f(x) - l) < epsilon, forall x < nu_epsilon, x in A => display(lim_(x -> -infinity)) f(x) = l$
+
+    - $forall M > 0 " " exists nu_M > 0 : f(x) > M, forall x < nu_M, x in A => display(lim_(x -> -infinity)) f(x) = +infinity$
+
+    - $forall M > 0 " " exists nu_M > 0 : f(x) < -M, forall x < nu_M, x in A => display(lim_(x -> -infinity)) f(x) = -infinity$
+  ],
+)
+#definition(
+  title: [Intorno],
+  [
+    Siano $r > 0, x_0 in RR$. Si dice _intorno circolare_ di centro $x_0$ e raggio $r$ l'insieme $I_r (x_0) := {x in RR : abs(x - x_0) < r}$. Si dice _intorno destro_ l'insieme $I_r^+ (x_0) := {x in RR : x_0 < x < x_0 + r}$ e si dice _intorno sinistro_ l'insieme $I_r^- (x_0) := {x in RR : x_0 - r < x < x_0}$.
+  ],
+)
+#definition(
+  title: [Punto di accumulazione],
+  [
+    Siano $E subset.eq RR, x_0 in RR$. $x_0$ si dice _punto di accumulazione_ di $E$ se $forall r > 0 " " [I_r (x_0) inter E] \\ {x_0} != emptyset$. $x_0$ si dice _punto di accumulazione destro_ se $forall r > 0 " " [I_r^+ (x_0) inter E] \\ {x_0} = emptyset$ e si dice _punto di accumulazione sinistro_ se $forall r > 0 " " [I_r^- (x_0) inter E] \\ {x_0} != emptyset$.
+  ],
+)
+
+#definition(
+  title: [Limiti di funzioni al finito],
+  [
+    Siano $f: A -> RR, A subset.eq RR, x_0$ punto di accumulazione per $A$. Allora:
+    - $forall epsilon > 0 " " exists delta_(epsilon, x_0) > 0 : abs(f(x) - l) < epsilon, forall x in I_(delta_(epsilon, x_0)) (x_0) inter A, x != x_0 => display(lim_(x -> x_0)) f(x) = l$
+    - $forall M > 0 " " exists delta_(M, x_0) > 0 : f(x) > M, forall x in I_(delta_(M, x_0)) (x_0) inter A, x != x_0 => display(lim_(x -> x_0)) f(x) = +infinity$
+    - $forall M > 0 " " exists delta_(M, x_0) > 0 : f(x) < -M, forall x in I_(delta_(M, x_0)) (x_0) inter A, x != x_0 => display(lim_(x -> x_0)) f(x) = -infinity$
+
+    Per $x_0^+$ e $x_0^-$ si considerano nell'espressione gli intorni $I_delta^+ (x_0)$ e $I_delta^- (x_0)$.
+  ],
+)
+#note-box([
+  $display(lim_(x -> x_0^-)) f(x) = display(lim_(x -> x_0^+)) f(x) => display(lim_(x -> x_0)) f(x) = l$ con $l in RR$ \
+  $display(lim_(x -> x_0^-)) f(x) != display(lim_(x -> x_0^+)) f(x) => exists.not display(lim_(x -> x_0)) f(x)$ \
+  $x_0$ punto di accumulazione sia destro che sinistro e $display(lim_(x -> x_0)) f(x) = l => display(lim_(x -> x_0^-)) f(x) = display(lim_(x -> x_0^+)) f(x) = l$
+])
+
+#theorem(
+  title: [Teorema ponte],
+  [
+    Siano $A subset.eq RR, {x_n}$ una successione con ${x_n} subset.eq A, f: A -> RR, A subset.eq RR, l in RR, x_0$ punto di accumulazione per $A$. Allora $display(lim_(x -> x_0)) f(x) = l <=> forall {x_n} in A \\ {x_0}, display(lim_(n -> infinity)) x_n, display(lim_(n -> +infinity)) f(x_n) = l$
+  ],
+) <lmf:pnt>
+#note-box([
+  Se ${x_n}, {y_n} subset A \\ {x_0}, display(lim_(n -> infinity)) x_n = display(lim_(n -> infinity)) y_n = x_0, display(lim_(n -> infinity)) f(x_n) != display(lim_(n -> infinity)) f(y_n)$ allora $exists.not display(lim_(x -> infinity)) f(x)$
+])
+
+#theorem(title: [Unicità del limite], [
+  Sia $f$ una funzione. Se $f$ ammette limite, esso è unico.
+])
+
+#theorem(
+  title: [Permanenza del segno],
+  [
+    Siano $A subset.eq RR, f: A -> RR, x_0$ punto di accumulazione per $A$. Se $display(lim_(x -> x_0)) f(x) = M$ con $M > 0$ allora $exists delta > 0 " " f(x) > M / 2, forall x in A inter I_delta (x_0), x != x_0$, quindi $f(x) > 0$.
+  ],
+) <lmf:prm>
+#theorem(
+  title: [Teorema dei due carabinieri],
+  [
+    Siano $A subset.eq RR, f, g, h$ tre funzioni con $g(x) <= f(x) <= h(x), forall x in [I_sigma (x_0) \\ {x_0}] inter A$ per qualche $sigma > 0$ e $display(lim_(x -> x_0)) g(x) = display(lim_(x -> x_0)) h(x) = l$ con $l in RR$. Allora $display(lim_(x -> x_0)) f(x) = l$.
+  ],
+) <lmf:tdc>
+#lemma(
+  title: [Limite del valore assoluto di una funzione infinitesima],
+  [
+    $display(lim_(x -> infinity)) f(x) = 0 <=> display(lim_(x -> infinity)) abs(f(x))$
+  ],
+)
+#corollary(
+  title: [Limite del prodotto di funzioni],
+  [
+    Se $display(lim_(x -> x_0)) f(x) = 0$ e $g$ limitata in $I_delta (x_0)$ allora $display(lim_(x -> x_0)) f(x)g(x) = 0$.
+  ],
+)
+
+#theorem(
+  title: [Limite di funzioni monotone],
+  [
+    Siano $f$ una funzione e $x_0 in (a, b)$. Allora: \
+    $
+      lim_(x -> x_0^-) f(x) = cases(display(sup_(a < x < x_0)) f(x) &"se" f arrow.tr "in" (a,b), display(inf_(a < x < x_0)) f(x) &"se" f arrow.br "in" (a, b)), lim_(x -> x_0^+) f(x) = cases(display(inf_(x_0 < x < b)) f(x) &"se" f arrow.tr "in" (a, b), display(sup_(x_0 < x < b)) f(x) &"se" f arrow.br "in" (a, b))
+    $
+    $
+      lim_(x -> +infinity) f(x) = cases(display(sup_(x > a)) f(x) &"se" f arrow.tr "in" (a, +infinity), display(inf_(x > a)) f(x) &"se" f arrow.br "in" (a, +infinity)), lim_(x -> -infinity) f(x) = cases(display(sup_(x < a)) f(x) &"se" f arrow.tr "in" (-infinity, a), display(inf_(x < a)) f(x) &"se" f arrow.br "in" (-infinity, a))
+    $
+  ],
+)
+
+== Limiti notevoli
+
+- *Goniometrici*: $display(lim_(x -> 0)) sin x = 0, display(lim_(x -> 0)) f(x) cos x = 1, display(lim_(x -> 0)) (sin x) / x = 1, display(lim_(x -> 0)) (1 - cos x) / x^2 = 1 / 2$
+
+- *Esponenziali*: $display(lim_(x -> +infinity)) (1 + 1 / x)^x = e, display(lim_(x -> +infinity)) log(1 + x) / x = 1, display(lim_(x -> +infinity)) (e^x - 1) / x = 1, display(lim_(x -> +infinity)) ((1 + x)^alpha - 1) / x = alpha$
+
+- *Gerarchia degli infiniti*: $display(lim_(x -> +infinity)) (log_a (x)) / x^alpha = 0, display(lim_(x -> +infinity)) x^alpha / a^x = 0$
+
+#pagebreak()
+
+== Infiniti, infinitesimi e asintoti
+#definition(
+  title: [Funzione infinitesima],
+  [
+    Una funzione $f$ si dice _infinitesima per $x -> x_0$_ se $display(lim_(x -> x_0)) f(x) = 0$. Analogamente per $x -> plus.minus infinity$.
+  ],
+)
+#definition(
+  title: [Funzione infinita],
+  [
+    Una funzione $f$ si dice _infinita per $x -> x_0$_ se $display(lim_(x -> x_0)) f(x) = +plus.minus infinity$. Analogamente per $x -> plus.minus infinity$.
+  ],
+)
+#definition(
+  title: [Ordini di infinitesimi],
+  [
+    Siano $f, g$ due funzioni infinitesime per $x -> x_0$. Allora:
+    - Se $display(lim_(x -> x_0)) f(x) / g(x) = 0$, $f$ è un _infinitesimo di ordine superiore_ rispetto a $g$
+
+    - Se $display(lim_(x -> x_0)) f(x) / g(x) = l$ con $l in RR$, $f$ e $g$ sono _infinitesimi dello stesso ordine_
+
+    - Se $display(lim_(x -> x_0)) f(x) = g(x) = plus.minus infinity$, $f$ è un _infinitesimo di ordine inferiore_ rispetto a _g_
+
+    - Se $exists.not display(lim_(x -> x_0)) f(x) / g(x)$, $f$ e $g$ sono _non paragonabili_
+
+    - Se $display(lim_(x -> x_0)) f(x) / g(x) = 1$, $f$ e $g$ sono _asintoticamente equivalenti_
+
+    Analogamente per $x -> plus.minus infinity$.
+  ],
+)
+#definition(
+  title: [Ordini di infiniti],
+  [
+    Siano $f, g$ due funzioni infinite per $x -> x_0$. Allora:
+    - Se $display(lim_(x -> x_0)) f(x) = g(x) = plus.minus infinity$, $f$ è un _infinito di ordine inferiore_ rispetto a _g_
+
+    - Se $display(lim_(x -> x_0)) f(x) / g(x) = 0$, $f$ è un _infinito di ordine superiore_ rispetto a $g$
+
+    - Se $display(lim_(x -> x_0)) f(x) / g(x) = l$ con $l in RR$, $f$ e $g$ sono _infiniti dello stesso ordine_
+
+    - Se $exists.not display(lim_(x -> x_0)) f(x) / g(x)$, $f$ e $g$ sono _non paragonabili_
+
+    - Se $display(lim_(x -> x_0)) f(x) / g(x) = 1$, $f$ e $g$ sono _asintoticamente equivalenti_
+
+    Analogamente per $x -> plus.minus infinity$.
+  ],
+)
+#definition(
+  title: [O-piccolo],
+  [
+    Siano $f, g$ due funzioni. Se $display(lim_(x -> x_0)) f(x) / g(x) = 0$ allora $f(x) = o(g(x))$ per $x -> x_0$. Analogamente per $x -> +infinity$ e $x -> -infinity$.
+  ],
+)
+
+Se $display(lim_(x -> x_0)) f(x) = plus.minus infinity$ o $display(lim_(x -> x_0^+)) f(x) = plus.minus infinity, display(lim_(x -> x_0^-)) f(x) = minus.plus infinity$, allora la retta $x = x_0$ è un *asintoto verticale* di $f$, mentre se il limite va a infinito solo per $x -> x_0^+$ o solo per $x -> x_0^-$ allora la retta $x = x_0$ si dice l'*asintoto destro* o *sinistro* di $f$. \
+Se $display(lim_(x -> plus.minus infinity)) f(x) = b$ con $b in RR$, la retta $y = b$ si dice *asintoto orizzontale* di $f$.
+
+#definition(
+  title: [Asintoto],
+  [
+    Sia $f: C -> RR$ con $C = (c, +infinity)$. La retta $y = m x + q$ si dice _asintoto_ di $f$ per $x -> +infinity$ se $display(lim_(x -> +infinity)) (f(x) - m x - q) = 0$. Lo stesso vale con $C = (-infinity, c)$ e $x -> -infinity$.
+  ],
+)
+Dunque, se $m = 0$ si ha un asintoto orizzontale, viceversa si ha un *asintoto obliquo*.
+
+Poiché $display(lim_(x -> +infinity)) (f(x) - m x - q) / x = 0$ e $display(lim_(x -> +infinity)) q / x = 0$ allora $m = display(lim_(x -> +infinity)) f(x) / x$ e $q = display(lim_(x -> +infinity)) (f(x) - m x)$.
+
+== Continuità
+
+#definition(
+  title: [Funzione continua],
+  [
+    Siano $f: A -> RR$ con $A subset.eq RR$, $x_0 in A$ punto di accumulazione per $A$. Allora $f$ si dice _continua in $x_0$_ se $display(lim_(x -> x_0)) f(x) = f(x_0)$. Se $f$ è continua $forall x_0 in A$ allora si dice _continua in $A$_.
+  ],
+)
+#note-box([
+  Secondo la definizione di limite, $forall epsilon > 0 " " exists delta_(epsilon, x_0) > 0 : abs(f(x) - f(x_0)) < epsilon, forall x in (A inter I_delta_(epsilon, x_0) (x_0))$.
+])
+#proposition(
+  title: [Continuità delle funzioni goniometriche],
+  [
+    $display(lim_(x -> x_0)) sin x = sin x_0, display(lim_(x -> x_0)) cos x = cos x_0$
+  ],
+) <lmf:cgn>
+#proof([
+  Ricordiamo che $sin a - sin b = -2sin((a - b) / 2)cos((a + b) / 2)$ e $cos x - cos b = 2sin((a - b) / 2)cos((a + b) / 2)$ per le formule di prostaferesi. Allora \
+  $abs(sin x - sin x_0) = 2abs(sin((x - x_0) / 2)cos((x + x_0) / 2))$. Poiché $abs(sin a) <= abs(a)$ e $abs(cos(a)) <= 1$ ,allora \
+  $0 <= abs(sin x - sin x_0) <= 2 abs((x - x_0) / 2) dot 1 <=> abs(sin x - sin x_0) <= underbrace(abs(x - x_0), -> 0)$. Quindi, per il @lmf:tdc, $display(lim_(x -> x_0)) abs(sin x - sin x_0) = 0 <=> display(lim_(x -> x_0)) sin x = sin x_0$. Allo stesso modo, si ha anche $0 <= abs(cos x - cos x_0) <= abs(x - x_0)$. Quindi, per il @lmf:tdc, $display(lim_(x -> x_0)) abs(cos x - cos x_0) = 0 <=> display(lim_(x -> x_0)) cos x = cos x_0$.
+])
+#note-box([
+  $display(lim_(x -> x_0)) tan x = display(lim_(x -> x_0)) (sin x) / (cos x) = (sin x_0) / (cos x_0) = tan x_0, display(lim_(x -> x_0)) cot x = display(lim_(x -> x_0)) (cos x) / (sin x) = (cos x_0) / (sin x_0) = cot x_0$
+])
+
+In generale, per l'algebra dei limiti, si dimostra che un qualsiasi polinomio $p(x), sin x, cos x, tan x$, $cot x, a^x, sinh x, cosh x$ sono tutte continue nel loro dominio.
+
+#theorem(
+  title: [Limite della funzione composta],
+  [
+    Siano $f(x)$ una funzione con $display(lim_(x -> x_0)) f(x) = y_0$ e $g(y)$ una funzione continua in $y_0$. Allora
+
+    $display(lim_(x -> x_0)) g(f(x)) = g(display(lim_(x -> x_0)) f(x)) = g(y_0)$.
+  ],
+) <lmf:lfc>
+#corollary(
+  title: [Continuità della funzione composta],
+  [
+    Siano $f(x)$ una funzione continua in $x_0$ e $g(y)$ una funzione continua in $y_0$ con $y_0 = f(x_0)$. Allora la funzione $g(f(x))$ è continua in $x_0$.
+  ],
+)
+#proof([
+  $f(x)$ è continua in $x_0$ per ipotesi, quindi $display(lim_(x -> x_0)) f(x) = f(x_0) = y_0$. Per il @lmf:lfc, $display(lim_(x -> x_0)) g(f(x)) = g(display(lim_(x -> x_0)) f(x)) = g(f(x_0)) = g(y_0)$. Quindi $g(f(x))$ è continua in $x_0$.
+]) \ \
+
+Grazie al @lmf:pnt, abbiamo il seguente teorema.
+#theorem(
+  title: [Continuità per successione],
+  [
+    Una funzione $f: A -> RR$ con $A subset.eq RR$ è continua in $x_0 in A$ se e solo se $display(lim_(n -> infinity)) f(x_n) = f(x_0)$, $forall {x_n} subset.eq A$ con $display(lim_(n -> infinity)) x_n = x_0$.
+  ],
+)
+=== Continuità della funzione inversa
+
+#theorem(
+  title: [Continuità della funzione inversa],
+  [
+    Sia $f$ una funzione definita in un intervallo $I$, continua ed invertibile. Allora $f^(-1)$ è continua.
+  ],
+) <lmf:cnv>
+#warning-box([Il @lmf:cnv è falso se $I$ non è un intervallo, quindi, ad esempio, se $I = [1, 2] union [3, 4]$])
+Grazie al @lmf:cnv, si ha anche che $log_a x$ è continua se $a > 0, a != 1$.
+#theorem(title: [Continuità delle funzioni goniometriche e le loro inverse], [
+  Le funzioni circolari e le loro inverse sono continue.
+])
+#proof([
+  Sappiamo che $sin x, cos x, tan x, cot x$ sono continue per la @lmf:cgn. Dalla stessa si ha anche che $arcsin x, arccos x, arctan x, "arccot"x$ sono continue.
+])
+
+=== Punti di discontinuità
+
+#definition(
+  title: [Punto di discontinuità],
+  [
+    Siano $f: A -> RR$ con $A subset.eq RR$ e $x_0 in A$ punto di accumulazione per $A$. Se $f$ non è continua in $x_0$, allora $x_0$ si dice _punto di discontinuità_ di $f$.
+  ],
+)
+
+Si possono avere punti di discontinuità in diversi casi:
+- $display(lim_(x -> x_0^-)) f(x) != display(lim_(x -> x_0^+)) f(x) => x_0$ si dice *punto di discontinuità di 1ª specie* o *salto*. Per esempio, $f(x) = [x]$ presenta un salto in ogni $x$ intera.
+
+- $display(lim_(x -> x_0^-)) f(x) = plus.minus infinity$ o $display(lim_(x -> x_0^+)) f(x) = plus.minus infinity => x_0$ si dice *punto di discontinuità di 2ª specie*. Per esempio, $f(x) = 1 / x$ presenta questa specie di discontinuità in $x = 0$.
+
+- $exists.not display(lim_(x -> x_0^-)) f(x)$ o $exists.not display(lim_(x -> x_0^+)) f(x) => x_0$ si dice *punto di discontinuità di 3ª specie*. Per esempio la funzione $f(x) = cases(sin 1/x &"se" x != 0, 1 &"se" x = 0)$ presenta una discontinuità di 3ª specie in $x = 0$.
+
+- $display(lim_(x -> x_0^-)) f(x) = display(lim_(x -> x_0^+)) f(x) = l$ e $f(x_0) != l$ o $x_0 in.not A => x_0$ si dice *punto di discontinuità eliminabile*. Infatti si può ridefinire la medesima funzione come $hat(f)(x) = cases(f(x) &"se" x != x_0, l &"se" x = x_0)$ dove $hat(f)$ è detta *estensione continua* di $f$.
+
+=== Teoremi sulla continuità
+
+#theorem(
+  title: [Permanenza del segno per funzioni continue],
+  [
+    Siano $f$ una funzione continua in $A subset.eq RR$ e $x_0 in A$. Se $f(x_0) gt.lt c$ con $c in RR$, allora \
+    $exists I_x_0 : f(x) gt.lt c, forall x in I_x_0 inter A$.
+  ],
+)
+#proof([
+  Per il @lmf:prm, poiché $f$ è continua in $x_0$, $display(lim_(x -> x_0)) (f(x) - c)= f(x_0) - c$, il che è $gt.lt 0$, quindi $f(x_0) gt.lt c$.
+])
+
+#theorem(
+  title: [Esistenza degli zeri],
+  [
+    Sia $f$ una funzione continua nell'intervallo $I = [a, b]$. Se $f(a)$ e $f(b)$ hanno segno discorde, allora $exists x_0 in (a, b) : f(x_0) = 0$, dove $x_0$ è detto _zero di $f(x)$_.
+  ],
+) <lmf:esz>
+#proof([
+  Sia $c = (a + b) / 2$. Se $f(c) = 0$ allora $x_0 = c$. Se $f(c) > 0$ allora la funzione assume valori discordi in $a$ e $c$, mentre, se $f(c) < 0$, allora assume valori discordi in $b$ e $c$. \
+  Consideriamo ora l'intervallo $[a_1, b_1]$, dove $a_1 = cases(a &"se" f(c) > 0, c &"se" f(c) < 0)$ e $b_1 = cases(c &"se" f(c) > 0, b &"se" f(c) < 0)$. In questo modo, abbiamo che $f(a_1)$ e $f(b_1)$ hanno segni discordi. Sia ora $c_1 = (a_1 + b_1) / 2$ e ripetiamo il ragionamento. \
+  Otterremo dunque tre successioni, ossia ${a_n}, {b_n}, {c_n}$, dove $c_n = (a_n + b_n) / 2$ e, se $f(c_n) > 0$, abbiamo che $a_(n + 1) = a_n$ e $b_(n + 1) = b_n$, mentre, se $f(c_n) < 0$, abbiamo che $a_(n + 1) = c_n$ e $b_(n + 1) = b_n$. \
+  Possiamo iterare questo processo finché $f(c_n) = 0$, ossia quando avremo trovato lo zero della funzione in $(a, b)$. \
+  ${a_n}$ è crescente e ${b_n}$ è decrescente. Inoltre $a <= a_n <= c_n <= b_n <= b, forall n >= 1$. Di conseguenza, $a_n$ è limitata, quindi per il @lms:reg, esiste $display(lim_(n -> infinity)) a_n = epsilon$. Per il @lms:pcfr, $a <= epsilon <= b$. Notiamo che $b_n - a_n = (b - a) / 2^n <=> b_n = underbrace((b - a) / 2^n, -> 0) + a_n$, quindi $display(lim_(n -> infinity)) b_n = epsilon$. Poiché $f$ è continua in $[a, b]$ per ipotesi:
+  - $display(lim_(n -> infinity)) f(a_n) = f(epsilon)$. Poiché $f(a_n) < 0$, per il @lms:cprm, $f(epsilon) <= 0$
+  - $display(lim_(n -> infinity)) f(b_n) = f(epsilon)$. Poiché $f(b_n) > 0$, per il @lms:cprm, $f(epsilon) >= 0$
+  Dunque, poiché $0 <= f(epsilon) <= 0$, allora $f(epsilon) = 0 <=> x_0 = epsilon$.
+])
+#note-box([
+  Se $f$ è strettamente monotona, lo zero è unico. Inoltre non è necessario che $I$ sia limitato affinché si possa applicare il teorema.
+])
+
+#theorem(
+  title: [Teorema dei valori intermedi],
+  [
+    Sia $f$ una funzione continua in un intervallo $I$. Allora $f$ assume tutti i valori compresi tra $display(inf_I) f$ e $display(sup_I) f$. Ossia $forall y_0 in (display(inf_I) f; display(sup_I) f) " " exists x_0 in I : y_0 = f(x_0)$.
+  ],
+)
+#proof([
+  Siano $m := display(inf_I) f, M := display(sup_I) f$ e $y_0 in (m, M)$. Per definizione, $y_0 > m display(<=>^"def.") exists a in I : f(a) < y_0$ e $y_0 < M display(<=>^"def.") exists b in I : f(b) > y_0$. \
+  Sia $g(x) := f(x) - y_0$ con $x in [a,b] subset.eq I$. Dunque $g$ è continua in $[a,b]$. Inoltre $g(a) < 0$ e $g(b) > 0$. Per il @lmf:esz, $exists x_0 in (a, b) : g(x_0) = 0 <=> f(x_0) = y_0$.
+])
+
+#definition(
+  title: [Massimo e minimo assoluto],
+  [
+    Siano $f: A -> RR$ con $A subset.eq RR$ e $x_0 in A$. $x_0$ si dice _punto di massimo assoluto_ di $f$ se $f(x) <= f(x_0)$, $forall x in A$. Viceversa, $x_0$ si dice _punto di minimo assoluto_ di $f$ se $f(x) >= f(x_0), forall x in A$.
+  ],
+)
+#theorem(
+  title: [Teorema di Weierstrass],
+  [
+    Una funzione $f: [a, b] -> RR$ continua in $[a, b]$ ammette massimo e minimo assoluti.
+  ],
+)
+
+#warning-box([
+  Per tutti questi teoremi è fondamentale sia che la funzione sia continua e che si stia considerando un intervallo, altrimenti nessuno di questi teoremi è applicabile: in particolare per i teoremi di Weierstrass e di esistenza degli zeri, è fondamentale che l'intervallo sia chiuso e limitato.
+])
+
+
+
 #pagebreak()
 #outline(title: [Indice dei dimostrabili], target: figure
   .where(kind: "theorem")
