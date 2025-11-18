@@ -5,6 +5,7 @@
 #show: show-theorion
 
 #set text(lang: "it")
+#set par(justify: true)
 #set page(numbering: "I", footer: [], header: context {
   if counter(page).display() != "I" {
     if calc.even(counter(page).get().at(0)) {
@@ -176,13 +177,13 @@ Fissiamo ora uno spazio vettoriale $(V, +, dot, KK)$ finitamente generato.
   Supponiamo, per assurdo, che $c_(l + 1) != 0 => -c_(l + 1) v_(l + 1) = display(sum^l_(i = 1) c_i v_i) => v_(l + 1) = display(sum^l_(i = 1) - c_i / c_(l + 1) dot v_i)$ \
   $<=> v_(l + 1) in cal(L)(v_1, ..., v_l) =>$ assurdo. Dunque $c_(l + 1) = 0 => v_1, ... v_l, v_(l + 1)$ linearmente indipendenti.
 ])
-#pagebreak()
 #theorem(
   title: [Esistenza di una base],
   [
     Se lo spazio $(V, +, dot, KK)$ è finitamente generato, allora esiste una base finita.
   ],
 )
+#pagebreak()
 #proof([
   Sia $V = cal(L)(v_1, ..., v_n)$ \
   Se $v_1, ..., v_n$ sono linearmente indipendenti, allora sono una base. \
@@ -473,7 +474,10 @@ Se $b = underline(O)_m$ allora il sistema è detto *omogeneo*.
 Le mosse di Gauss sono un algoritmo che permette di modificare una matrice o un sistema lineare preservandone l'insieme di soluzioni. Comprendono:
 - scambio di righe
 - sostituzione di una certa $R_i$ con $a dot R_i + c dot R_k$, con $a, c in KK, a != 0$
-#proposition([Le mosse di Gauss preservano $S o l(A)$])
+#proposition(
+  title: [Conservazione delle soluzioni tramite le mosse di Gauss],
+  [Le mosse di Gauss preservano $S o l(A)$],
+)
 #proof([È ovvio che la prima mossa preservi le soluzioni. \
   La seconda mossa porta ad avere un nuovo sistema. Infatti
   $
@@ -630,6 +634,17 @@ Dunque abbiamo che $s$ rappresenta il numero minimo di parametri necessari a des
   - $2. => 3.$ : Segue dal @ssl:tcr
   - $3. => 4.$ : $D = (d_1 | d_2 | ... | d_n) in MM_(n,n)(KK) => A dot D = (A dot d_1 | A dot d_2 | ... | A dot d_n) = I_n$ \ $<=> A dot d_i = e_i$. Bisogna risolvere $n$ sistemi lineari quadrati e, visto che $r k(A) = n$ per il teorema di Cramer, allora $d_i$ esiste ed è unica. Per poterli risolvere contemporaneamente posso dire che $(A | e_1 | ... | e_n) = (A | I) display(op(-->, limits: #true)^("Gauss")_("Jordan")) ( I | d_1 | ... | d_n) = (I | D) = (I | A^(-1))$
 ])
+#definition(
+  title: [Matrici simili],
+  [
+    Due matrici quadrate $A, B in MM_(n,n) (KK)$ si dicono _simili_ se esiste una matrice $P$ invertibile tale che $B = P^(-1) dot A dot P$, quindi $B tilde A$.
+  ],
+)
+La relazione di similitudine è una relazione di equivalenza quindi è:
+- *riflessiva*: $A tilde A$, infatti $A = I^(-1) dot A dot I$
+- *simmetrica*: $B tilde A <=> A tilde B$, infatti se $B = P^(-1) dot A dot P$, allora, moltiplicando per $P dot P^(-1)$, abbiamo $P dot B dot P^(-1) = P dot P^(-1) dot A dot P dot P^(-1) = A$
+- *transitiva*: $A tilde B, B tilde C <=> A tilde C$, infatti $A = P^(-1) dot B dot P$ e $B = Q^(-1) dot C dot Q$, quindi $A = P^(-1) dot (Q^(-1) dot C dot Q) dot P = (Q dot P)^(-1) dot C dot (Q dot P) = H^(-1) dot C dot H$
+
 
 == Sottospazi vettoriali
 
@@ -691,7 +706,7 @@ Sia $(V, +, dot, KK)$ con $dim(V) = n < +infinity$.
   [
     Sia $U$ un sottospazio di $V$, $u_1, ..., u_l in U$ linearmente indipendenti. Allora si può estendere così da avere una base di $U$. In simboli: $U = cal(L)(u_1, ..., u_l, u_(l + 1), ..., u_m) "con" m = dim(U), m <= dim(V)$.
   ],
-)
+) <ssv:cpl>
 #proof([
   Sia $B_l = {u_1, ..., u_l} subset.eq U$.
   1. Se $cal(L)(B_l) = cal(L)(u_1, ..., u_l) = U$ allora $B_l$ è una base di $U$
@@ -734,7 +749,7 @@ Se consideriamo $A in MM_(m,n)(KK)$, può risultare utile studiare $cal(L)(R i g
 #note-box([
   $dim(cal(L)(C o l(A))) subset.eq KK^m dim(cal(L)(R i g(A))) subset.eq KK^n$ non sono comparabili.
 ])
-#theorem(title: [Teorema del rango], [
+#theorem(title: [Equivalenza tra rango per righe e rango per colonne], [
   $ dim(cal(L)(C o l(A))) = dim(cal(L)(R i g(A))) = r k(A) $
 ])
 #warning-box([$cal(L)(C o l(A))$ non si preserva quando riduco $A$ a scala.])
@@ -743,6 +758,367 @@ Se consideriamo $A in MM_(m,n)(KK)$, può risultare utile studiare $cal(L)(R i g
   title: [Estrazione di base con riduzione a scala],
   [
     Siano $B = (v_1 | ... | v_n)$ una matrice con $v_1, ..., v_n in KK^m$, $I = {j_1, ..., j_k}$ l'insieme degli indici di colonna dei pivot di $B$ ridotta a scala. Allora $B = {v_j_i, j_i in I}$ è base di $cal(L)(v_1, ..., v_n)$.
+  ],
+)
+
+=== Operazioni su sottospazi vettoriali
+
+#proposition(
+  title: [Intersezione di sottospazi vettoriali],
+  [
+    Siano $U_1, U_2 display(op(subset.eq, limits: #true)^(s.s.v.)) V$. Allora $U_1 inter U_2 display(op(subset.eq, limits: #true)^(s.s.v.)) V$
+  ],
+)
+#proof([
+  Siano $u_1, u_2 in U_1 inter U_2$. Allora, per ipotesi e per la @ssl:csv \
+  $c_1 u_1 + c_2 u_2 in U_1$ e $c_1 u_1 + c_2 u_2 in U_2, forall c_1, c_2 in KK => c_1 v_1 + c_2 v_2 in U_1 inter U_2$
+])
+#warning-box([
+  In generale, l'unione di due sottospazi vettoriali non è anch'essa un sottospazio, a meno che \ $U_1 subset.eq U_2$ o $U_2 subset.eq U_1$.
+])
+#definition(
+  title: [Somma di sottospazi vettoriali],
+  [
+    Siano $H, W display(op(subset.eq, limits: #true)^(s.s.v.)) V$. Allora $H + W = {v =h + w : h in H, w in W}$.
+  ],
+)
+Banalmente, si ha che $H subset.eq H + W, W subset.eq H + W$ e $H union W subset.eq H + W$.
+#proposition(
+  title: [Span della somma di due sottospazi vettoriali],
+  [
+    Siano $H = cal(L)(h_1, ..., h_k), W = cal(L)(w_1, ..., w_m)$. Allora $H + W = cal(L)(h_1, ..., h_k, w_1, ..., w_m)$.
+  ],
+)
+#proof([
+  Sia $V subset.eq H + W$. Quindi $v = h + w$ dove $h = display(sum^k_(i = 1)) a_i h_i, w = display(sum^m_(i = 1)) b_i w_i$. Dunque \
+  v = $display(sum^k_(i = 1)) a_i h_i + display(sum^m_(i = 1)) b_i w_i => v in cal(L)(h_1, ..., h_k, w_1, ..., w_m)$ \
+  $v = h + w => v in H + W => H + W = cal(L)(h_1, ..., h_k, w_1, ..., w_m)$
+])
+
+#note-box([
+  Se $B_H$ e $B_W$ sono basi di $H$ e $W$ allora $H + W = cal(L)(B_H, B_W)$. Dunque $H + W$ è un sottospazio con generatori ${B_H, B_W}$.
+])
+#warning-box([
+  In generale, l'unione di vettori linearmente indipendenti non è linearmente indipendente.
+])
+
+#lemma(
+  title: [Unione di basi estese],
+  [
+    Siano $H, W display(op(subset.eq, limits: #true)^(s.s.v.)) V$ con $B_(H inter W) = {u_1, ..., u_l}, B_W = {u_1, ..., u_l, w_(l + 1), ..., w_k}$ ottenuta estendendo $B_(H inter W)$ e $B_H = {u_1, ..., u_l, h_(l + 1), ..., h_m}$. Allora $B_H union B_W$ sono linearmente indipendenti.
+  ],
+) <ssl:ube>
+#proof([
+  Sia $U display(op(subset.eq, limits: #true)^(s.s.v.)) H$. Allora $u = display(sum^l_(i = 1)) a_i u_i, h = display(sum^m_(i = 1)) b_i h_i, w = display(sum^k_(i = 1))c_i w_i$. \
+  $u + h + w = cal(O) <=> u + h = -w$. $u + h in H$ poiché $U subset.eq H$. Dunque $w in H inter W => w = display(sum^k_(i = 1)) d_i u_i$. \
+  $=> display(sum^l_(i = 1)) (a_i + d_i)u_i + display(sum^m_(i = 1)) b_i h_i = cal(O)$. È una combinazione lineare di ${u_1, ..., u_l, h_(l + 1), ..., h_m} = B_H$. Dunque, devono essere linearmente indipendenti, il che é possibile solo con $b_i = 0$. \
+  $=> display(sum^l_(i = 1)) a_i u_i + display(sum^k_(i = 1)) c_i w_i = cal(O)$. È una combinazione lineare di ${u_1, ..., u_l, w_(l + 1), ..., w_k} = B_W$. Dunque, sono linearmente indipendenti se $a_i = 0, c_i = 0 => B_H union B_W$ linearmente indipendenti.
+])
+#corollary([
+  Se $H inter W = {cal(O)}$ e $B_H, B_W$ sono basi di $H$ e $W$ rispettivamente, allora $B_H union B_W$ sono linearmente indipendenti. In particolare $B_(H + W) = B_H union B_W$.
+])
+#definition(
+  title: [Somma diretta di due sottospazi],
+  [
+    Siano $H, W display(op(subset.eq, limits: #true)^(s.s.v.)) V$ con $H inter W = {cal(O)}$. Allora $H + W$ è anche detta _somma diretta di $H$ e $W$_ e si indica $H plus.circle W$.
+  ],
+)
+#theorem(
+  title: [Formula di Grassmann],
+  [
+    Siano $H, W display(op(subset.eq, limits: #true)^(s.s.v.)) V$. Allora $dim(H + W) = dim(H) + dim(W) - dim(H inter W)$.
+  ],
+)
+#proof([
+  Sia $B_U = {u_1, ..., u_l}$ una base di U. Essa la posso estendere a:
+  - $B_W = {u_1, ..., u_l, w_(l + 1), ..., w_k}$
+  - $B_H = {u_1, ..., u_l, h_(l + 1), ..., h_m}$
+  Allora, per il @ssl:ube, $B_H union B_W$ sono linearmente indipendenti, ma è anche base di $H + W = cal(L)(B_W union B_H)$. Quindi $dim(H + W) = dim(B_W union B_H) = k + m - l = dim(H) + dim(W) - dim(H inter W).$
+])
+= Applicazioni lineari
+
+#definition(
+  title: [Applicazione o funzione lineare],
+  [
+    Siano $(V, +, dot, KK), (W, +, dot, KK)$ due spazi vettoriali sullo stesso campo. Allora la funzione \
+    $T: V -> W$ si dice _lineare_ se $T(v + u) = T(v) + T(u), T(c dot v) = c dot T(v), forall v, u in V, forall c in KK$.
+  ],
+)
+Si nota che $v + u$ e $c dot v$ sono operazioni in $V$, mentre $T(v) + T(u)$ e $c dot T(v)$ sono operazioni in $W$.
+
+#proposition(
+  title: [Criterio di linearità],
+  [
+    Sia $T: V -> W$ una funzione. Essa è lineare se \
+    $
+      T(c_1 v_1 + c_2 v_2) = c_1 T(v_1) + c_2 T(v_2), forall c_1, c_2 in KK, forall v_1, v_2 in V
+    $
+  ],
+)
+Se dominio e codominio coincidono, allora la funzione è detta *endomorfismo*. Se, invece, la funzione è biunivoca, allora è detta *isomorfismo*.
+
+Le funzioni lineari possiedono le seguenti proprietà:
+- $T(cal(O)_V) = cal(O)_W$: infatti $T(cal(O)_V) = T(0 dot cal(O)_V) = 0 dot T(cal(O)_V) = cal(O)_W$
+- $T(-v) = -T(v)$
+- $T(display(sum^k_(i = 1)) c_i v_i) = display(sum^k_(i = 1)) c_i T(v_i)$
+- $T: V -> W, L: W -> Z => (L compose T)(v) = L(T(v))$. Se $L, T$ lineari, anche $L compose T$ lineare
+- Se $U display(op(subset.eq, limits: #true)^(s.s.v.)) V$ allora anche $T(U) display(op(subset.eq, limits: #true)^(s.s.v.)) W$
+- Se $H display(op(subset.eq, limits: #true)^(s.s.v.)) W$ allora anche $T^(-1)(H) display(op(subset.eq, limits: #true)^(s.s.v.)) V$
+
+#note-box([
+  Una funzione $T: KK^n -> KK^m$ tale per cui $T vec(x_1, dots.v, x_n) = vec(f_1(x_1, ..., x_n), dots.v, f_m (x_1, ..., x_n))$ è lineare se e solo se $f_i (x_1, ..., x_n)$ è un polinomio di primo grado omogeneo, ossia senza termine noto.
+])
+
+#proposition(title: [Funzione lineare come span lineare], [
+  Se $U = cal(L)(u_1, ..., u_k)$ allora $T(U) = cal(L)(T(u_1), ..., T(u_k))$.
+])
+#proof([
+  Sia $u in U$. Dunque $u = display(sum^k_(i = 1)) c_i u_i$ \
+  $=> T(u) = T(display(sum^k_(i = 1)) c_i u_i) = display(sum^k_(i = 1)) c_i T(u_i) in cal(L)(T(u_1), ..., T(u_k))$ \
+  Sia $w in cal(L)(T(u_1), ..., T(u_k))$. Dunque $u = display(sum^k_(i = 1)) d_i u_i$ \
+  $=> w = display(sum^k_(i = 1)) d_i T(u_i) = T(display(sum^k_(i = 1)) d_i u_i) = T(u) => w = T(u)$
+])
+#note-box([
+  $T$ è suriettiva se e solo se $dim(T(V)) = dim(W) => T(V) display(op(subset.eq, limits: #true)^(s.s.v.)) W$.
+])
+#warning-box([
+  In generale, la controimmagine di un vettore $T^(-1)({w})$ non è un sottospazio vettoriale. Infatti, se lo fosse avremmo $u_1, u_2 in T^(-1)(W) => u_1 - u_2 in T^(-1)(W)$, dunque $w = T(u_1 - u_2) =$ \
+  $T(u_1) - T(u_2) = w - w = cal(O)$, il che è un assurdo se $w != cal(O)_W$.
+])
+
+== Nucleo di un'applicazione lineare
+
+#definition(
+  title: [Kernel di una funzione lineare],
+  [
+    Sia $T: V -> W$ lineare. Allora $ker(T) = T^(-1)({cal(O)_W}) = {v in V : T(v) = cal(O)_W}$
+  ],
+)
+#proposition(
+  title: [Proprietà del nucleo di una funzione lineare],
+  [
+    Sia $T: V -> W$. Allora valgono le seguenti proprietà:
+    1. $ker(T) display(op(subset.eq, limits: #true)^(s.s.v.)) V$. Infatti $T(c_1 v_1 + c_2 v_2) = c_1 T(v_1) + c_2 T(v_2) = c_1 dot underline(0) + c_2 dot underline(0) = underline(0),$\ $forall v_1, v_2 in ker(T), forall c_1, c_2 in KK$.
+    2. $ker(T) = {cal(O)_V} => T$ iniettiva
+    3. Se $T^(-1)(w) != emptyset, forall w in W$ e $alpha in T^(-1)(w)$ allora $T^(-1)(w) = alpha + ker(T)$. Questo è detto anche _teorema della fibra_.
+    4. $T^(-1)(H) = cal(L)(alpha_1, ..., alpha_l) plus.circle ker(T)$, dove $H = cal(L)(h_1, ..., h_l) subset.eq W, alpha_i in T^(-1)(h_i)$. Infatti ${alpha_1, ..., alpha_l}$ sono linearmente indipendenti, poiché controimmagini di $H$, dunque possiamo anche dire che $T^(-1)(H)$ è un sottospazio vettoriale e una sua base è ${alpha_1, ..., alpha_l} union B_(ker(T))$
+  ],
+)
+#proof([
+  2. Siano $T$ iniettiva e $v in ker(T)$. Allora $T(v) = cal(O)_W = T(cal(O)_V) => v = cal(O)_V$. \ Siano ora $ker(T) = {cal(O)_V}, v_1, v_2 in V$ tali che $T(v_1) = T(v_2) => T(v_1) - T(v_2) = cal(O)_W$. \ Poiché $T$ è lineare, $T(v_1 - v_2) = cal(O)_W => v_1 - v_2 in ker(T)$. \ Per ipotesi, $ker(T) = {cal(O)_V} => v_1 - v_2 = cal(O)_V <=> v_1 = v_2$
+  3. Siano $alpha, beta in T^(-1)(w)$. $T(beta - alpha) = T(beta) - T(alpha) = w - w = cal(O)_W => beta - alpha in ker(T)$ \ $=> beta = alpha + (beta - alpha) => beta in alpha + ker(T)$
+])
+
+Consideriamo una matrice $A in MM_(m,n)(KK)$ e la funzione lineare associata $L_A: KK^n -> KK^m$. Allora valgono le seguenti proprietà:
+- $(L_B compose L_A)(x) = L_B (L_A (x)) = L_B (A dot x) = B dot (A dot x) = (B dot A) dot x = L_(B dot A)(x)$ \ dove $B in MM_(s,m)(KK)$ e $L_B: KK^m -> KK^s$
+- $ker(L_A) = {v in KK^n : L_A (v) = A dot v = underline(0)} = ker(A)$
+- $L_A^(-1)(b) = {x in KK^n : b = L_A (x) = A dot x} = S o l(A, b) = alpha + ker(A) = alpha + ker(L_A)$ con $b in KK^m$
+- $L_A^(-1)(H) = cal(L)(alpha_1, ..., alpha_l) plus.circle ker(A)$ con $H = cal(L)(b_1, ..., b_l)$ e $alpha_i in L_A^(-1)(b_i)$
+- $L_A (U) = cal(L)(L_A (u_1), ..., L_A (u_s))$ con $U display(op(subset.eq, limits: #true)^(s.s.v.)) KK^n$ e $U = {u_1, ..., u_s}$.
+- $L_A (KK^n) = L_A (cal(L)(e_1, ..., e_n)) = cal(L)(L_A (e_1), ..., L_A (e_n)) = cal(L)(A dot e_1, ..., A dot e_n) = cal(L)(C o l(A))$ \ $=> dim (L_A (KK^n)) = r k(A)$
+
+#theorem(
+  title: [Teorema di nullità più rango],
+  [
+    Sia $T: V -> W$ lineare con $dim(V) = n$. Allora $dim(V) = dim(T(V)) + dim(ker(T))$.
+  ],
+) <apl:npr>
+#proof([
+  Sappiamo che $ker(T) display(op(subset.eq, limits: #true)^(s.s.v.)) V, ker(T) = cal(L)(u_1, ..., u_l), dim(ker(T)) = l$. \
+  Per il @ssv:cpl, possiamo completare ${u_1, ..., u_l, v_(l + 1), ..., v_n}$ come base di $V$. \
+  Poiché $T$ è lineare, $T(V) = cal(L)(underbrace((T(u_1), ..., T(u_l)), = cal(O)_W), T(v_(l + 1)), ..., T(v_n)) = cal(L)(T(v_(l + 1)), ..., T(v_n))$ \
+  Dimostriamo dunque che ${T(v_(l + 1)), ..., T(v_n)}$ sono linearmente indipendenti. \
+  $<=> display(sum^n_(s = l + 1)) a_s T(v_s) = cal(O)_W <=> T(display(sum^n_(s = l + 1))a_s v_s) => display(sum^n_(s = l + 1)) a_s v_s in ker(T) => display(sum^n_(s = l + 1)) a_s v_s = display(sum^l_(i = 1)) b_i u_i$ \
+  $=> display(sum^n_(s = l + 1)) a_s v_s + display(sum^l_(i = 1)) (-b_i v_i) = cal(O)_V$. Poiché $v_s, u_i in B_V => b_1 = ... = b_l = a_(l + 1) = ... = a_s = 0$ \
+  $=> T(v_(l + 1)), ..., T(v_n)$ linearmente indipendenti $<=> {T(v_(l + 1)), ..., T(v_n)}$ base di $V$ \
+  $=> dim(T(V)) = n - l = dim(V) - dim(ker(T)) <=> dim(V) = dim(T(V)) + dim(ker(T))$
+])
+#corollary([
+  Sia $A in MM_(m,n)(KK)$. Allora $dim(ker(A)) = n - r k(A)$
+])
+#proof([\
+  Per le proprietà di funzioni lineari con matrice associata, $dim(L_A (KK^n)) = dim(C o l(A)) = r k(A)$. \
+  Per il @apl:npr, $n = dim(KK^n) = dim(L_A (KK^n)) + dim(ker(A)) = r k(A) + dim(ker(A))$ \
+  $=> dim(ker(A)) = n - r k(A)$
+])
+
+Il teorema di nullità più rango comporta delle conseguenze:
+- Se $T: V -> W$ è iniettiva, allora $dim(V) = dim(T(V))$ il che è $<= dim(W)$, dal momento che $ker(T) = {cal(O)} => dim(ker(T)) = 0$
+- Se $T$ è suriettiva, allora $dim(V) >= dim(W)$, poiché $T(V) = W$ quindi $dim(V) = dim(W) + underbrace(dim(ker(T)), >= 0)$
+#note-box([
+  Se $T$ è iniettiva e ${v_1, ..., v_n}$ è una base di $V$ allora $T(V) = cal(L)(T(v_1), ..., T(v_n))$ e, poiché $dim(T(V)) = n = dim(V)$, ${T(v_1), ..., T(v_n)}$ è una base di $T(V)$.
+])
+#proposition(title: [Isomorfismo della funzione inversa], [
+  Sia $T: V -> W$ lineare. Allora $T^(-1): W -> V$ è un isomorfismo.
+])
+#theorem(title: [Biunivocità di una funzione lineare], [
+  Sia $T: V -> W$ lineare. Se $dim(V) = dim(W)$, allora $T$ è biunivoca.
+]) <apl:bfl>
+#proof([
+  Se $T$ è iniettiva, allora $ker(T) = {cal(O)} => dim(ker(T)) = 0, dim(V) = dim(T(V)),$ \ $dim(T(V)) <= dim(W)$. Però, $dim(V) = dim(W)$, quindi $dim(T(V)) = dim(W)$ \
+  $=> T$ è anche suriettiva, quindi è biunivoca \
+  Se $T$ è suriettiva, $T(V) = W => dim(W) = dim(V) = underbrace(dim(T(V)), = W) + dim(ker(T)) => dim(ker(T)) = 0 => ker(T) = {cal(O)_W} => T$ è anche iniettiva, quindi è biunivoca.
+])
+
+== Isomorfismi
+
+Consideriamo l'applicazione lineare $T: V -> W$ e il sottospazio $U display(op(subset.eq, limits: #true)^(s.s.v.)) V$. Allora abbiamo che $T: U -> T(U)$, dunque possiamo dire che $dim(U) = dim(T(U))$. \
+Consideriamo ora la funzione lineare $L_A: KK^n -> KK^m$ associata alla matrice $A in MM_(m,n) (KK)$. Se essa è un isomorfismo, per il @apl:npr, $dim(KK^n) = dim(KK^m) <=> n = m$, quindi la matrice $A$ è quadrata. Inoltre, per il @apl:bfl, se $dim(KK^n) = dim(KK^m)$ allora $L_A$ è biunivoca $<=> L_A$ è iniettiva $<=> ker(L_A) = ker(A) = {cal(O)_V} <=> dim(ker(A)) = n - r k(A) = 0 <=> n = r k(A)$. Quindi abbiamo anche che $A$ è invertibile. Infatti possiamo verificare che $L_A^(-1) = L_(A^(-1))$. \
+In generale, una funzione lineare è univocamente individuata dalle immagini di una sua base.
+
+#theorem(
+  title: [Teorema di interpolazione di funzioni lineari],
+  [
+    Siano $B = {v_1, ..., v_n}$ base di $V$ e $w_1, ..., w_n in W$ non necessariamente distinti. Allora esiste ed è unica la funzione $F: V -> W$ con $F(v_i) = w_i$ per $i = 1, ..., n$ definita $F(v) = display(sum^n_(i = 1)) c_i w_i$
+  ],
+)
+#proof([
+  Sia $F: V -> W display(<=>^"def.")F(h v_1 + k v_2) = display(sum^n_(i = 1)) d_i w_i, forall n, k in KK, forall v_1, v_2 in V$ dove \
+
+  $vec(d_1, dots.v, d_n) = [h v_1 + k v_2]_B = h[v_1]_B + k[v_2]_B = h vec(a_1, dots.v, a_n) + k vec(b_1, dots.v, b_n)$, quindi $d_i = h a_i + k b_i$. Allora \
+
+  $display(sum^n_(i = 1)) d_i w_i = display(sum^n_(i = 1)) (h a_i + k b_i)w_i = h display(sum^n_(i = 1)) underbrace(a_i, [v_1]_B) w_i + k display(sum^n_(i = 1)) underbrace(b_i, [v_2]_B) w_i = h F(v_1) + k F(v_2)$. Quindi $F$ è lineare e $F(v_i) = w_i$. Poiché $B$ base di $V$, $[v_i]_B = vec(c_1, dots.v, c_n) = e_i <=> v_i = 0 dot v_1 + ... + 1 dot v_i +$ \ $+ 0 dot v_(i + 1) + ... + 0 dot v_n$. Quindi $F(v_j) = display(sum^n_(i = 1)) c_i w_i = w_i$, in quanto $c_i = 1$ se $i = j$, altrimenti $0$.
+])
+
+#theorem(
+  title: [Teorema di rappresentazione di funzioni lineari],
+  [
+    Sia $T: attach(V, tl: B) -> W^B'$ lineare con $B = {v_1, ..., v_n}$ e $B' = {w_1, ..., w_n}$. Allora la matrice \
+    $A = ([T(v_1)]_B' | ... | [T(v_n)]_B')$ rappresenta T, ossia:
+    1. $[T(v)]_B' = L_A ([v]_B) = A dot [v]_B, forall v in V$
+    2. $[ker(T)]_B = ker(L_A) = ker(A)$, quindi $dim(ker(T)) = n - r k(A)$
+    3. Se $U = cal(L)(u_1, ..., u_l) display(op(subset.eq, limits: #true)^(s.s.v.)) V$, allora $[T(U)]_B' = cal(L)(L_A ([u_1]_B), ..., L_A ([u_l]_B))$
+    4. $[T(V)]_B' = cal(L)(C o l(A))$ quindi $dim(T(V)) = r k(A)$
+  ],
+)
+#proof([
+  1. $v = display(sum^n_(i = 1)) c_i v_i <=> [v]_B = vec(c_1, dots.v, c_n) => T(v) = T(display(sum^n_(i = 1)) c_i v_i) = display(sum^n_(i = 1)) c_i T(v_i)$. Considerando le coordinate, $[T(v)]_B' = [display(sum^n_(i = 1)) c_i T(v_i)] = display(sum^n_(i = 1)) c_i [T(v_i)]_B' = c_1 [T(v_1)]_B' + ... + c_n [T(v_n)]_B' = ([T(v_1)]_B' | ... | [T(v_n)]_B') dot vec(c_1, dots.v, c_n) = A dot [v]_B$
+  2. $ker(T) = {v in V : T(v) = cal(O)_W}$ quindi $[cal(O)_W]_B' = [T(v)]_B' = A dot [v]_B <=> [ker(T)]_B = ker(A)$
+  3. Sappiamo che $T(U) = cal(L)(T(u_1), ..., T(u_l))$ quindi $[T(U)]_B' = cal(L)([T(u_1)]_B', ..., [T(u_l)]_B') = cal(L)(A dot [u_1]_B, ..., A dot [u_l]_B)$ per l'isofmorfismo delle coordinate
+  4. Applicando la 3. nel caso $U = V$ si ha $[T(V)]_B' = cal(L)(A dot [v_1]_B, ... A dot [v_n]_B)$
+])
+
+#theorem(
+  title: [Matrice rappresentativa di composizione di funzioni lineari],
+  [
+    Siano $F: attach(V, tl: B) -> W^B'$ e $T: attach(W, tl: B') -> H^B''$. Allora $M_B^B'' (T compose F) = M_B'^B'' (T) dot M_B^B' (F)$
+  ],
+) <apl:mrc>
+#corollary([
+  Se $T: attach(V, tl: B) -> W^B'$ è un isomorfismo, allora $M_B'^B (T^(-1)) = (M_B^B'(T))^(-1)$. Quindi $T$ è un isomorfismo se e solo se $r k(M_B^B' (T)) = dim(V) = dim(W)$.
+])
+#proof([
+  Sia $B = {v_1, ..., v_n}$. Poiché $T^(-1) compose T = I_V$, per il @apl:mrc, \
+  $M_B^B (I_V) = M_B^B (T^(-1) compose T) = M_B'^B (T^(-1)) dot M_B^B' (T)$. Calcoliamo $M_B^B (I_V) = ([v_1]_B | ... | [v_n]_B) = (e_1 | ... | e_n) = I$, allora $I = M_B'^B (T^(-1)) dot M_B^B' (T)$. Quindi $M_B'^B (T^(-1)) = (M_B^B' (T))^(-1)$
+])
+#note-box([Se $T$ è un isomorfismo, $M_B^B' (T)$ è una matrice quadrata.])
+
+== Cambi di base
+
+#definition(
+  title: [Matrice di cambio base],
+  [
+    La matrice $M_B^B' (I_V)$ che rappresenta $I_V: attach(V, tl: B) -> V^B'$ si dice _matrice di cambio base_ tra \
+    $B = {v_1, ..., v_n}$ e $B' = {w_1, ..., w_n}$ e si calcola $M_B^B' (I_V) = ([v_1]_B' | ... | [v_n]_B')$.
+  ],
+)
+Per calcolare tale matrice si applica Gauss-Jordan alla matrice $(w_1 | ... | w_n | v_1 | ... | v_n)$ così da ottenere la matrice $(I | [v_1]_B' | ... | [v_n]_B')$, ossia $(I | M_B^B' (I_V))$.
+Se considero $I_V$ come un isomorfismo, allora abbiamo che $M_B'^B (I_V^(-1)) = (M_B^B' (I_V))^(-1)$ e, poiché $I^(-1) = I$, $M_B'^B (I_V) = (M_B^B' (I_V))^(-1)$.
+
+Un'altra strategia prevede l'utilizzo di una "base ponte" intermedia $P$ più semplice, come la base canonica, per cui risulta facile calcolare $M_B^P (I)$ e $M_B'^P (I)$. Infatti, dal @apl:mrc, $M_B^B' (I) = M_P^B' (I) dot M_B^P (T) = (M_B'^P (I))^(-1) dot M_B^P (I)$.
+
+#note-box([
+  Un endomorfismo $T: attach(V, tl: B) -> V^B'$ ha una $M_B^B' (T) in MM_(n,n)(KK)$ con $n = dim(V)$. In generale, si tende ad utilizzare per comodità la stessa base, quindi $T: attach(V, tl: B) -> V^B$.
+])
+Questa strategia risulta utile per cambiare la base dell'endomorfismo: infatti, se consideriamo $T: attach(V, tl: B) -> V^B$, abbiamo che $M_B'^B' (T) = M_B^B' (I) dot M_B^B (T) dot M_B'^B (I)$, ossia, se $P = M_B'^B (I)$, $M_B'^B' (T) = P^(-1) dot M_B^B (T) dot P$.
+#proposition(title: [Similitudine delle matrici rappresentative], [
+  Due matrici rappresentative dello stesso endomorfismo sono simili.
+])
+
+#theorem(
+  title: [Teorema di rappresentazione completo],
+  [
+    Siano $V, W$ due spazi vettoriali con rispettive basi $B$ e $B'$. Allora, la funzione $M_B^B' : L(V, W) -> MM_(m,n) (KK)$, la quale associa un'applicazione lineare alla sua matrice associata, è un isomorfismo. In particolare, abbiamo che, se $T, F in L(V, W)$, allora $M_B^B' (a T + b F) = a M_B^B' (T) + b M_B^B' (F)$.
+  ],
+)
+
+= Determinante
+
+Il determinante di una matrice si può considerare come il *volume con segno del parallelepipedo che ha per lati le righe della matrice*. Il suo calcolo è possibile solo con matrici quadrate.
+#proposition(
+  title: [Proprietà del determinante],
+  [
+    La funzione $det: RR^n times ... times RR^n -> RR$ soddisfa le seguenti proprietà:
+    1. è lineare su ciascun componente, ossia è multilineare
+    2. lo scambio di righe comporta un cambio di segno
+    3. se una riga è combinazione lineare delle altre, $det(A) = 0$
+    4. la 2ª mossa di Gauss in forma ristretta ($R_i -> R_i + b R_j, i != j$) non ne cambia il valore
+    5. se la matrice è triangolare ed ha diagonale i valori $d_1, ..., d_n$, allora $det(A) = d_1 dot ... dot d_n$
+  ],
+) <det:prp>
+#proof([
+  2. Per la proprietà 3, $0 = det(R_1, R_2 + R_3, R_3 + R_2) = det(R_1, R_2, R_3 + R_2) +$ \ $+ det(R_1, R_3, R_3 + R_2) = det(R_1, R_2, R_3) + det(R_1, R_2, R_2) + det(R_1, R_3, R_3) +$ $+ det(R_1, R_3, R_2) = det(R_1, R_2, R_3) + 0 + 0 + det(R_1, R_3, R_2)$ \ $<=> det(R_1, R_2, R_3) = -det(R_1, R_3, R_2)$
+  3. $det(R_1, a R_1, + b R_3, R_3) = a det(R_1, R_1, R_3) + b det(R_1, R_3, R_3) = 0 + 0 = 0$
+  4. $det(..., R_i, R_j, ...) = det(..., R_i + b R_j, R_j) = det(..., R_i, R_j, ...) + b det(..., R_j, R_j, ...) = det(..., R_i, R_j, ...) + 0 = det(..., R_i, R_j, ...)$
+])
+
+Posso calcolare il determinante con l'algoritmo di Gauss, tenendo conto che la prima mossa cambia i segni e che la seconda in forma ristretta lascia invariato il valore. Ottengo la matrice a scala $S$ dalla matrice $A$, e ho che $det(A) = (-1)^l det(S)$, dove $l$ rappresenta il numero di scambi di riga effettuati.
+
+#theorem(title: [Proprietà di una matrice quadrata], [
+  Sia $A in MM_(n,n)(KK)$. Allora sono equivalenti:
+  - $r k(A) = n$
+  - $A$ è invertibile
+  - $det(A) != 0$
+])
+#proof([
+  $1. => 3.$: $det(A) = (-1)^l det(S)$, quindi $abs(det(A)) = abs(det(S)) = abs(d_1) dot ... dot abs(d_n)$. Quindi \ $r k(A) = r k(S) = n <=> d_i != 0$. Ho quindi $n$ pivot, allora $abs(d_1) dot ... dot abs(d_n) != 0 <=> det(A) != 0$.
+])
+#definition(
+  title: [Minore],
+  [
+    Il _minore $i, j$ di A_, con $A in MM_(n,n)(RR)$, è la matrice $hat(A)_(i j) in MM_(n,n)(KK)$ ottenuta non considerando la riga $i$ e la colonna $j$.
+  ],
+)
+
+#theorem(
+  title: [Teorema di esistenza ed unicità della funzione determinante],
+  [
+    Esiste ed è unica la funzione $det: MM_(n,n) (RR) -> RR$ che soddisfa le proprietà già citate nella @det:prp. Inoltre, fissata una riga $i$, vale la formula $det(A) = display(sum^n_(j = 1)) (-1)^(i + j) a_(i j) dot det(hat(A)_(i j))$, detta _sviluppo di Laplace_.
+  ],
+)
+#note-box([Lo sviluppo di Laplace ha un costo spropositato di $O(n!)$, quindi è preferibile calcolare il determinante induttivamente.])
+
+#theorem(title: [Determinante di una trasposta], [
+  $det(A) = det(A^t)$
+])
+#note-box([Da questo teorema ne segue che tutte le proprietà viste finora valgono anche per le colonne.])
+#theorem(title: [Teorema di Binet], [
+  Siano $A, B in MM_(n,n)(RR)$. Allora $det(A dot B) = det(A) dot det(B)$.
+]) <det:bin>
+Il determinante ha delle conseguenze interessanti:
+- Se $A$ è invertibile $det(A^(-1)) = det^(-1) (A) = 1 / det(A)$. Infatti, poiché $I = A dot A^(-1)$, per il @det:bin, $det(I) = det(A) dot det(A^(-1)) = 1 <=> det(A^(-1)) = 1 / det(A)$
+- Se $A tilde B$ allora $det(A) = det(B)$. Infatti, se $A tilde B$, esiste una matrice $P$ invertibile tale che $A = P^(-1) dot B dot P <=> det(A) = cancel(det(P^(-1))) dot det(B) dot cancel(det(P)) = det(B)$
+- Con piccole matrici quadrate, è utile per calcolare il rango quando ho, per esempio, dei parametri
+- Può essere utile per determinare il rango di matrici non quadrate
+
+== Sottomatrici
+
+#definition(
+  title: [Sottomatrice quadrata],
+  [
+    Si dice _sottomatrice quadrata di ordine $p$ di $A$_ la matrice $A' in MM_(p,p) (RR)$ ottenuta da $A in MM_(n,n) (RR)$ considerando l'intersezione tra $p$ righe e $p$ colonne. Ad essa si possono orlare una riga e una colonna, ottenendo la matrice $A'' in MM_(p + 1, p + 1) (RR)$.
+  ],
+)
+#theorem(
+  title: [Teorema degli orlati],
+  [
+    Sia $A in MM_(m,n) (KK)$. Allora $r k(A) = p <=> exists A' in MM_(p, p) (RR)$ sottomatrice di $A :$ \ $det(A') != 0, det(A'') = 0, forall A'' in MM_(p + 1, p + 1) (RR)$.
+  ],
+)
+#theorem(
+  title: [Calcolo della matrice inversa con complementi algebrici],
+  [
+    Se $A in MM_(n,n) (KK)$ è invertibile, allora $A^(-1) = 1 / det(A) (c_(i j))$ dove $c_(i j) = (-1)^(i + j) det(hat(A)_(i j))$.
   ],
 )
 
