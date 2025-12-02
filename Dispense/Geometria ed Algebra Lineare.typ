@@ -1,8 +1,10 @@
 #import "@preview/theorion:0.3.3": *
+#import "@preview/itemize:0.2.0" as el
 
 #import cosmos.rainbow: *
 
 #show: show-theorion
+#show: el.default-enum-list
 
 #set text(lang: "it")
 #set par(justify: true)
@@ -581,7 +583,7 @@ Dunque abbiamo che $s$ rappresenta il numero minimo di parametri necessari a des
   [
     Sia $A in MM_(m,n)(KK)$. Allora il sistema $A dot x = b$:
     1. ha soluzione se e solo se $r k(A) = r k(A|b)$
-    2. se $exists alpha in S o l(A, b)$ allora $S o l(A, b) = alpha + ker(A) = {beta in KK^n : beta = alpha + t_1 v_1 + ... + t_s v_s, forall t_i in KK, v_i in ker(A), s = n - r k(A)}$
+    2. se $exists alpha in S o l(A, b)$ allora $S o l(A, b) = alpha + ker(A) = {beta in KK^n : beta = alpha + t_1 v_1 + ... + t_s v_s,$ $forall t_i in KK, v_i in ker(A), s = n - r k(A)}$
   ],
 )
 #proof([Poiché abbiamo dimostrato che le mosse di Gauss non cambiano $S o l(A, b)$, è sufficiente dimostrare il teorema per una qualsiasi matrice a scala. \
@@ -816,7 +818,7 @@ Banalmente, si ha che $H subset.eq H + W, W subset.eq H + W$ e $H union W subset
 ])
 #corollary([
   Se $H inter W = {cal(O)}$ e $B_H, B_W$ sono basi di $H$ e $W$ rispettivamente, allora $B_H union B_W$ sono linearmente indipendenti. In particolare $B_(H + W) = B_H union B_W$.
-])
+]) <ssl:cube>
 #definition(
   title: [Somma diretta di due sottospazi],
   [
@@ -1121,6 +1123,189 @@ Il determinante ha delle conseguenze interessanti:
     Se $A in MM_(n,n) (KK)$ è invertibile, allora $A^(-1) = 1 / det(A) (c_(i j))$ dove $c_(i j) = (-1)^(i + j) det(hat(A)_(i j))$.
   ],
 )
+#pagebreak()
+
+= Diagonalizzazione
+
+#definition(
+  title: [Endomorfismo diagonalizabile],
+  [
+    Sia $T: attach(V, tl: B) -> V^B$ un endomorfismo con base $B$. $T$ si dice _diagonalizzabile_ se $M_B^B (T) tilde M_B'^B' (T)$ e quest'ultima è diagonale, ossia della forma $mat(
+      lambda_1, ..., 0; dots.v, dots.down, dots.v;
+      0, ..., lambda_n
+    )$ con $lambda_i in KK$.
+  ],
+)
+Se consideriamo dunque l'endomorfismo $T: attach(V, tl: B) -> V^B$ e costruiamo la matrice $M_B'^B' (T) = mat(
+  lambda_1, ..., 0; dots.v, dots.down, dots.v;
+  0, ..., lambda_n
+)$ con $B' = {u_1, ..., u_n}$ otteniamo $M_B'^B' (T) = ([T(u_1)]_B' | ... | [T(u_n)]_B')$, dove $[T(u_i)]_B' = (0, ..., 0, lambda_i, 0, ..., 0)$, quindi $T(u_i) = 0 u_1 + ... + lambda_i u_i + ... + 0 u_n = lambda_i u_i$.
+
+#definition(
+  title: [Autovalori e autovettori],
+  [
+    Un vettore $u in V$ con $u != cal(O)_V$ tale che $T(u) = lambda u$ per un certo $lambda in KK$ è detto _autovettore_ di $T$ relativo all'_autovalore_ $lambda$.
+  ],
+)
+#note-box([
+  Se $u$ è autovettore di $T$ rispetto a $lambda$, allora anche $c dot u, forall c in KK$ è ancora autovalore rispetto a $lambda$ in quanto $T(c dot u) = c T(u) = c dot lambda dot u = lambda (c dot u)$.
+])
+
+#theorem(
+  title: [Primo criterio di diagonalizzazione],
+
+  [
+    Sia $T: V -> V$. Allora $T$ è diagonalizzabile se e solo se esiste una base $B'$ di $V$ fatta di autovettori.
+  ],
+) <dia:pcd>
+#warning-box([
+  Dal precedente teorema emerge che non tutti gli endormorfismi sono diagonalizzabili.
+])
+
+#definition(
+  title: [Spettro e autospazio],
+  [
+    L'insieme $sigma(T) = {lambda_1, ..., lambda_l}$ di autovalori distinti è detto lo _spettro di $T$_. Ad ogni $lambda_i$ è associato l'insieme $V_lambda_i = {v in V : T(v) = lambda_i v_i}$ detto _autospazio dell'autovalore $lambda_i$_, composto da tutti gli autovettori di $T$ relativi a $lambda_i$.
+  ],
+)
+
+#proposition(
+  title: [Autospazio come sottospazio],
+  [
+    Sia $lambda in sigma(T)$. Allora $V_lambda display(op(subset.eq, limits: #true)^(s.s.v.)) V$.
+  ],
+)
+#proof([
+  $forall u_1, u_2 in V_lambda, forall c_1, c_2 in KK$ \
+  $T(c_1 u_1 + c_2 u_2) = c_1 T(u_1) + c_2 T(u_2) = c_1 lambda u_1 + c_2 lambda u_2 = lambda (c_1 u_1 + c_2 u_2) => c_1 u_1 + c_2 u_2 in V_lambda$
+])
+#pagebreak()
+
+== Autospazi
+
+#proposition(title: [Proprietà di un autospazio], [
+  Sia $T: attach(V, tl: B) -> V^B$ con $A = M_B^B (T)$. Allora:
+  1. $[V_lambda]_B = ker(A - lambda I), forall lambda in sigma(T)$
+  2. $dim(V_lambda) = n - r k(A - lambda I)$
+  3. $lambda in sigma(T) <=> det(A - x I) = 0$
+]) <dia:pda>
+#proof([Siano $lambda in sigma(T), u in V_lambda$.
+  1. $T(u) = lambda u <=> [T(u)]_B = [lambda u]_B = lambda [u]_B <=> A dot [u]_B = lambda [u]_B <=> (A - lambda I) dot [u]_B = underline(0) <=>$ \ $[u]_B in ker(A - lambda I) <=> V_lambda = ker(A - lambda I)$
+  2. $dim(V_lambda) = dim([V_lambda)_B]) = dim(ker(A - lambda I)) = n - r k(A - lambda I)$
+  3. Se $lambda in sigma(T)$, allora $V_lambda != {cal(O)_V} <=> ker(A - lambda I) != {underline(0)} <=> r k(A - lambda I) < n <=> det(A - lambda I) = 0$ \ $<=> lambda$ soddisfa l'equazione $det(A - x I) = 0$
+])
+#definition(
+  title: [Molteplicità geometrica],
+  [
+    Sia $lambda in sigma(T)$. $dim(V_lambda) = m_g (lambda)$ è detta _molteplicità geometrica dell'autovalore $lambda$_.
+  ],
+)
+
+#proposition(title: [Lineare indipendenza di autovettori], [
+  Siano $lambda_1, ..., lambda_k in sigma(T)$ distinti e $v_i in V_lambda_i$. Allora $v_1, ..., v_k$ sono linearmente indipendenti.
+])
+
+Poiché $lambda_1, ..., lambda_k$ sono distinti, concludiamo che $V_lambda_1 inter V_lambda_2 = {cal(O)_V}$, perché, se così non fosse, potremmo considerare un vettore $u != cal(O)_V$ tale che $u in V_lambda_1, u in V_lambda_2$ per esempio, e risulta ovvio che l'insieme ${v_1, v_2 } = {u, u}$ non è linearmente indipendente. Dunque, per il @ssl:cube, se \
+$V_lambda_1 inter V_lambda_2 = {cal(O)_V}$, abbiamo che $B_V_lambda_1 union B_V_lambda_2$ è linearmente indipendente ed è base di $V_lambda_1 plus.circle V_lambda_2$.
+
+  Per lo stesso ragionamento possiamo concludere anche che $(V_lambda_1 plus.circle V_lambda_2) inter V_lambda_3 = {cal(O)_V}$. Infatti, se così non fosse, avremmo un $u_3 != cal(O)_V$ tale che $u_3 in (V_lambda_1 plus.circle V_lambda_2) inter V_lambda_3 <=> u_3 = u_1 + u_2, u_1 in V_lambda_1,$ \ $u_2 in V_lambda_2 <=> u_1, u_2, u_3$ sono linearmente dipendenti, il che è un assurdo per la proposizione precedente. Sempre dal @ssl:cube, $B_V_lambda_1 union B_V_lambda_2 union B_V_lambda_3$ è linearmente indipendente ed è base di \
+$(V_lambda_1 plus.circle V_lambda_2) plus.circle V_lambda_3$.
+
+Questo ragionamento può essere iterato fino all'ultimo autospazio $V_lambda_k$, trovando il sottospazio
+$ W = ((((V_lambda_1 plus.circle V_lambda_2) plus.circle V_lambda_3) plus.circle V_lambda_4) plus.circle ...) plus.circle V_lambda_k = V_lambda_1 plus.circle V_lambda_2 plus.circle ... plus.circle V_lambda_k $
+che ha per base $B_V_lambda_1 union B_V_lambda_2 union ... union B_V_lambda_k = display(union.big^k_(i = 1)) B_V_lambda_i$.
+
+#proposition(title: [Somma diretta di autospazi], [
+  Sia $sigma(T) = {lambda_1, ..., lambda_l}$. Allora $W = V_lambda_1 plus.circle ... plus.circle V_lambda_l$ ha base $display(union.big^(l)_(i = 1)) B_V_lambda_i$ quindi $dim(W) = display(sum^(l)_(i = 1)) abs(B_V_lambda_i) = display(sum^l_(i = 1)) dim(V_lambda_i) = display(sum^l_(i = 1)) m_g (lambda_i)$.
+]) <dia:sda>
+
+#theorem(title: [Criterio geometrico di diagonalizzazione], [
+  Siano $T: V -> V$ e $sigma(T) = {lambda_1, ..., lambda_l}$. Allora $T$ è diagonalizzabile se e solo se $V = V_lambda_1 plus.circle ... plus.circle V_lambda_l$ \
+  o equivalentemente $dim(V) = display(sum^l_(i = 1)) m_g (lambda_i)$.
+]) <dia:cgd>
+#proof([
+  Dal @dia:pcd, $T$ è diagonalizzabile se e solo se $V$ ha una base di autovettori. Quindi, per la @dia:sda, poiché $V = V_lambda_1 plus.circle ... plus.circle V_lambda_l$, allora $dim(V) = display(sum^l_(i = 1)) m_g (lambda_i)$.
+])
+
+== Polinomio caratteristico
+
+L'equazione al punto 3. della @dia:pda è in realtà un polinomio, dunque possiede certe proprietà. In particolare, può avere radici o meno in base al campo in cui sto lavorando. Infatti, se abbiamo un certo $p(x) in KK [x]$, esso si può decomporre in fattori di grado $1$, ossia
+$ p(x) = (lambda_1 - x)^m_1 dot (lambda_2 - x)^m_2 dot ... dot (lambda_l - x)^m_l dot q(x) $
+dove $lambda_1, ..., lambda_l$ sono le radici distinte, $m_i$ rappresenta la *molteplicità algebrica della radice $lambda_i$* e $q(x)$ è un polinomio che non ha radici in $KK$. Inoltre $display(sum^l_(i = 1)) m_a (lambda_i) <= n$, ossia la somma delle molteplicità algebriche delle radici è minore o uguale al grado di $p(x)$.
+
+#definition(title: [Traccia di una matrice], [
+  Sia $A in MM_(n,n) (KK)$ con $A = (a_(i j))$. Si dice _traccia di $A$_ la somma dei valori sulla diagonale di $A$, ossia
+  $ tr(A) = sum^n_(i = 1) a_(i i) $
+])
+#theorem(title: [Teorema del polinomio caratteristico], [
+  Siano $(V, +, dot, KK)$ uno spazio vettoriale, $T: attach(V, tl: B) -> V^B$ un endomorfismo e $A = M_B^B (T) = (a_(i j))$ con $A in MM_(n,n) (KK)$. Allora:
+  1. la funzione $p_A (x) = det(A - x I)$ è un polinomio di $x$ di grado $n$ della forma $ p_A (X) = (-1)^n x^n + (-1)^(n - 1) tr(A) x^(n - 1) + ... + (-1)^(n - k) C_k x^(n - k) + ... + det(A) $ dove $C_k$ rappresenta la somma dei minori principali di ordine $k$ della matrice $A$.
+  2. $p_A (x)$ non dipende dalla base $B$, quindi se consideriamo un'altra base $B'$ di $V$ e prendiamo la matrice $C = M_B'^B' (T)$, abbiamo che $p_A (x) = p_B (x)$
+  3. se $A$ è diagonale, assume allora la forma $p_A (x) = (lambda_1 - x)...(lambda_n - x)$
+]) <dia:tpc>
+#proof([
+  2. Sia $B'$ una nuova base di $V$. Allora $M_B'^B' (T) = C$ e $A tilde C$, quindi $C = P^(-1) A P$ con $P = M_B'^B (I d)$. Dunque $p_B (x) = det(B - x I) = det(P^(-1) A P - x P^(-1) P) = det(P^(-1) (A - x I) P) = cancel(det(P^(-1))) dot det(A - x I) dot cancel(det(P)) = det(A - x I)$
+])
+#pagebreak()
+
+#proposition(title: [Proprietà di un endomorfismo diagonalizzabile], [
+  Sia $T: attach(V, tl: B) -> V^B$ un endomorfismo diagonalizzabile. Allora:
+  - $p_T (x)$ ha $n$ radici con $n = dim(V) = display(sum^n_(i = 1)) m_a (lambda_i)$
+  - se $B' = {u_1, ..., u_n}$ è base di $V$ fatta di autovettori tali che $T(u_i) = lambda_i u_i$, allora \ $M_B'^B' (T) = d i a g(lambda_1, ..., lambda_n)$
+  - $det(M_B^B (T)) = lambda_1 dot ... dot lambda_n, tr(M_B^B (T)) = display(sum^n_(i = 1)) lambda_i$
+]) <dia:ped>
+#proof([
+  Sia $A = M_B^B (T)$. Poiché $T$ è diagonalizzabile, $A tilde D$ dove $D = d i a g(lambda_1, ..., lambda_n)$. \
+  Per il @dia:tpc, $p_T (x) = p_A (x) = p_D (x) = (lambda_1 - x)...(lambda_n - x)$, quindi $p_T (x)$ ha $n$ radici $lambda_1, ..., lambda_n$ contate con la loro molteplicità. Poiché $A tilde D$, $det(A) = det(D) = lambda_1 dot ... dot lambda_n$ e \
+  $tr(A) = tr(D) = lambda_1 + ... + lambda_n$.
+])
+
+Abbiamo dunque visto che, date $A, B in MM_(n,n)(KK)$ tali che $A tilde B$, allora $p_A (x) = p_B (x) $ \ $= det(A - x I) = det(B - x I)$. Inoltre $det(A) = det(B), tr(A) = tr(B)$ e $p_A (x)$ e $p_B (x)$ hanno le stesse radici con la stessa molteplicità algebrica. Dunque possiamo dire che per ogni radice $lambda$ di $A$ e $B$, la molteplicità geometrica deve coincidere, ossia $dim(ker(A - lambda I)) = dim(ker(B - lambda I))$.
+
+#warning-box([
+  Queste condizioni sono solo necessarie e, in generale, non sufficienti per determinare $A display(tilde^?) B$.
+])
+In generale, possiamo dire che $A tilde B$ quando $A tilde D$ e $B tilde D$ con una matrice diagonale $D$.
+
+#proposition(title: [Criterio di similitudine per matrici diagonalizzabili], [
+  Siano $A, B in MM_ (n,n) (KK)$. Se $A$ e $B$ sono diagonalizzabili, allora $A tilde B <=> p_A (x) = p_B (x)$.
+])
+#theorem(title: [Disuguaglianza fondamentale delle molteplicità], [
+  Sia $lambda in sigma(T)$. Allora $1 <= m_g (lambda) <= m_a (lambda)$.
+]) <dia:dfm>
+#note-box([
+  $m_g (lambda) >= 1$ poiché, per definizione di autovalore, $V_lambda != {cal(O)_V}$, ossia il vettore nullo non è mai l'unica soluzione della relazione $T(u) = lambda u, u in V_lambda$, quindi $m_g (lambda) = dim(V_lambda) != 0 <=> dim(V_lambda) >= 1$.
+])
+
+== Secondo criterio di diagonalizzabilità
+
+#definition(title: [Autovalore regolare], [
+  Un autovalore $lambda in sigma(T)$ si dice _regolare_ se $m_g (lambda) = m_a (lambda)$.
+])
+#note-box([
+  Se un autovalore $lambda$ ha $m_a (lambda) = 1$ allora è regolare, poiché $1 <= m_g (lambda) <= m_a (lambda)$ quindi \
+  $m_a (lambda) = m_g (lambda) = 1$.
+])
+#theorem(title: [Secondo criterio di diagonalizzabilità], [
+  Sia $T: V -> V$ con $dim(V) = n$ e $sigma(T) = {lambda_1, ..., lambda_l}$. Allora $T$ è diagonalizzabile se e solo se $display(sum^l_(i = 1)) m_a (lambda_i) = n$ e $forall lambda_i in sigma(T), m_a (lambda_i) = m_g (lambda_i)$.
+])
+#proof([
+  Supponiamo che $m_g (lambda) = m_a (lambda), forall lambda in sigma(T)$ e che $n = display(sum^l_(i = 1)) m_g (lambda_i)$. Allora abbiamo che $display(sum^l_(i = 1)) m_a (lambda_i) = display(sum^l_(i = 1)) m_g (lambda_i) = n$. Per il @dia:cgd, $T$ è diagonalizzabile. \
+  Supponiamo ora che $T$ sia diagonalizzabile. Allora abbiamo che, per la @dia:ped, $display(sum^l_(i = 1)) m_a (lambda_i) = n$. Supponiamo per assurdo che ogni $lambda in sigma(T)$ non sia regolare, ossia $m_a (lambda) != m_g (lambda)$. Per il @dia:dfm, $m_g (lambda) < m_a (lambda)$ e, per il @dia:cgd, poiché $T$ è diagonalizzabile, $n = display(sum^l_(i = 1)) m_g (lambda_i)$, quindi $n = display(sum^l_(i = 1)) m_g (lambda_i) < display(sum^l_(i = 1)) m_a (lambda_i) = n$, il che è un assurdo poiché $n = n$ e non $n < n$, quindi ogni $lambda in sigma(T)$ è regolare, ossia $m_a (lambda) = m_g (lambda)l, forall lambda in sigma(T)$.
+])
+
+Possiamo utilizzare un algoritmo per verificare che un endomorfismo $T: V -> V$ sia diagonalizzabile:
+1. Si fissa una base $B$ e si costruisce la matrice rappresentativa $A = M_B^B (T)$
+2. Si costruisce $p_T (x) = det(A - x I)$
+3. Si calcola $sigma(T)$, il quale è composto dalle radici distinte di $p_T (x)$
+4. Si calcola $m_a (lambda)$ per ogni radice $lambda$ e si verifica che $display(sum^l_(i = 1)) m_a (lambda_i) = n$. Se è vera la relazione, si calcola $m_g (lambda) = dim(V_lambda) = dim(ker(A - lambda I)) = n - r k(A - lambda I)$ e si verifica che $m_g (lambda) = m_a (lambda)$. Se entrambe le uguaglianze sono verificate per ogni $lambda in sigma(T)$, $T$ è diagonalizzabile, viceversa non lo è
+5. Si calcola una base $B_V_lambda_i$ di ogni autospazio $V_lambda_i$, quindi, poiché $[V_lambda_i]_B = ker (A - lambda_i I)$, si risolve il sistema $(A - lambda_i I) dot v = 0$. Si considera dunque l'unione $display(union.big^l_(i = 1)) B_V_lambda_i = {[u_1]_B, ..., [u_n]_B}$ di tutte le basi trovate. Allora $B' = {u_1, ..., u_n}$ è la base di autovettori che diagonalizza $T$.
+6. Si calcola la matrice di cambio base $M_B'^B (I d) = P = ([u_1]_B | ... | [u_n]_B)$, dove $B'$ è una base di autovettori, con la relazione $P^(-1) A P = M_B'^B' (T) = d i a g(lambda_1, ..., lambda_n)$.
+
+#note-box([
+  Se $T$ non è iniettiva, $ker(T) != {cal(O)_V} => 0 in sigma(T) <=> V_0 = {v in V : T(v) = 0 dot v = cal(O)_V} = ker(T)$. Inoltre $p_T (x) = x^s q(x)$ con $s = m_a (0) => s >= 1$. \
+  Se $M_B^B (T) = (a_(i j))$ è una matrice triangolare (superiore o inferiore), i suoi autovalori risiedono sulla diagonale. Abbiamo infatti $p_T (x) = det(A - x I) = (a_11 - x)(a_22 - x)...(a_(n n) - x)$.
+])
 
 #pagebreak()
 #outline(title: [Indice dei dimostrabili], target: figure
