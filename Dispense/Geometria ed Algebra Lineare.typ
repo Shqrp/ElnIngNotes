@@ -601,7 +601,6 @@ Dunque abbiamo che $s$ rappresenta il numero minimo di parametri necessari a des
   - _cartesiana_: ${x = (x_1, ..., x_n) in KK^n, k in KK : (a_1, ..., a_n)x = k}$
   - _parametrica_: ${beta = (a_1, ..., a_n) + t_1 (b_1, ..., b_n) + t_2(c_1, ..., c_2), forall t_1, t_2 in KK}$
 ])
-#pagebreak()
 #theorem(
   title: [Teorema di Cramer],
   [
@@ -709,6 +708,7 @@ Sia $(V, +, dot, KK)$ con $dim(V) = n < +infinity$.
     Sia $U$ un sottospazio di $V$, $u_1, ..., u_l in U$ linearmente indipendenti. Allora si può estendere così da avere una base di $U$. In simboli: $U = cal(L)(u_1, ..., u_l, u_(l + 1), ..., u_m) "con" m = dim(U), m <= dim(V)$.
   ],
 ) <ssv:cpl>
+#pagebreak()
 #proof([
   Sia $B_l = {u_1, ..., u_l} subset.eq U$.
   1. Se $cal(L)(B_l) = cal(L)(u_1, ..., u_l) = U$ allora $B_l$ è una base di $U$
@@ -832,9 +832,7 @@ Banalmente, si ha che $H subset.eq H + W, W subset.eq H + W$ e $H union W subset
   ],
 )
 #proof([
-  Sia $B_U = {u_1, ..., u_l}$ una base di U. Essa la posso estendere a:
-  - $B_W = {u_1, ..., u_l, w_(l + 1), ..., w_k}$
-  - $B_H = {u_1, ..., u_l, h_(l + 1), ..., h_m}$
+  Sia $B_U = {u_1, ..., u_l}$ una base di U. Essa la posso estendere a $B_W = {u_1, ..., u_l, w_(l + 1), ..., w_k}$ e $B_H = {u_1, ..., u_l, h_(l + 1), ..., h_m}$
   Allora, per il @ssl:ube, $B_H union B_W$ sono linearmente indipendenti, ma è anche base di $H + W = cal(L)(B_W union B_H)$. Quindi $dim(H + W) = dim(B_W union B_H) = k + m - l = dim(H) + dim(W) - dim(H inter W).$
 ])
 = Applicazioni lineari
@@ -896,6 +894,7 @@ Le funzioni lineari possiedono le seguenti proprietà:
     Sia $T: V -> W$ lineare. Allora $ker(T) = T^(-1)({cal(O)_W}) = {v in V : T(v) = cal(O)_W}$
   ],
 )
+#pagebreak()
 #proposition(
   title: [Proprietà del nucleo di una funzione lineare],
   [
@@ -1047,6 +1046,7 @@ Questa strategia risulta utile per cambiare la base dell'endomorfismo: infatti, 
 = Determinante
 
 Il determinante di una matrice si può considerare come il *volume con segno del parallelepipedo che ha per lati le righe della matrice*. Il suo calcolo è possibile solo con matrici quadrate.
+#pagebreak()
 #proposition(
   title: [Proprietà del determinante],
   [
@@ -1123,7 +1123,6 @@ Il determinante ha delle conseguenze interessanti:
     Se $A in MM_(n,n) (KK)$ è invertibile, allora $A^(-1) = 1 / det(A) (c_(i j))$ dove $c_(i j) = (-1)^(i + j) det(hat(A)_(i j))$.
   ],
 )
-#pagebreak()
 
 = Diagonalizzazione
 
@@ -1179,9 +1178,6 @@ Se consideriamo dunque l'endomorfismo $T: attach(V, tl: B) -> V^B$ e costruiamo 
   $forall u_1, u_2 in V_lambda, forall c_1, c_2 in KK$ \
   $T(c_1 u_1 + c_2 u_2) = c_1 T(u_1) + c_2 T(u_2) = c_1 lambda u_1 + c_2 lambda u_2 = lambda (c_1 u_1 + c_2 u_2) => c_1 u_1 + c_2 u_2 in V_lambda$
 ])
-#pagebreak()
-
-== Autospazi
 
 #proposition(title: [Proprietà di un autospazio], [
   Sia $T: attach(V, tl: B) -> V^B$ con $A = M_B^B (T)$. Allora:
@@ -1246,8 +1242,6 @@ dove $lambda_1, ..., lambda_l$ sono le radici distinte, $m_i$ rappresenta la *mo
 #proof([
   2. Sia $B'$ una nuova base di $V$. Allora $M_B'^B' (T) = C$ e $A tilde C$, quindi $C = P^(-1) A P$ con $P = M_B'^B (I d)$. Dunque $p_B (x) = det(B - x I) = det(P^(-1) A P - x P^(-1) P) = det(P^(-1) (A - x I) P) = cancel(det(P^(-1))) dot det(A - x I) dot cancel(det(P)) = det(A - x I)$
 ])
-#pagebreak()
-
 #proposition(title: [Proprietà di un endomorfismo diagonalizzabile], [
   Sia $T: attach(V, tl: B) -> V^B$ un endomorfismo diagonalizzabile. Allora:
   - $p_T (x)$ ha $n$ radici con $n = dim(V) = display(sum^n_(i = 1)) m_a (lambda_i)$
@@ -1294,6 +1288,7 @@ In generale, possiamo dire che $A tilde B$ quando $A tilde D$ e $B tilde D$ con 
   Supponiamo ora che $T$ sia diagonalizzabile. Allora abbiamo che, per la @dia:ped, $display(sum^l_(i = 1)) m_a (lambda_i) = n$. Supponiamo per assurdo che ogni $lambda in sigma(T)$ non sia regolare, ossia $m_a (lambda) != m_g (lambda)$. Per il @dia:dfm, $m_g (lambda) < m_a (lambda)$ e, per il @dia:cgd, poiché $T$ è diagonalizzabile, $n = display(sum^l_(i = 1)) m_g (lambda_i)$, quindi $n = display(sum^l_(i = 1)) m_g (lambda_i) < display(sum^l_(i = 1)) m_a (lambda_i) = n$, il che è un assurdo poiché $n = n$ e non $n < n$, quindi ogni $lambda in sigma(T)$ è regolare, ossia $m_a (lambda) = m_g (lambda)l, forall lambda in sigma(T)$.
 ])
 
+#pagebreak()
 Possiamo utilizzare un algoritmo per verificare che un endomorfismo $T: V -> V$ sia diagonalizzabile:
 1. Si fissa una base $B$ e si costruisce la matrice rappresentativa $A = M_B^B (T)$
 2. Si costruisce $p_T (x) = det(A - x I)$
