@@ -1,82 +1,12 @@
-#import "@preview/theorion:0.3.3": *
-#import "@preview/cetz:0.3.4"
-#import "@preview/cetz-plot:0.1.1"
+#import "../template.typ": *
 #import math: *
 
-#import cosmos.rainbow: *
-
-#let func(caption, size, domain, f, ..options) = {
-  figure(
-    cetz.canvas({
-      import cetz.draw: *
-      import cetz-plot: plot
-      plot.plot(
-        size: size,
-        axis-style: "school-book",
-        x-tick-step: none,
-        y-tick-step: none,
-        ..options,
-        {
-          for fun in f {
-            plot.add(domain: domain, samples: 1000, fun)
-          }
-        },
-      )
-    }),
-    numbering: none,
-    gap: 1em,
-    caption: caption,
-  )
-}
-#let inverseFunc(caption, size, domain, f, ..options) = {
-  figure(
-    cetz.canvas({
-      import cetz.draw: *
-      import cetz-plot: plot
-      plot.plot(
-        size: size,
-        axis-style: "school-book",
-        x-tick-step: none,
-        y-tick-step: none,
-        ..options,
-        {
-          for fun in f {
-            plot.add(domain: domain, samples: 100, axes: ("y", "x"), fun)
-          }
-        },
-      )
-    }),
-    numbering: none,
-    caption: caption,
-  )
-}
-
-#show: show-theorion
-
-#set text(lang: "it")
-#set page(numbering: "I", footer: [], header: context {
-  if counter(page).display() != "I" {
-    if calc.even(counter(page).get().at(0)) {
-      align(left, [#{ counter(page).display() } - _Analisi Matematica I_])
-    } else {
-      align(right, [_Analisi Matematica I_ - #{ counter(page).display() }])
-    }
-  }
-})
-
-#align(center, heading(outlined: false, [Analisi Matematica I]))
-#align(
-  center,
+#show: polypst(
+  [Analisi Matematica I],
   [Andrea Giurgola - Prof. Fabio Punzo \ Ingegneria Elettronica, Politecnico di Milano],
-) \
+  demIndex: true,
+)
 
-#set heading(numbering: "1.1.")
-#set-theorion-numbering("1.1")
-#outline(title: [Indice])
-
-#pagebreak()
-#counter(page).update(1)
-#set page(numbering: "1")
 = Richiamo di logica
 
 La logica si basa su *predicati* (o *affermazioni*), i quali possono essere veri o falsi e si connettono tra loro tramite connettivi:
@@ -99,7 +29,7 @@ Esistono tre quattro diverse tipologie di teorema:
 == Il principio di induzione
 
 Il *principio di induzione* è un principio dimostrativo che permette di dimostrare un teorema in $NN$ riducendo notevolmente il numero di passaggi necessari. \
-Sia $p(n)$ una proposizione logica che dipende dalla variabile $n in NN$. Se $p(n)$ è valida per $n = 0$ (*ipotesi* o *base induttiva*), allora sarà vera anche per $n = 0 + 1$ (*passo induttivo*), e così via. Secondo il principio di induzione, allora $p(n)$ è vera $forall n in NN$. Di seguito tre esempi di teoremi dimostrabili con il principio di induzione.
+Sia $p(n)$ una proposizione logica che dipende dalla variabile $n in NN$. Se $p(n)$ è valida per $n = 0$ (*ipotesi* o *base induttiva*), allora sarà vera anche per $n = 0 + 1$ (*passo induttivo*), e così via. Secondo il principio di induzione, allora $p(n)$ è vera $forall n in NN$. Di seguito tre esempi di teoremi dimostrabilicon il principio di induzione.
 
 #theorem(
   title: [Somma dei primi $n$-naturali],
@@ -161,7 +91,9 @@ I numeri razionali possono anche essere rappresentati sotto forma di *allineamen
 - *finito*: la parte decimale ha un numero limitato di cifre
 - *periodico*: la parte decimale si ripete all'infinito con costanza
 
-#note-box([Gli allineamenti decimali con periodo $9$ non provengono da alcuna divisione (ad esempio $0.overline(9) = 1$).])
+#note-box(
+  [Gli allineamenti decimali con periodo $9$ non provengono da alcuna divisione (ad esempio $0.overline(9) = 1$).],
+)
 
 #definition(title: [Numeri pari e dispari], [
   Sia $n in ZZ$. $n$ si dice:
@@ -183,7 +115,9 @@ I numeri razionali possono anche essere rappresentati sotto forma di *allineamen
   title: [Parità dei quadrati inversa],
   [$n^2$ pari $=> n$ pari, $n^2$ dispari $=> n$ dispari],
 ) <raz:pdq2>
-#proof([Sia $n in ZZ$. Introducendo i predicati $cal(P)$: $n$ è dispari e $cal(Q)$: $n^2$ è dispari, dalla @raz:pdq si inferisce che $cal(P) => cal(Q)$. Poiché la negazione di dispari è pari, allora, per contrapposizione, è vero che $overline(cal(Q)) => overline(cal(P))$. ])
+#proof(
+  [Sia $n in ZZ$. Introducendo i predicati $cal(P)$: $n$ è dispari e $cal(Q)$: $n^2$ è dispari, dalla @raz:pdq si inferisce che $cal(P) => cal(Q)$. Poiché la negazione di dispari è pari, allora, per contrapposizione, è vero che $overline(cal(Q)) => overline(cal(P))$. ],
+)
 
 === Il problema delle radici
 
@@ -223,7 +157,9 @@ Sia $E subset.eq RR$.
     - $m in RR$ si dice _minimo_ ($min E$) di E se $cases(m in E, m <= x\,forall x in E)$
   ],
 )
-#example([$E = (0; 2] => max E = 2, exists.not min E$, $E = [0; 2) => exists.not max E, min E = 0$])
+#example(
+  [$E = (0; 2] => max E = 2, exists.not min E$, $E = [0; 2) => exists.not max E, min E = 0$],
+)
 #definition(title: [Maggiorante e minorante di un insieme], [
   - $Lambda in RR$ si dice _maggiorante_ di E se $Lambda >= x, forall x in E$ \
   - $lambda in RR$ si dice _minorante_ di E se $lambda <= x, forall x in E$
@@ -302,7 +238,9 @@ In altre parole, se consideriamo la potenza $a^b$ per un qualsiasi numero reale 
   Si dice _valore assoluto_ o _modulo_ di un numero $x in RR$ \
   $ abs(x) := cases(x"   se" x >= 0, -x" se" x < 0) $
 ])
-#warning-box([Sia $a in RR$. Allora $sqrt(a^2) = abs(a)$ poiché il risultato di una radice di ordine pari è sempre positivo.])
+#warning-box(
+  [Sia $a in RR$. Allora $sqrt(a^2) = abs(a)$ poiché il risultato di una radice di ordine pari è sempre positivo.],
+)
 
 In altre parole, $abs(a) = max{a, -a} <=> abs(a) = abs(-a), a <= abs(a), -a <= abs(a)$.
 
@@ -666,10 +604,15 @@ Se dominio e codominio di $f$ sono contenuti in $RR$, allora $G_f$ può essere r
   gutter: 4pt,
   align: center + horizon,
   func($f(x) = x$, (4, 4), (-5, 5), (x => x,)),
-  func($f(x) = x^n, \ forall n in NN$, (4, 4), (-1.2, 1.2), (
-    x => calc.pow(x, 2),
-    x => calc.pow(x, 3),
-  )),
+  func(
+    $f(x) = x^n, \ forall n in NN$,
+    (4, 4),
+    (-1.2, 1.2),
+    (
+      x => calc.pow(x, 2),
+      x => calc.pow(x, 3),
+    ),
+  ),
   func(
     $f(x) = x^(p/q), \ forall p,q in NN, p,q "coprimi",q "pari"$,
     (4, 4),
@@ -730,12 +673,22 @@ Se dominio e codominio di $f$ sono contenuti in $RR$, allora $G_f$ può essere r
     y-min: -2,
   ),
 
-  inverseFunc($f(x) = arcsin(x)$, (3, 3), (-2 * calc.pi, 2 * calc.pi), (
-    calc.sin,
-  )),
-  inverseFunc($f(x) = arccos(x)$, (3, 3), (-2 * calc.pi, 2 * calc.pi), (
-    calc.cos,
-  )),
+  inverseFunc(
+    $f(x) = arcsin(x)$,
+    (3, 3),
+    (-2 * calc.pi, 2 * calc.pi),
+    (
+      calc.sin,
+    ),
+  ),
+  inverseFunc(
+    $f(x) = arccos(x)$,
+    (3, 3),
+    (-2 * calc.pi, 2 * calc.pi),
+    (
+      calc.cos,
+    ),
+  ),
   inverseFunc(
     $f(x) = arctan(x)$,
     (3, 3),
@@ -1335,10 +1288,10 @@ L'o-piccolo possiede le seguenti proprietà:
 
 In virtù di questo, i limiti notevoli si possono riformulare in una forma alternativa, con ${a_n}$ infinitesima:
 $
-      sin(a_n) tilde a_n & => sin(a_n) = a_n + o(a_n)     \
-   e^(a_n) - 1 tilde a_n & => e^(a_n) = a_n + o(a_n)      \
+      sin(a_n) tilde a_n & => sin(a_n) = a_n + o(a_n) \
+   e^(a_n) - 1 tilde a_n & => e^(a_n) = a_n + o(a_n) \
   log(1 + a_n) tilde a_n & => log(1 + a_n) = a_n + o(a_n) \
-         "e così via..."                                  \
+         "e così via..." \
 $
 #note-box([
   È possibile sfruttare l'equivalenza asintotica anche per calcolare i limiti di funzioni composte, partendo dalla funzione più esterna.
@@ -1446,7 +1399,6 @@ $
 #theorem(
   title: [Criterio del rapporto],
   [
-    #set list(spacing: 1em)
     Sia ${a_n}$ una successione tale che $a_n > 0, forall n in NN$ e $display(lim_(n -> infinity)) a_(n + 1) / a_n = l$ con $l in RR$. Allora
     - $l < 1 => display(sum^infinity_(k = 1)) a_k$ convergente
     - $l > 1 => display(sum^infinity_(k = 1)) a_k$ divergente
@@ -1506,15 +1458,10 @@ $
   [
     Siano $f: A -> RR$ con $(a, +infinity) subset.eq A subset.eq RR, l in RR$. Allora:
     - $forall epsilon > 0 " " exists nu_epsilon > 0 : abs(f(x) - l) < epsilon, forall x > nu_epsilon, x in A => display(lim_(x -> +infinity)) f(x) = l$
-
     - $forall M > 0 " " exists nu_M > 0 : f(x) > M, forall x > nu_M, x in A => display(lim_(x -> +infinity)) f(x) = +infinity$
-
     - $forall M > 0 " " exists nu_M > 0 : f(x) < -M, forall x > nu_M, x in A => display(lim_(x -> +infinity)) f(x) = -infinity$
-
     - $forall epsilon > 0 " " exists nu_epsilon > 0 : abs(f(x) - l) < epsilon, forall x < nu_epsilon, x in A => display(lim_(x -> -infinity)) f(x) = l$
-
     - $forall M > 0 " " exists nu_M > 0 : f(x) > M, forall x < nu_M, x in A => display(lim_(x -> -infinity)) f(x) = +infinity$
-
     - $forall M > 0 " " exists nu_M > 0 : f(x) < -M, forall x < nu_M, x in A => display(lim_(x -> -infinity)) f(x) = -infinity$
   ],
 )
@@ -1551,7 +1498,7 @@ $
 #theorem(
   title: [Teorema ponte],
   [
-    Siano $A subset.eq RR, {x_n}$ una successione con ${x_n} subset.eq A, f: A -> RR, A subset.eq RR, l in RR, x_0$ punto di accumulazione per $A$. Allora $display(lim_(x -> x_0)) f(x) = l <=> forall {x_n} in A \\ {x_0}, display(lim_(n -> infinity)) x_n, display(lim_(n -> +infinity)) f(x_n) = l$
+    Siano $A subset.eq RR, {x_n}$ una successione con ${x_n} subset.eq A, f: A -> RR, A subset.eq RR, l in RR, x_0$ punto di accumulazione per $A$. Allora $display(lim_(x -> x_0)) f(x) = l <=> forall {x_n} in A \\ {x_0}, display(lim_(n -> infinity)) x_n, display(lim_(n -> +infinity)) f(x_n) = l$.
   ],
 ) <lmf:pnt>
 #note-box([
@@ -1628,15 +1575,10 @@ $
   [
     Siano $f, g$ due funzioni infinitesime per $x -> x_0$. Allora:
     - Se $display(lim_(x -> x_0)) f(x) / g(x) = 0$, $f$ è un _infinitesimo di ordine superiore_ rispetto a $g$
-
     - Se $display(lim_(x -> x_0)) f(x) / g(x) = l$ con $l in RR$, $f$ e $g$ sono _infinitesimi dello stesso ordine_
-
     - Se $display(lim_(x -> x_0)) f(x) = g(x) = plus.minus infinity$, $f$ è un _infinitesimo di ordine inferiore_ rispetto a _g_
-
     - Se $exists.not display(lim_(x -> x_0)) f(x) / g(x)$, $f$ e $g$ sono _non paragonabili_
-
     - Se $display(lim_(x -> x_0)) f(x) / g(x) = 1$, $f$ e $g$ sono _asintoticamente equivalenti_
-
     Analogamente per $x -> plus.minus infinity$.
   ],
 )
@@ -1645,15 +1587,10 @@ $
   [
     Siano $f, g$ due funzioni infinite per $x -> x_0$. Allora:
     - Se $display(lim_(x -> x_0)) f(x) = g(x) = plus.minus infinity$, $f$ è un _infinito di ordine inferiore_ rispetto a _g_
-
     - Se $display(lim_(x -> x_0)) f(x) / g(x) = 0$, $f$ è un _infinito di ordine superiore_ rispetto a $g$
-
     - Se $display(lim_(x -> x_0)) f(x) / g(x) = l$ con $l in RR$, $f$ e $g$ sono _infiniti dello stesso ordine_
-
     - Se $exists.not display(lim_(x -> x_0)) f(x) / g(x)$, $f$ e $g$ sono _non paragonabili_
-
     - Se $display(lim_(x -> x_0)) f(x) / g(x) = 1$, $f$ e $g$ sono _asintoticamente equivalenti_
-
     Analogamente per $x -> plus.minus infinity$.
   ],
 )
@@ -1738,7 +1675,9 @@ Grazie al @lmf:pnt, abbiamo il seguente teorema.
     Sia $f$ una funzione definita in un intervallo $I$, continua ed invertibile. Allora $f^(-1)$ è continua.
   ],
 ) <lmf:cnv>
-#warning-box([Il @lmf:cnv è falso se $I$ non è un intervallo, quindi, ad esempio, se $I = [1, 2] union [3, 4]$])
+#warning-box(
+  [Il @lmf:cnv è falso se $I$ non è un intervallo, quindi, ad esempio, se $I = [1, 2] union [3, 4]$],
+)
 Grazie al @lmf:cnv, si ha anche che $log_a x$ è continua se $a > 0, a != 1$.
 #theorem(title: [Continuità delle funzioni goniometriche e le loro inverse], [
   Le funzioni circolari e le loro inverse sono continue.
@@ -1773,7 +1712,7 @@ Si possono avere punti di discontinuità in diversi casi:
     Siano $f$ una funzione continua in $A subset.eq RR$ e $x_0 in A$. Se $f(x_0) gt.lt c$ con $c in RR$, allora \
     $exists I_x_0 : f(x) gt.lt c, forall x in I_x_0 inter A$.
   ],
-)
+) <lmf:prmc>
 #proof([
   Per il @lmf:prm, poiché $f$ è continua in $x_0$, $display(lim_(x -> x_0)) (f(x) - c)= f(x_0) - c$, il che è $gt.lt 0$, quindi $f(x_0) gt.lt c$.
 ])
@@ -1803,7 +1742,7 @@ Si possono avere punti di discontinuità in diversi casi:
   [
     Sia $f$ una funzione continua in un intervallo $I$. Allora $f$ assume tutti i valori compresi tra $display(inf_I) f$ e $display(sup_I) f$. Ossia $forall y_0 in (display(inf_I) f; display(sup_I) f) " " exists x_0 in I : y_0 = f(x_0)$.
   ],
-)
+) <lmf:vim>
 #proof([
   Siano $m := display(inf_I) f, M := display(sup_I) f$ e $y_0 in (m, M)$. Per definizione, $y_0 > m display(<=>^"def.") exists a in I : f(a) < y_0$ e $y_0 < M display(<=>^"def.") exists b in I : f(b) > y_0$. \
   Sia $g(x) := f(x) - y_0$ con $x in [a,b] subset.eq I$. Dunque $g$ è continua in $[a,b]$. Inoltre $g(a) < 0$ e $g(b) > 0$. Per il @lmf:esz, $exists x_0 in (a, b) : g(x_0) = 0 <=> f(x_0) = y_0$.
@@ -1820,16 +1759,868 @@ Si possono avere punti di discontinuità in diversi casi:
   [
     Una funzione $f: [a, b] -> RR$ continua in $[a, b]$ ammette massimo e minimo assoluti.
   ],
-)
+) <lmf:wst>
 
 #warning-box([
   Per tutti questi teoremi è fondamentale sia che la funzione sia continua e che si stia considerando un intervallo, altrimenti nessuno di questi teoremi è applicabile: in particolare per i teoremi di Weierstrass e di esistenza degli zeri, è fondamentale che l'intervallo sia chiuso e limitato.
 ])
 
+= Derivate
 
+#definition(
+  title: [Funzione derivabile e derivata],
+  [
+    Siano $f: (a, b) -> RR$ e $x_0 in (a, b)$. $f$ si dice _derivabile_ in $x_0$ se $exists display(lim_(h -> 0)) (f(x + h) - f(x)) / h := f'(x_0) in RR$, dove $f'(x_0)$si dice la _derivata di $f$ in $x_0$_. Si può anche indicare $D f(x_0)$ o $lr((dif f(x)) / (dif x)|)_(x = x_0)$.
+  ],
+)
+
+#grid(
+  columns: 2,
+  [
+    La derivata ha un significato geometrico molto importante: infatti la derivata calcolata in $x = x_0$ rappresenta il *coefficiente angolare* della retta tangente al grafico di $f(x)$ in $x = x_0$. \
+    Sappiamo infatti che la retta passante per $P$ e $Q$ ha equazione
+    $ r: y = f(x_0) + (f(x_1) - f(x_0)) / (x_1 - x_0) (x - x_0) $
+    Se prendiamo un $x_1$ sempre più vicino ad $x_0$, la retta tende a passare da secante a tangente alla curva di $f(x)$. Quindi se consideriamo
+  ],
+  cetz.canvas({
+    import cetz.draw: *
+    import cetz-plot: plot
+    plot.plot(
+      size: (3.5, 3.5),
+      axis-style: "school-book",
+      x-tick-step: none,
+      y-tick-step: none,
+      y-min: -2,
+      y-max: 11,
+      x-min: -2,
+      x-max: 11,
+      {
+        plot.add(domain: (0.1, 11), x => 8 * calc.log(x))
+        plot.annotate({
+          mark(
+            (3, 8 * calc.log(3)),
+            0deg,
+            anchor: "center",
+            symbol: "o",
+            fill: black,
+            scale: 3.5,
+          )
+          content((2, 8 * calc.log(3) + 1), "P")
+        })
+        plot.annotate({
+          mark(
+            (9, 8 * calc.log(9)),
+            0deg,
+            anchor: "center",
+            symbol: "o",
+            fill: black,
+            scale: 3.5,
+          )
+          content((7, 8 * calc.log(9) + 1.5), "Q")
+        })
+        plot.add-hline(8 * calc.log(3), min: 0, max: 3, style: (
+          stroke: (dash: "dashed", paint: red),
+        ))
+        plot.add-hline(8 * calc.log(9), min: 0, max: 9, style: (
+          stroke: (dash: "dashed", paint: red),
+        ))
+        plot.add-vline(3, min: 0, max: 8 * calc.log(3), style: (
+          stroke: (dash: "dashed", paint: red),
+        ))
+        plot.add-vline(9, min: 0, max: 8 * calc.log(9), style: (
+          stroke: (dash: "dashed", paint: red),
+        ))
+        plot.add(
+          domain: (-1, 11),
+          x => (4 / 3) * calc.log(3) * (x - 3) + 8 * calc.log(3),
+          style: (stroke: (dash: "dashed", paint: yellow)),
+        )
+        plot.add(
+          domain: (-1, 11),
+          x => (3.25 / 3) * (x - 3) + 8 * calc.log(3),
+          style: (stroke: (dash: "dashed", paint: green)),
+        )
+        plot.annotate({
+          content((-2.25, 8 * calc.log(9)), $f(x_1)$)
+          content((-2.25, 8 * calc.log(3)), $f(x_0)$)
+          content((3, -1), $x_0$)
+          content((9, -1), $x_1$)
+        })
+      },
+    )
+  }),
+)
+$display(lim_(x -> x_0)) (f(x_1) - f(x_0)) / (x_1 - x_0)$, otteniamo una scrittura analoga di $f'(x_0)$, il cui valore corrisponde precisamente al coefficiente angolare della retta tangente a $f(x)$ in $x = x_0$. Quindi $r: y = f(x_0) + f'(x_0)(x - x_0)$.
+
+#theorem(
+  title: [Continuità di una funzione derivabile],
+  [
+    Siano $f: (a, b) -> RR$ e $x_0 in (a, b)$. Se $f$ è derivabile in $x_0$, allora è anche continua in $x_0$.
+  ],
+)
+#proof([
+  $f(x) - f(x_0) = (f(x) - f(x_0)) / (x - x_0) (x - x_0)$. Poiché $f(x) - f(x_0) display(-->_(x -> x_0)) 0$ e $x - x_0 display(-->_(x -> x_0)) 0$, allora $display(lim_(x -> x_0)) (f(x) - f(x_0)) = 0 <=> display(lim_(x -> x_0)) f(x) = f(x_0)$, quindi $f$ è continua in $x_0$.
+])
+#definition(
+  title: [Funzione derivata],
+  [
+    Sia $f: (a, b) -> RR$ derivabile in $(a, b)$. Allora $forall x in (a, b) " " exists f'(x)$. Dunque abbiamo costruito la funzione $f': (a, b) -> RR$ detta _funzione derivata di $f$_.
+  ],
+)
 
 #pagebreak()
-#outline(title: [Indice dei dimostrabili], target: figure
-  .where(kind: "theorem")
-  .or(figure.where(kind: "proposition"))
-  .or(figure.where(kind: "lemma")))
+
+== Calcolo di derivate fondamentali
+
+$
+  dif / (dif x) c = 0, c in RR "  " dif / (dif x) a x^n = a n x^(n - 1) "  " dif / (dif x) log_a (x) = (log_a e) / x, a > 0, a != 1
+$
+$ dif / (dif x) sin x = cos x "  " dif / (dif x) cos x = -sin x $
+#proof([
+  1. $display(lim_(h -> 0)) (f(x + h) - f(x)) / h = display(lim_(h -> 0)) (c - c) / h = display(lim_(h -> 0)) 0 / h = 0$
+  3. $display(lim_(h -> 0)) (log_a (x + h) - log_a (x)) / h = display(lim_(h -> 0)) (log_a (x + h) / x) / h = display(lim_(h -> 0)) (log_a (1 + h / x)) / h = display(lim_(h -> 0)) 1 / x (log_a (1 + h / x)) / (h / x) = (log_a (e)) / x$
+
+  4. $display(lim_(h -> 0)) (sin(x + h) - sin x) / h = display(lim_(h -> 0)) (sin x cos h + sin h cos x - sin x) / h = display(lim_(h -> 0)) (sin x ((cos h - 1) / h) + cos x ((sin h) / h)) = cos x$
+])
+
+#theorem(
+  title: [Derivate di operazioni],
+  [
+    Siano $f$ e $g$ due funzioni derivabili in $x$. Allora:
+    1. $f plus.minus g$ è derivabile in $x$ e $dif / (dif x) (f(x) plus.minus g(x)) = f'(x) plus.minus g'(x)$
+    2. $f dot g$ è derivabile in $x$ e $dif / (dif x) f(x)g(x) = f'(x)g(x) + f(x)g'(x)$
+    3. $f / g$ è derivabile in $x$ e $dif / (dif x) f(x) / g(x) = (f'(x)g(x) - f(x)g'(x)) / (g(x))^2$
+  ],
+)
+#proof([
+  1. $display(lim_(h -> 0)) (f(x + h) - g(x + h) - (f(x) + g(x))) / h = display(lim_(h -> 0)) (f(x + h) - f(x)) / h + display(lim_(h -> 0)) (g(x + h) - g(x)) / h = f'(x) + g'(x)$
+
+  2. $display(lim_(h -> 0)) (f(x + h)g(x + h) - f(x)g(x)) / h = display(lim_(h -> 0)) (f(x + h)g(x + h) - f(x + h)g(x) + f(x + h)g(x) - f(x)g(x)) / h =$ \ $= display(lim_(h -> 0)) f(x + h) (g(x + h) - g(x)) / h + display(lim_(h -> 0)) g(x) (f(x + h) - f(x)) / h = f(x)g'(x) + f'(x)g(x)$
+])
+
+#theorem(
+  title: [Derivata della funzione composta],
+  [
+    Siano $f$ e $g$ due funzioni derivabili. La funzione composta $f compose g$ è anch'essa derivabile e $dif / (dif x) f(g(x)) = f'(g(x))g'(x)$.
+  ],
+)
+
+=== Derivate delle inverse
+#theorem(
+  title: [Derivata della funzione inversa],
+  [
+    Sia $f$ una funzione invertibile, continua con $f^(-1)$ anch'essa continua, derivabile in $x$ e tale che $f'(x) = 0$. Allora $f^(-1)$ è derivabile in $y$ e abbiamo che $f^(-1) (y) = lr(1 / (f'(x))|)_(x = f^(-1) (y))$
+  ],
+)
+Possiamo scambiare $x$ e $y$, ottenendo $f^(-1) (x) = lr(1 / (f'(y))|)_(y = f^(-1) (x))$. Abbiamo dunque che:
+- $a^x$ è l'inversa di $log_a (x)$, dove $a > 0, a != 1$ quindi
+  $
+    dif / (dif x) a^x = lr(1 / (dif / (dif x) log_a (y))|)_(y = a^x) = lr(1 / ((log_a e) / y)|)_(y = a^x) = a^x / (log_a e) = a^x log a
+  $
+#pagebreak()
+- $x^alpha$ si può riscrivere come $e^log(x^alpha)$ dunque
+  $
+    dif / (dif x) = x^alpha = dif / (dif x) e^log(x^alpha) = dif / (dif x) e^(alpha log x) = e^(alpha log x) dot alpha dot 1 / x = x^alpha dot alpha / x = alpha x^(alpha - 1)
+  $
+- $arcsin x$ è l'inversa di $sin x$ allora
+  $
+    dif / (dif x) arcsin x = lr(1 / (dif / (dif x) sin y)|)_(y = arcsin x) = lr(1 / (cos y)|)_(y = arcsin x)
+  $
+  Poiché $cos y != 0$ in quanto a denominatore, allora $y != pi / 2, y != 3/2 pi$, ossia $y in (-pi / 2, pi / 2)$. Inoltre $sin^2 y + cos^2 y = 1$, quindi $cos y = sqrt(1 - sin^2 y) display(=^(y = arcsin x)) sqrt(1 - x^2)$, dunque
+  $
+    dif / (dif x) arcsin x = 1 / sqrt(1 - x^2), dif / (dif x) arccos x = -1 / sqrt(1 - x^2) "con" -1 < x < 1
+  $
+- $arctan x$ è l'inversa di $tan x$ quindi
+  $
+    dif / (dif x) arctan x = lr(1 / (tan y)|)_(y = arctan x) = lr(cos^2 y|)_(y = arctan x) <==>^(cos^2 y = 1 / (1 + tan^2 y)) 1 / (1 + tan^2 (arctan x)) = 1 / (1 + x^2)
+  $
+  Analogamente, si ha anche che
+  $ dif / (dif x) "arccot" x = -1 / (1 + x^2) $
+
+== Punti di non derivabilità
+
+#definition(
+  title: [Punto di non derivabilità],
+  [
+    Sia $f: (a, b) -> RR$ con $x_0 in (a, b)$. Se $exists.not display(lim_(x -> x_0)) (f(x) - f(x_0)) / (x - x_0)$ oppure vale $plus.minus infinity$, allora $x_0$ si dice _punto di non derivabilità_.
+  ],
+)
+Se la funzione presenta punti di discontinuità, allora essi saranno anche punti di non derivabilità, quindi supponiamo ora che $f$ sia continua in $x_0$. Si ha che:
+- Se $display(lim_(h -> 0^+)) (f(x_0 + h) - f(x_0)) / h != display(lim_(h -> 0^-)) (f(x_0 + h) - f(x_0)) / h$ ed entrambi i limiti sono finiti, allora $x_0$ è detto *punto angoloso*. Diciamo dunque che la *derivata destra*, ossia $f_+^' (x) := display(lim_(x -> x_0^+)) (f(x) - f(x_0)) / (x - x_0)$, e la *derivata sinistra*, ossia $f_-^' (x) := display(lim_(x -> x_0^-)) (f(x) - f(x_0)) / (x - x_0)$ sono diverse.
+- Se $display(lim_(h -> 0)) (f(x_0 + h) - f(x_0)) / h = plus.minus infinity$, $x_0$ si dice *flesso a tangente verticale*
+- Se $f_+^' (x_0) = plus.minus infinity$ e $f_-^' (x_0) = minus.plus infinity$, allora $x_0$ si dice *cuspide*
+
+#align(center, grid(
+  columns: 3,
+  align: center + horizon,
+  func(
+    [$f(x) = abs(x)$ \ Punto angoloso in $x = 0$],
+    (4, 3.87),
+    (-2, 2),
+    (
+      x => calc.abs(x),
+    ),
+    y-min: -2,
+    y-max: 2,
+  ),
+  func(
+    [$f(x) = arctan x$ \ Flesso a tangente verticale in $x = 0$],
+    (4, 3.87),
+    (-100, 100),
+    (x => calc.atan(x).rad(),),
+    y-min: -3,
+    y-max: 3,
+  ),
+  func(
+    [$f(x) = sqrt(abs(x))$ \ Cuspide in $x = 0$],
+    (4, 3.87),
+    (-100, 100),
+    (x => calc.sqrt(calc.abs(x)),),
+    y-min: -15,
+    y-max: 15,
+  ),
+))
+
+== Estremi relativi
+
+#definition(
+  title: [Estremo relativo],
+  [
+    Sia $f: A -> RR$ con $A subset.eq RR$. $x_0 in A$ si dice _punto di massimo relativo_ o _locale_ di $f$ se $exists I(x_0) : f(x_0) >= f(x), forall x in A inter I(x_0)$. Viceversa, $x_0$ si dice _punto di minimo relativo_ o _locale_ di $f$ se $exists I(x_0) : f(x_0) <= f(x), forall x in A inter I(x_0)$. \
+    $x_0$ si dice _punto di estremo relativo_ se è un punto di massimo o minimo relativo.
+  ],
+)
+#note-box([
+  Un estremo assoluto è anche un estremo relativo, ma non vale il contrario.
+])
+#definition(
+  title: [Punto interno],
+  [
+    Sia $(a, b) subset RR$. Se $x_0 in (a, b)$, allora $x_0$ si dice _interno all'intervallo $(a, b)$_.
+  ],
+)
+#definition(
+  title: [Punto critico],
+  [
+    Sia $f: (a, b) -> RR$. $x_0 in (a, b)$ si dice _punto critico_ o _punto stazionario_ di $f$ se $exists f'(x_0) = 0$.
+  ],
+)
+
+#theorem(
+  title: [Teorema di Fermat],
+  [
+    Siano $f: (a, b) -> RR$ e $x_0 in (a, b)$ un punto di estremo relativo di $f$ tale che $f$ sia derivabile in $x_0$. Allora $x_0$ è un punto critico di $f$, ossia $f'(x_0) = 0$.
+  ],
+) <drv:fmt>
+#proof([
+  Supponiamo che $x_0$ sia un punto di massimo relativo. Poiché $x_0 in (a, b)$, $x_0$ è interno ad $(a, b)$. Allora $exists r > 0 : I_r (x_0) subset (a, b)$. Inoltre, poiché è un massimo, $f(x_0) >= f(x),$ \ $forall x in I_r (x_0)$. Consideriamo dunque il rapporto incrementale $(f(x_0 + h) - f(x_0)) / h$ con $abs(h) < r$: se $h > 0$ il rapporto vale $<= 0$, mentre se $h < 0$ il rapporto vale $>= 0$. Poiché $f$ è derivabile in $x_0$ per ipotesi, $exists display(lim_(h -> 0^+)) (f(x_0 + h) - f(x_0)) / h = display(lim_(h -> 0^-)) (f(x_0 + h) - f(x_0)) / h = f'(x_0)$. Per il @lmf:prmc, il limite destro vale $<= 0$ e il limite sinistro vale $>= 0$, quindi $f'(x_0) = 0$.
+])
+
+#warning-box([
+  È essenziale che $x_0$ sia interno ad $(a, b)$ in quanto, se così non fosse, $x_0$ potrebbe essere un estremo relativo senza che $f'(x_0) = 0$. Inoltre, è essenziale che esista $f'(x_0)$ in quanto, altrimenti, l'estremo relativo potrebbe corrispondere ad un punto di non derivabilità. \
+  Questo teorema implica che un estremo relativo sia anche un punto critico, e non il contrario.
+])
+#note-box([
+  Questo teorema vale in particolare anche per gli estremi assoluti, purché siano verificate le ipotesi.
+])
+#pagebreak()
+
+=== Problema di ottimizzazione
+
+Sia $f: [a, b] -> RR$ una funzione continua in $[a, b]$. Per il @lmf:wst, $exists display(max_[a, b]) f$ e $exists display(min_[a, b]) f$, e possiamo calcolarli grazie al @drv:fmt. Sappiamo infatti che il $display(max_[a, b]) f$ e il $display(min_[a, b]) f$ possono trovarsi:
+- agli *estremi* $a$ e $b$
+- nei *punti di non derivabilità* di $f$, se esistono
+- nei *punti critici* interni all'intervallo
+Siccome, in genere, questi punti si trovano in numero finito, basterà calcolare il valore di $f$ in ognuno di questi punti e confrontarli: il più grande sarà il $display(max_[a, b]) f$, e il più piccolo sarà il $display(min_[a, b]) f$.
+
+== Teoremi di Rolle e Lagrange
+
+#theorem(
+  title: [Teorema di Rolle],
+  [
+    Sia $f: [a, b] -> RR$ continua in $[a, b]$ e derivabile in $(a, b)$ tale che $f(a) = f(b)$. Allora \
+    $exists xi in (a, b) : f'(xi) = 0$.
+  ],
+) <drv:rll>
+#proof([
+  Per ipotesi, $f$ è continua in $[a, b]$ quindi, per il @lmf:wst, $exists display(max_[a, b]) f, display(min_[a, b]) f$. Siano allora $x_M$ il punto di massimo assoluto e $x_m$ il punto di minimo assoluto di $f$. Possiamo avere che:
+  - $x_M, x_m in {a, b}$, ossia che uno dei due o entrambi corrispondono agli estremi dell'intervallo, quindi abbiamo che $f(x_M) = f(x_m) <=> display(max_[a, b]) f = display(min_[a, b]) f$, quindi $f$ è costante su tutto $[a, b]$, ossia \ $f'(x) = 0, forall x in [a, b]$
+  - almeno uno tra $x_M$ e $x_m$ cade dentro $(a, b)$, quindi, per il @drv:fmt, in tale punto $xi, f'(xi) = 0$.
+])
+#theorem(
+  title: [Teorema di Lagrange],
+  [
+    Sia $f: [a, b] -> RR$ continua in $[a, b]$ e derivabile in $(a, b)$. Allora $exists xi in (a, b) : f'(xi) = (f(b) - f(a)) / (b - a)$.
+  ],
+) <drv:lgr>
+#proof([
+  Sia $g(x) = f(x) - (f(a) - (f(b) - f(a))/(b - a) (x - a)), forall x in [a, b] => g(x)$ è continua in $[a, b]$ e derivabile in $(a, b)$. Inoltre $g(a) = g(b) = 0$. Allora, per il @drv:rll, $exists xi in (a, b) : f'(xi) = 0$. $g'(x) = f'(x) - (f(b) - f(a)) / (b - a) <=> g'(xi) = f'(xi) - (f(b) - f(a)) / (b - a) = 0 <=> f'(xi) = (f(b) - f(a)) / (b - a)$
+])
+#warning-box([
+  In entrambi i teoremi è essenziale considerare un intervallo e che la funzione sia derivabile su tutto esso, altrimenti le tesi potrebbero non verificarsi.
+])
+
+=== Applicazioni del teorema di Lagrange
+
+#theorem(
+  title: [Costanza di una funzione],
+  [
+    Sia $f$ una funzione derivabile nell'intervallo $I$. Se $f'(x) = 0, forall x in I$, allora $f$ è costante in $I$.
+  ],
+) <drv:cst>
+#proof([
+  Siano $x_1, x_2 in I$ con $x_1 < x_2$. Consideriamo l'intervallo $[x_1, x_2]$. Poiché $I$ è un intervallo, lo è anche $[x_1, x_2] subset.eq I$. Per il @drv:lgr, $exists xi in (x_1, x_2) : f'(xi) = (f(x_2) - f(x_1)) / (x_2 - x_1)$. Poiché $f'(xi) = 0$ per ipotesi, $f(x_2) - f(x_1) = 0 <=> f(x_2) = f(x_1)$. Poiché $x_1$ e $x_2$ sono arbitrari, $f$ è costante su tutto $I$.
+])
+#warning-box([
+  È essenziale che $I$ sia un intervallo, altrimenti la derivata può sempre valere $0$ senza che la funzione sia costante, come per esempio la funzione $f(x) = [x]$.
+])
+
+#theorem(title: [Test di monotonia], [
+  Sia $f$ una funzione derivabile nell'intervallo $I$. Allora:
+  - $f$ è crescente se e solo se $f'(x) >= 0, forall x in I$
+  - $f$ è decrescente se e solo se $f'(x) <= 0, forall x in I$.
+  - $f$ è strettamente crescente se $f'(x) > 0, forall x in I$
+  - $f$ è strettamente decrescente se $f'(x) < 0, forall x in I$
+])
+#proof([
+  Supponiamo che $f$ sia crescente in $I$. Allora $(f(x) - f(x_0)) / (x - x_0) >= 0, forall x, x_0 in I, x != x_0$. Inoltre abbiamo che $f'(x_0) = display(lim_(x -> x_0)) (f(x) - f(x_0)) / (x - x_0)$, per il @lmf:prmc, vale $>= 0$. \
+  Supponiamo ora che $f'(x) >= 0, forall x in I$. Siano $x_1, x_2 in I$ con $x_1 < x_2$. Per il @drv:lgr applicato a $[x_1, x_2] subset.eq I$, $exists xi in (x_1, x_2) : f'(xi) = (f(x_2) - f(x_1)) / (x_2 - x_1)$. Poiché $f'(x) >= 0, forall x in I$, allora $f'(xi) >= 0 <=> (f(x_2) - f(x_1)) / (x_2 - x_1) >= 0 <=> f$ è crescente in $I$.
+])
+#note-box([
+  Da notare che la condizione di monotonia stretta non è necessaria e sufficiente ma solo sufficiente. Inoltre, in generale, non si può dire che una funzione sia crescente o decrescente nell'unione di due intervalli se essa stessa non è un intervallo.
+])
+
+#theorem(
+  title: [Limite della derivata],
+  [
+    Sia $f: [a, b] -> RR$ continua in $[a, b]$ e derivabile in $[a, b] \\ {x_0}$. Se $exists display(lim_(x -> x_0)) f'(x) = L in RR$, allora $exists f'(x_0) = L$.
+  ],
+)
+#proof([
+  Per il @drv:lgr, $f'(xi) = (f(x_0 + h) - f(x_0)) / (h)$ per qualche $xi in (x_0, x_0 + h)$ se $h > 0$, o per qualche $xi in (x_0 + h, x_0)$ se $h < 0$. Abbiamo che $xi display(-->_(h -> 0^plus.minus)) x_0$, quindi $f'(xi) display(-->_(h -> 0^+)) f'(x_0)$. Allora $f'_+(x_0) = f'_-(x_0) = L$, dunque $f'(x_0) = L$.
+])
+#note-box([
+  È anche vero che se $display(lim_(x -> x_0)) f'(x) = L_1, display(lim_(x -> x_0)) f'(x) = L_2$, allora $f'_+(x_0) = L_1, f'_-(x_0) = L_2$. In particolare, abbiamo che se $L_1 = plus.minus infinity, L_2 = plus.minus infinity$ o $L_1 != L_2$, allora $f$ non è derivabile in $x_0$.
+])
+#pagebreak()
+
+== Derivate successive
+
+Sia $f: (a, b) -> RR$ derivabile in $(a, b)$. La sua funzione derivata $f': (a, b) -> RR$ può essere a sua volta derivabile. Quindi la sua derivata è detta *derivata seconda* di $f$ e si indica $f''(x), D^2 f(x)$ o $(dif^2 f(x)) / (dif x^2)$. Questo processo è iterabile $n$ volte, definendo dunque la *derivata $n$-esima* $(dif^n f(x)) / (dif x^n)$, dove $n$ si dice *ordine di derivazione*.
+
+#theorem(
+  title: [Massimo e minimo relativo di una funzione],
+  [
+    Siano $f: (a, b) -> RR$ derivabile due volte in $(a, b), x_0 in (a, b)$ un punto critico di $f$. Se \
+    $f''(x_0) > 0$, allora $x_0$ è un punto di minimo relativo, mentre se $f''(x_0) < 0$, allora $x_0$ è un punto di massimo relativo.
+  ],
+)
+
+=== Convessità e concavità
+
+#definition(
+  title: [Funzione convessa e concava],
+  [
+    Una funzione $f: (a, b) -> RR$ con $x_1, x_2 in (a, b)$ si dice:
+
+    - _convessa_ in $(a, b)$ se $f(x) <= f(x_1) + (f(x_2) - f(x_1)) / (x_2 - x_1) (x - x_1), forall x in [x_1, x_2]$
+
+    - _concava_ in $(a, b)$ se $f(x) >= f(x_1) + (f(x_2) - f(x_1)) / (x_2 - x_1) (x - x_1), forall x in [x_1, x_2]$
+  ],
+)
+#grid(
+  columns: 2,
+  [
+    In termini geometrici, si intende che una funzione è convessa in un intervallo quando il grafico della funzione compreso tra due punti $P_1 = (x_1, f(x_1)), P_2 = (x_2, f(x_2))$ sta sotto il segmento $P_1 P_2$, ed è invece concava quando il grafico sta sopra tale segmento.
+    #note-box([
+      $f$ convessa in $(a, b) <=> -f$ concava in $(a, b)$
+    ])
+  ],
+  cetz.canvas({
+    import cetz.draw: *
+    import cetz-plot: plot
+    plot.plot(
+      size: (3.5, 3.5),
+      axis-style: "school-book",
+      x-tick-step: none,
+      y-tick-step: none,
+      y-min: -5,
+      y-max: 55,
+      x-min: -5,
+      x-max: 55,
+      {
+        plot.add(domain: (0.1, 65), x => 32 * calc.log(x))
+        plot.add(
+          domain: (6, 45),
+          x => 32 * calc.log(x),
+          style: (stroke: (paint: red)),
+        )
+        plot.annotate({
+          content((20, 53), align(center, [è concava \ $arrow.r.curve$]))
+        })
+        plot.annotate({
+          mark(
+            (6, 32 * calc.log(6)),
+            0deg,
+            anchor: "center",
+            symbol: "o",
+            fill: black,
+            scale: 12,
+          )
+          content((12, 32 * calc.log(6) - 4), $P_1$)
+        })
+        plot.annotate({
+          mark(
+            (45, 32 * calc.log(45)),
+            0deg,
+            anchor: "center",
+            symbol: "o",
+            fill: black,
+            scale: 12,
+          )
+          content((50, 32 * calc.log(45) - 5), $P_2$)
+        })
+        plot.add-hline(32 * calc.log(6), min: 0, max: 6, style: (
+          stroke: (dash: "dashed", paint: red),
+        ))
+        plot.add-hline(32 * calc.log(45), min: 0, max: 45, style: (
+          stroke: (dash: "dashed", paint: red),
+        ))
+        plot.add-vline(6, min: 0, max: 32 * calc.log(6), style: (
+          stroke: (dash: "dashed", paint: red),
+        ))
+        plot.add-vline(45, min: 0, max: 32 * calc.log(45), style: (
+          stroke: (dash: "dashed", paint: red),
+        ))
+        plot.add(((6, 32 * calc.log(6)), (45, 32 * calc.log(45))), style: (
+          stroke: (paint: black),
+        ))
+
+        plot.annotate({
+          content((-10, 32 * calc.log(45)), $f(x_2)$)
+          content((-10, 32 * calc.log(3)), $f(x_1)$)
+          content((6, -5), $x_1$)
+          content((45, -5), $x_2$)
+        })
+      },
+    )
+  }),
+)
+
+Un altro modo per riscrivere la disuguaglianza di convessità è il seguente:
+$
+  f(lambda x_1 + (1 - lambda) x_2) <= lambda f(x_1) + (1 - lambda) f(x_2), forall lambda in [0, 1]
+$
+Il primo termine della disuguaglianza rappresenta i punti tra $x_1$ e $x_2$, mentre il secondo le ordinate dei punti del segmento $P_1 P_2$.
+#theorem(
+  title: [Criterio del primo ordine],
+  [
+    Sia $f: (a, b) -> RR$ derivabile in $(a, b)$. Allora $f$ è:
+    - convessa in $(a, b)$ se e solo se $f(x_2) >= f(x_1) + f'(x_1)(x_2 - x_1), forall x_1, x_2 in (a, b)$
+    - concava in $(a, b)$ se e solo se $f(x_2) <= f(x_1) + f'(x_1)(x_2 - x_1), forall x_1, x_2 in (a, b)$
+  ],
+)
+#theorem(
+  title: [Criterio del secondo ordine],
+  [
+    Sia $f: (a, b) -> RR$ derivabile due volte in $(a, b)$. Allora $f$ è convessa in $(a, b)$ se e solo se \
+    $f''(x) >= 0$, oppure è concava se e solo se $f''(x) <= 0, forall x in (a, b)$.
+  ],
+)
+I punti in cui si passa dalla convessità alla concavità e viceversa si dicono *punti di flesso* o semplicemente *flessi*.
+
+== Differenziabilità
+
+#definition(
+  title: [Funzione differenziabile],
+  [
+    Siano $f: (a, b) -> RR$ e $x_0 in (a, b)$. $f$ si dice _differenziabile_ in $x_0$ se
+    $ exists lambda in RR : f(x) = f(x_0) + lambda (x - x_0) + o(x - x_0) $
+  ],
+)
+
+Se una funzione $f(x)$ è differenziabile, si può definire una nuova funzione $d f(x_0): RR -> RR$ tale che $h |-> lambda h$ detta *differenziale di $f$ in $x_0$*.
+
+#theorem(
+  title: [Differenziabilità di una funzione derivabile],
+  [
+    Siano $f: (a, b) -> RR$ e $x_0 in (a, b)$. $f$ è differenziabile in $x_0$ se e solo se $f$ è derivabile in $x_0$.
+  ],
+)
+#proof([
+  Supponiamo che $f$ sia derivabile in $x_0$. Allora $exists f'(x_0) = display(lim_(x -> x_0)) (f(x) - f(x_0)) / (x - x_0)$. \
+  $(f(x) - f(x_0)) / (x - x_0) - f'(x_0) display(-->_(x -> x_0)) 0$. Moltiplichiamo per $(x - x_0) / (x - x_0)$, allora $(f(x) - f(x_0) - f'(x_0)(x - x_0)) / (x - x_0) display(-->_(x -> x_0)) 0$ \
+  $<=> f(x) - f(x_0) - f'(x_0)(x - x_0) = o(x - x_0) <=> f(x) = f(x_0) + f'(x_0)(x - x_0) + o(x - x_0)$. Quindi $f$ è differenziabile con $lambda = f'(x_0)$. \
+  Supponiamo ora che $f$ sia differenziabile in $x_0$. Allora, per qualche $lambda in RR$, \ $f(x) = f(x_0) + lambda(x - x_0)+ o(x - x_0) <=> (f(x) - f(x_0)) / (x - x_0) = (lambda cancel(x - x_0)) / cancel(x - x_0) + underbrace(o(x - x_0) / (x - x_0), -> 0)$. Quindi, $(f(x) - f(x_0)) / (x - x_0) display(-->_(x - x_0)) lambda$, dunque, per definizione, $f'(x_0) display(-->_(x -> x_0)) lambda <=> exists f'(x_0) = lambda$.
+])
+
+== Teorema di de l'Hôpital
+
+#theorem(
+  title: [Teorema di de l'Hôpital],
+  [
+    Siano $f, g$ due funzioni derivabili in $(a, b) \\ {x_0}$ tali che $display(lim_(x -> x_0)) f(x) = display(lim_(x -> x_0)) g(x) = 0$. \ Se $g'(x) != 0, forall x in (a, b) \\ {x_0}$ e se $exists display(lim_(x -> x_0)) (f'(x)) / (g'(x))$, allora $exists display(lim_(x -> x_0)) f(x) / g(x) = display(lim_(x -> x_0)) (f'(x)) / (g'(x))$.
+  ],
+) <drv:lhp>
+
+Questo teorema vale anche nei seguenti casi:
+- si considerano i limiti per $x -> x_0^+$ o $x -> x_0^-$
+- entrambe le funzioni sono infinite e non infinitesime, anche con segno discorde
+- entrambe le funzioni sono derivabili in $(a, +infinity)$ quindi si considera $x -> +infinity$, oppure sono derivabili in $(-infinity, a)$ quindi si considera $x -> -infinity$
+Il teorema di de l'Hôpital può essere utilizzato anche per risolvere forme indeterminate riconducibili a $0/0$ o $infinity/infinity$. Per esempio, sono equivalenti $underbrace(f(x), -> 0)underbrace(g(x), -> infinity)$ e $f(x) / underbrace(1 / g(x), -> 0)$, ma sulla seconda è applicabile il teorema.
+
+#note-box([
+  Va notato che $exists display(lim_(x -> x_0)) f(x) / g(x) arrow.r.double.not exists display(lim_(x -> x_0)) (f'(x)) / (g'(x))$. Per esempio $exists display(lim_(x -> +infinity)) (x + sin(x^2)) / (1 + x^2)$, ma $exists.not display(lim_(x -> +infinity)) (1 + 2x cos(x^2)) / (2x)$.
+])
+
+#pagebreak()
+
+== Polinomio di Taylor
+
+Consideriamo una funzione $f$ e il punto $P = (x_0, f(x_0))$. Possiamo dire che tra tutte le rette passanti per $P$, quella che meglio approssima il grafico di $f$ è la retta tangente a $f(x)$, ossia \
+$y = f(x_0) + f'(x_0)(x - x_0)$. Quindi, tra tutti i polinomi di primo grado, $f(x)$ è meglio approssimata in un intorno di $x_0$ da $p_1 (x) = f(x_0) + f'(x_0)(x - x_0)$, dunque la funzione può essere scritta come $f(x) = p_1(x) + o(x - x_0)$. \
+Supponiamo dunque che $f: (a, b) -> RR$ sia derivabile $n$ volte in $x_0$. Allora possiamo iterare il precedente ragionamento dicendo che:
+$
+  p_n (x) = f(x_0) + f'(x_0)(x - x_0) + (f''(x_0)) / 2! (x - x_0)^2 + ... + (f^((n))(x_0)) / n! (x - x_0)^n
+$
+Questo polinomio è detto *polinomio di Taylor di ordine $n$ e centro $x_0$*. Possiamo anche definire il *resto $n$-esimo* $R_n (x) = f(x) - p_n (x)$.
+
+#theorem(
+  title: [Formula di Taylor con resto di Peano],
+  [
+    Siano $f: (a, b) -> RR$ derivabile $n$ volte in $x_0$ e $x_0 in (a, b)$. Allora $f(x) = p_n (x) + R_n (x)$, dove $R_n (x) = o((x - x_0)^n)$.
+  ],
+)
+#proof([
+  Sia $n = 3$. Poiché $R_3 (x) = o((x - x_0)^3)$, allora $display(lim_(x -> x_0)) (R_3 (x)) / (x - x_0)^3 = 0 <=>$ \
+
+  $display(lim_(x -> x_0)) (f(x) - p_3 (x)) / (x - x_0)^3 = 0 <=> display(lim_(x - x_0)) (f(x) - (f(x_0) + f'(x_0)(x - x_0) + (f''(x_0)) / 2! (x - x_0)^2 + (f'''(x_0))/3! (x - x_0)^3)) / (x - x_0)^3 = 0/0 => "FI"$ \
+  Applichiamo il @drv:lhp. \
+
+  $display(=^"H.") display(lim_(x -> x_0)) (f'(x) - (f'(x_0) + cancel(2)/cancel(2!) f''(x_0)(x - x_0) + 3 / 3! f'''(x_0)(x - x_0)^2)) / (3(x - x_0)^2) display(=^"H.") display(lim_(x -> x_0)) (f''(x_0) - (f''(x_0) + cancel(2 dot 3)/cancel(3!) f'''(x_0)(x - x_0))) / (6(x - x_0))$ \
+  $= display(lim_(x -> x_0)) 1/6 ((f''(x) - f''(x_0)) / (x - x_0) - f'''(x_0)) = 1/6 (f'''(x_0) - f'''(x_0)) = 0 => R_3 (x) = o((x - x_0)^3)$
+])
+
+#note-box([
+  Se $f$ è derivabile $n + 1$ volte in $(a, b)$ e $x_0 in (a, b)$, abbiamo un'alternativa al resto di Peano, ossia $R_n (x) = (f^((n + 1)) (xi) (x - x_0)^(n + 1)) / (n + 1)!$ per qualche $xi$ tra $x$ e $x_0$. Questo è detto *resto di Lagrange*. \
+  Inoltre, per $x -> 0$, la formula di Taylor è detta anche *formula di MacLaurin*.
+])
+
+Di seguito, le formule di Taylor con $x -> 0$ per alcune funzioni elementari:
+- $e^x = 1 + x + x^2/2! + x^3/3! + ... + x^n/n! + o(x^n)$
+- $sin x = x - x^3/3! + x^5/5! - x^7/7! + ... + (-1)^n (x^(2n + 1))/(2n + 1)! + o(x^(2n + 2))$
+- $cos x = 1 - x^2/2! + x^4/4! - x^6/6! + ... + (-1)^n x^(2n)/(2n)! + o(x^(2n + 1))$
+- $1 / (1 - x) = 1 + x + x^2 + x^3 + ... + x^n + o(x^n)$
+- $log(1 + x) = x - x^2/2 + x^3/3 - x^4/4 + ... + (-1)^n x^n/n + o(x^n)$
+- $arctan x = x - x^3/3 + x^5/5 - x^7/7 + ... + (-1)^n x^(2n + 1)/(2n + 1) + o(x^(2n + 2))$
+
+#note-box([
+  Poiché le formule di Taylor di $sin x, cos x$ e $arctan x$ hanno termini a grado solo pari o dispari, si guadagna un grado dell'o-piccolo finale.
+])
+
+#pagebreak()
+
+= Integrali
+
+Sia $f: (a, b) -> RR$.
+#definition(title: [Primitiva di una funzione], [
+  Sia $F$ una funzione derivabile in $(a, b)$. $F$ si dice _primitiva_ o _antiderivata_ di $f$ se $F'(x) = f(x), forall x in (a, b)$.
+])
+#definition(title: [Integrale indefinito], [
+  La totalità delle primitive di $f$ è detta _integrale indefinito_ di $f$, e si indica $integral f(x) dif x$.
+])
+#proposition(title: [Insieme delle primitive di una funzione], [
+  Sia $F$ una primitiva di $f$ in $(a, b)$. Allora $integral f(x) dif x = F(x) + c$ al variare di $c in RR$.
+])
+#proof([
+  Se $F(x)$ è una primitiva di $f$, allora $dif / (dif x) (F(x) + c) = f(x), forall c in RR$. \
+  Sia ora $G(x)$ una qualsiasi primitiva di $f$. Allora $dif / (dif x) (G(x) - F(x)) = G'(x) - F'(x) =$ \
+  $= f(x) - f(x) = 0, forall x in (a, b)$. \
+  Per il @drv:cst, $exists c in RR : G(x) - F(x) = c, forall x in (a, b) <=> G(x) = F(x) + c$.
+])
+
+== Calcolo di integrali indefiniti
+
+Dalle derivate delle funzioni elementari, possiamo ricavare i seguenti integrali immediati.
+$
+  integral k dif x = k x + c "  " integral x^alpha dif x = x^(alpha + 1) / (alpha + 1) + c, alpha != -1 "  " integral 1 / x dif x = log abs(x) + c "  " integral a^x dif x = a^x / (log a) + c
+$
+$
+  integral 1 / (1 + x^2) dif x = arctan x + c "   " integral 1 / sqrt(1 - x^2) dif x = arcsin x + c "   " integral - 1 / sqrt(1 - x^2) dif x = arccos x + c
+$
+$
+  integral sin x dif x = -cos x + c "  " integral cos x dif x = sin x + c "  " integral (1 + tan^2 x) dif x = integral 1/(cos^2 x) dif x = tan x + c
+$
+$
+  integral 1/(sin^2 x) dif x = cot x + c "  " integral sinh x dif x = cosh x + c "  " integral cosh x dif x = sinh x + c "  " integral e^x dif x = e^x + c
+$
+
+L'integrale possiede la proprietà di *linearità*, quindi vale il seguente.
+$
+  integral (alpha f(x) + beta g(x)) dif x = alpha integral f(x) dif x + beta integral g(x) dif x, forall alpha, beta in RR
+$
+
+Dalla formula della derivata del prodotto di funzioni, possiamo arrivare alla formula dell'*integrazione per parti*. Per applicarla è necessario scegliere nell'espressione da integrare $f'(x)$ e $g(x)$, calcolare l'integrale della prima e la derivata della seconda e sostituire nella formula.
+$
+  dif / (dif x) f(x)g(x) = f'(x)g(x) + f(x)g'(x) <=> integral f'(x)g(x) dif x = f(x)g(x) - integral f(x)g'(x) dif x
+$
+
+Dalla formula della derivata della funzione composta (considerando $F$ una primitiva di $f$), si ha la formula dell'*integrazione per sostituzione*, ponendo $u = g(x)$ e $dif u = g'(x) dif x$.
+$
+  dif / (dif x) F(g(x)) = f(g(x))g'(x) <=> integral f(g(x))g'(x) = integral f(u) dif u = F(u) + c = F(g(x)) + c
+$
+Nella pratica, l'integrazione per sostituzione prevede che:
+- si identifichi l'espressione $g(x)$ tale che venga sostituita da una variabile, ossia $u = g(x)$ e \ $dif u = g'(x) dif x$, ottenendo $integral f(g(x))g'(x) dif x = integral f(u) dif u = F(u) + c$
+- si sostituisca $u = g(x)$ nell'espressione della primitiva $F(u)$
+È anche possibile scambiare il ruolo di $u$ e $x$ se può risultare comodo, ottenendo dunque
+$
+  integral f(x) dif x = integral f(g(u))g'(u) dif u "con" x = g(u) <=> u = g^(-1) (x), dif x = g'(u) dif u
+$
+Quest'ultimo metodo permette di avere una lista di *integrali semi-immediati*, come per esempio:
+$
+  integral (g(x))^alpha g'(x) dif x = (g(x))^(alpha + 1) / (alpha + 1) + c "  " integral (g'(x)) / g(x) dif x = log abs(g(x)) + c "   " integral e^g(x) g'(x) dif x = e^g(x) + c
+$
+
+=== Integrazione di funzioni razionali
+
+Consideriamo l'integrale $integral p(x)/q(x) dif x$. La strategia per calcolare questo tipo di integrali consiste nel ricondurre l'integrale in una forma tale per cui $deg(p(x)) < deg(q(x))$, ricorrendo alla divisione tra polinomi se già così non fosse ($p(x) / q(x) = s(x) + r(x) / q(x)$). Quando la frazione è ricondotta a questa forma, ci sono tre diverse strategie da applicare a seconda della situazione:
+- $q(x)$ è *scomponibile* in polinomi irriducibili: si ricorre al metodo dei fratti semplici e si identificano i coefficienti dei numeratori (a seconda del $deg(q(x))$), la cui somma riporta alla frazione originale, come ad esempio $ integral (1 + 2x^2) / (x^4 - 1) dif x => x^4 - 1 = (x^2 - 1)(x^2 + 1) = (x - 1)(x + 1)(x^2 + 1) \
+  <=> (1 + 2x^2) / (x^4 - 1) = A / (x - 1) + B / (x + 1) + (C x + D) / (x^2 + 1) =^(B = -A)_(C = 0) ((2A - D) + x^2(2A + D)) / (x^4 - 1) <=> cases(2A - D = 1, 2A + D = 2) " " cases(A = 3/4, D = 1/2) \
+  <=> integral (1 + 2x^2) / (x^4 - 1) dif x = integral (3/4) / (x - 1) dif x - integral (3/4)/(x + 1) dif x + integral (1/2)/(x^2 + 1) dif x = 3/4 log abs((x - 1)/(x + 1)) + 1/2 arctan x + c $ Da notare che il numeratore della frazione con $x^2 + 1$ è un polinomio di 1° grado, poiché il numeratore deve differire dal denominatore di un solo grado.
+- $q(x)$ è della forma $(x + k)^n$: si può integrare per sostituzione, ponendo $u = x + k$ e riscrivendo $p(x)$ in termini di $t$, oppure si ricorre sempre al metodo dei fratti semplici, considerando però un coefficente per ogni grado, ossia $A_1 / (x + k) + A_2 / (x + k)^2 + ... + A_n / (x + k)^n$
+- $q(x)$ è già *irriducibile*: in questo caso si riconduce $p(x)$ alla forma $A q'(x) + B$, cosicché il primo termine avrà come risultato $log abs(q(x))$ e il secondo una variazione di $arctan x$, come ad esempio
+  $
+    integral (1 - 2x) / (x^2 + 2x + 5) dif x => Delta = 2^2 - 4 dot 5 = 4 - 20 = - 16 => q(x) "non ha radici in" RR \
+    <=> 1 - 2x = A q'(x) + B = A(2x + 2) + B = 2A x + 2A + B <=> cases(2A = -2, 2A + B = 1) " " cases(A = -1, B = 3) \
+    integral (1 - 2x) / (x^2 + 2x + 5) dif x = -1 integral (2x + 2) / (x^2 + 2x + 5) dif x + integral 3 / (x^2 + 2x + 5) dif x = log abs(x^2 + 2x + 5) + I \
+    I = integral 3 / (x^2 + 2x + 5) dif x = 3 integral 1 / ((x^2 + 2x + 1) + 4) dif x = 3 integral 1 / (4((x + 1)^2 / 4 + 1)) dif x = 3/4 dot 2 integral (1/2) / (((x+ 1) / 2)^2 + 1) dif x \
+    = 3/2 arctan((x + 1) / 2) + c <=> integral (1 - 2x) / (x^2 + 2x + 5) dif x = log(x^2 + 2x + 5) + 3/2 arctan((x + 1) / 2) + c
+  $
+
+== Integrali definiti
+
+#grid(
+  columns: 2,
+  [Sia $f: [a, b] -> RR$ una funzione limitata. Allora $exists M, m in RR : m <= f(x) <= M, forall x in [a, b]$. Consideriamo il sottografico di $f$ $cal(S) := {(x, y) in RR^2 : a <= x <= b, 0 <= y <= f(x)}$. L'area di $cal(S)$ può essere calcolata pensando di dividere $[a, b]$ in intervalli più piccoli, ossia in *partizioni* $cal(P)$ di $[a, b]$, tali che $a = x_0 < x_1 < x_2 < ... < x_n = b$ per un qualche $n in NN$. \ Dunque, per $k = 0, ..., n$, possiamo definire $M_k := display(sup_[x_(k - 1), x_k]) f$ e $m_k := display(inf_[x_(k - 1), x_k]) f$. Possiamo considerare che ogni partizione, permette di visualizzare 2 rettangoli, entrambi con larghezza $x_k - x_(k - 1)$ mentre uno
+  ],
+  cetz.canvas({
+    import cetz.draw: *
+    import cetz-plot: plot
+    plot.plot(
+      size: (3.5, 3.5),
+      axis-style: "school-book",
+      x-tick-step: none,
+      y-tick-step: none,
+      y-min: -1,
+      y-max: 15,
+      x-min: -1,
+      x-max: 10,
+      {
+        let f = x => 0.05 * (x - 4) * (x - 5) * (x - 4) + 8
+        plot.add(domain: (1, 9), f, style: (stroke: red))
+        plot.annotate({
+          rect((1, 0), (3, f(1)), stroke: green, fill: green.opacify(-80%))
+          rect((3, 0), (5, f(3)), stroke: green, fill: green.opacify(-80%))
+          rect((5, 0), (7, f(5)), stroke: green, fill: green.opacify(-80%))
+          rect((7, 0), (9, f(7)), stroke: green, fill: green.opacify(-80%))
+          rect((1, f(1)), (3, f(3)), stroke: blue, fill: blue.opacify(-80%))
+          rect((3, f(3)), (5, f(5)), stroke: blue, fill: blue.opacify(-80%))
+          rect((5, f(5)), (7, f(7)), stroke: blue, fill: blue.opacify(-80%))
+          rect((7, f(7)), (9, f(9)), stroke: blue, fill: blue.opacify(-80%))
+          content((1, -1), $a$)
+          content((3, -1), $x_1$)
+          content((5, -1), $x_2$)
+          content((7, -1), $x_3$)
+          content((9, -1), $b$)
+          content((11, 4), text(green)[$s(cal(P))$])
+          content((11, 10.5), text(blue)[$S(cal(P))$])
+          content((11, 14.5), text(red)[$f(x)$])
+        })
+      },
+    )
+  }),
+)
+
+ha altezza $M_k$ e l'altro $m_k$. Se consideriamo la somma delle patrizioni, otteniamo
+$
+  S(cal(P)) = display(sum^n_(k = 1)) M_k (x_k - x_(k - 1)) "    " s(cal(P)) = display(sum^n_(k = 1)) m_k (x_k - x_(k - 1))
+$
+La prima è la somma delle aree massime dei rettangoli ed è detta *somma integrale superiore* e la seconda considera invece le aree minime dei rettangoli ed è detta *somma integrale inferiore*. Abbiamo dunque che $s(cal(P)) <= S(cal(P))$. \
+La somma integrale può essere definita anche in termini di $f$.
+$
+  S(f) := inf{S(cal(P)) : cal(P) "partizione di" [a, b]}, s(f) := sup{S(cal(P)) : cal(P) "partizione di" [a, b]} => s(f) <= S(f)
+$
+
+#definition(title: [Funzione integrabile secondo Riemann], [
+  Sia $f: [a, b] -> RR$. $f$ si dice _integrabile secondo Riemann_ in $[a, b]$ se $s(f) = S(f)$.
+])
+#definition(title: [Integrale definito], [
+  Sia $f$ integrabile in $[a, b]$. Allora $integral_a^b f(x) dif x := s(f) = S(f)$ è detto _integrale definito di $f$_ in $[a, b]$.
+])
+#note-box([
+  Se $f(x) >= 0, forall x in [a, b]$, $integral_a^b f(x) dif x$ rappresenta l'area del sottografico $cal(S)$.
+])
+
+#theorem(title: [Integrabilità di una funzione continua], [
+  Sia $f: [a, b] -> RR$. Se $f$ è continua in $[a, b]$, allora è integrabile in $[a, b]$.
+])
+#theorem(title: [Integrabilità di una funzione monotòna e limitata], [
+  Sia $f: [a, b] -> RR$. Se $f$ è monotòna in $[a, b]$ e limitata, allora è integrabile in $[a, b]$.
+])
+
+=== Proprietà degli integrali definiti
+
+Siano $f, g$ due funzioni integrabili in $[a, b]$. Allora abbiamo le seguenti proprietà:
+- $f plus.minus g$ è integrabile in $[a, b]$ e $integral_a^b (f(x) plus.minus g(x)) dif x = integral_a^b f(x) dif x plus.minus integral_a^b g(x) dif x$
+- $alpha f$ è integrabile in $[a, b], forall alpha in RR$ e $integral_a^b alpha f(x) dif x = alpha integral_a^b f(x) dif x$
+- se $f <= g$ in $[a, b]$ allora $integral_a^b f(x) dif x <= integral_a^b g(x) dif x$
+- se $c in [a, b]$ allora $integral_a^b f(x) dif x = integral_a^c f(x) dif x + integral_c^b f(x) dif x$
+- $integral_a^a f(x) dif x = 0$
+- $integral_a^b f(x) dif x = -integral_b^a f(x) dif x$
+- se $a > b$, poiché $integral_a^b f(x) dif x <= integral_a^b abs(f(x)) dif x$ e $integral_a^b f(x) >= -integral_a^b abs(f(x))$, abbiamo \ $- integral_a^b abs(f(x)) dif x <= integral_a^b f(x) dif x <= integral_a^b abs(f(x)) dif x$, ossia $abs(integral_a^b f(x) dif x) <= integral_a^b abs(f(x)) dif x$
+
+#note-box([
+  Nel caso in cui non sia noto che $a > b$, si ha in generale $abs(integral_a^b f(x) dif x) <= abs(integral_a^b abs(f(x)) dif x)$.
+])
+
+#theorem(title: [Teorema della media integrale], [
+  Siano $f$ integrabile in $[a, b], m := display(inf_[a, b]) f in RR$ e $M := display(sup_[a, b]) f in RR$. Allora:
+  - $m(b - a) <= integral_a^b f(x) dif x <= M(b - a)$
+  - se $f$ è continua in $[a, b]$, $exists xi in [a, b] : integral_a^b f(x) dif x = f(xi)(b - a)$
+]) <int:med>
+#proof([
+  Per ipotesi, $m <= f(x) <= M, forall x in [a, b]$. Integrando su $[a, b]$, si ha \
+  $integral_a^b m dif x <= integral_a^b f(x) dif x <= integral_a^b M dif x <=> m(b - a) <= integral_a^b f(x) dif x <= M(b - a)$. \
+  Sia $f$ continua in $[a, b]$. Per la precedente relazione, $m <= (integral_a^b f(x) dif x) / (b - a) <= M$, quindi $(integral_a^b f(x) dif x) / (b - a) in [m, M]$. Per il @lmf:vim, $exists xi in [a, b] : f(xi) = (integral_a^b f(x) dif x) / (b - a) <=> integral_a^b f(x) dif x = f(xi)(b - a)$.
+])
+
+#definition(title: [Funzione integrale], [
+  Sia $f$ integrabile in $[a, b]$. Allora $F(x) := integral_a^x f(t) dif t, forall x in [a, b]$ è detta _funzione integrale_ di $f$.
+])
+#theorem(title: [Teorema fondamentale del calcolo integrale], [
+  Sia $f$ continua in $[a, b]$. Allora:
+  1. la sua funzione integrale $F(x)$ è derivabile e $F'(x) = f(x)$
+  2. se $G$ è una primitiva di $f$ in $[a, b]$, allora $F(x) = G(x) - G(a), forall x in [a, b]$. In particolare, $integral_a^b f(x) dif x = G(b) - G(a), forall x in [a, b]$
+]) <int:fci>
+#proof([
+  1. Siano $x in [a, b], x + h in [a, b]$. Allora $(F(x + h) - F(x)) / h = 1/h (integral_a^(x + h) f(t) dif t - integral_a^h f(t) dif t)$ $= 1/h (cancel(integral_a^x f(t) dif t) + integral_x^(x + h) f(t) dif t - cancel(integral_a^x f(t) dif t)) = 1/h integral_x^(x + h) f(t) dif t$. Quindi, poiché $f$ è continua in $[a, b]$, per il @int:med, $exists xi in (x, x + h) : 1/h integral_x^(x + h) f(t) dif t = f(xi)$. Poiché $x < xi < x + h$, \ $xi display(-->_(h -> 0)) x$ e, poiché $f$ è continua, $f(xi) display(-->_(h -> 0)) f(x)$, quindi $(F(x + h) - F(x)) / h display(-->_(h -> 0)) f(x) <=> F'(x) = f(x)$. \
+  2. Sia $G$ una primitiva di $f$. Allora $G'(x) - F'(x) = f(x) - f(x) = 0, forall x in [a, b]$, quindi, per il @drv:cst, $G(x) - F(x)$ è costante in $[a, b]$. Abbiamo che $c = G(x) - F(x) = G(a) - F(a) = G(a) - 0 = G(a), forall x in [a, b] => F(x) = G(x) - G(a)$, poiché $F(a) = integral_a^a f(t) dif t = 0$. Se poniamo $x = b$, otteniamo $integral_a^b f(t) dif t = F(b) = G(b) - G(a)$.
+])
+
+=== Calcolo di integrali definiti
+
+Per calcolare $integral_a^b f(x) dif x$, utilizziamo il @int:fci:
+- si trova una primitiva $G(x)$ di $f(x)$
+- si calcola $lr(G(x)|)_a^b = G(b) - G(a)$, il quale è il nostro risultato
+Il calcolo risulta più intricato, quando è necessaria l'integrazione per sostituzione. Infatti, possiamo calcolare $integral_a^b f(x) dif x$ in due modi principali:
+- se integriamo nella forma $integral_a^b f(x) dif x = integral f(g(u))g'(u) dif u$ con $x = g(u)$ otteniamo che
+  $
+    &"se" g arrow.tr, "ossia" g' > 0 " " => integral_a^b f(x) dif x = integral_(g^(-1) (a))^(g^(-1) (b)) f(g(u))g'(u) dif u \
+    &"se" g arrow.br, "ossia" g' < 0 " " => integral_a^b f(x) dif x = integral_(g^(-1) (b))^(g^(-1) (a)) f(g(u))g'(u) dif u = integral_(g^(-1) (a))^(g^(-1) (b)) f(g(u))(-g'(u)) dif u
+  $
+  $
+    <==> integral_a^b f(x) dif x = integral_(g^(-1) (a))^(g^(-1) (b)) f(g(u))abs(g'(u)) dif u
+  $
+- se integriamo nella forma $integral f(g(x)) dif x = integral f(u) dif u$ con $u = g(x)$ otteniamo che
+  $ integral_a^b f(g(x))g'(x) dif x = integral_(g(a))^(g(b)) f(u) dif u $
+
+=== Aree di regioni piane
+
+#grid(
+  columns: 2,
+  [
+    Siano $f, g$ integrabili in $[a, b]$. Consideriamo $H := {(x, y) in RR^2 : x in [a, b], g(x) <= y <= f(x)}$. Se $f >= g$ in $[a, b]$, allora abbiamo che
+    $
+      "area"(H) = integral_a^b f(x) dif x - integral_a^b g(x) dif x = integral_a^b (f(x) - g(x)) dif x
+    $
+  ],
+  cetz.canvas({
+    import cetz.draw: *
+    import cetz-plot: plot
+    plot.plot(
+      size: (3.5, 3.5),
+      axis-style: "school-book",
+      x-tick-step: none,
+      y-tick-step: none,
+      y-min: -1,
+      y-max: 15,
+      x-min: -1,
+      x-max: 10,
+      {
+        let f = x => 0.05 * (x - 4) * (x - 5) * (x - 4) + 10
+        let g = x => 0.05 * (x - 2) * (x - 3) * (x - 8) + 5
+        plot.add-vline(1, min: 0, max: f(1), style: (
+          stroke: (paint: red, dash: "dashed"),
+        ))
+        plot.add-vline(9, min: 0, max: f(9), style: (
+          stroke: (paint: red, dash: "dashed"),
+        ))
+        plot.add-fill-between(domain: (1, 9), f, g, style: (
+          stroke: (paint: red),
+          fill: red.opacify(-80%),
+        ))
+        plot.annotate({
+          content((1, -1), $a$)
+          content((9, -1), $b$)
+          content((11, 16.5), text(red)[$f(x)$])
+          content((11, 8.5), text(red)[$g(x)$])
+          content((5, 7.5), text(red)[$H$])
+        })
+      },
+    )
+  }),
+)
+
+== Integrali impropri
+
+Sia $f: (a, b] -> RR$ continua in $(a, b]$ e non limitata con un asintoto verticale in $x = a$. \
+Consideriamo $alpha in (a, b]$. Sappiamo che $forall alpha in (a, b]$ $f$ è integrabile in $[alpha, b]$, quindi $integral_alpha^b f(x) dif x in RR$, quindi possiamo dire che $f$ è integrabile *in senso improprio* in $[a, b]$ se $exists display(lim_(alpha -> a^+)) integral_alpha^b f(x) dif x$, ossia poniamo $integral_a^b f(x) dif x = display(lim_(alpha -> a^+)) integral_alpha^b f(x) dif x$:
+- se questo limite esiste ed è reale, si dice che l'integrale *converge*
+- se questo limite va all'infinito o non esiste, diciamo che $f$ *non è integrabile in senso improprio* in $[a, b]$, quindi non converge o diverge
+Lo stesso ragionamento vale se considero l'intervallo $[a, b)$ con un asintoto verticale in $x = b$, oppure se uno dei due estremi dell'intervallo è infinito ($(infinity, a]$ o $[a, infinity)$).
+
+=== Criteri di convergenza
+
+#theorem(title: [Teorema del confronto], [
+  Siano $f, g: [a, +infinity) -> RR$ continue in $[a, +infinity)$ tale che $f, g >= 0$ in $[a, +infinity)$. Allora:
+  - se $f(x) <= g(x)$ e $g$ è integrabile in senso improprio in $[a, +infinity)$, allora $f$ è integrabile in senso improprio e $integral_a^(+infinity) f(x) dif x <= integral_a^(+infinity) g(x) dif x$
+  - se $f(x) >= g(x)$ e $integral_a^(+infinity) g(x) dif x = +infinity$, allora $integral_a^(+infinity) f(x) dif x = +infinity$
+]) <int:cfr>
+#proof([
+  Siano $F(t) := integral_a^t f(x) dif x, G(t) := integral_a^t g(x) dif x, forall t >= a$. Per ipotesi, $F(t) <= G(t)$.
+  Poiché $f >= 0, g >= 0$, allora $F$ e $G$ sono crescenti, quindi $exists display(lim_(t -> infinity)) F(t), display(lim_(t -> +infinity)) G(t)$. Poiché $g$ è integrabile, $display(lim_(t -> +infinity)) = integral_a^(+infinity) g(x) dif x in RR$, quindi, visto che $F(t) <= G(t)$, anche $f$ è integrabile e $display(lim_(t -> +infinity)) F(t) = integral_a^b f(x) dif x$.
+])
+
+Questo teorema vale anche per $(-infinity, a]$ e $integral_a^b f(x) dif x$ con un asintoto verticale per $x = a$ o $x = b$.
+
+#theorem(title: [Teorema del confronto asintotico], [
+  Siano $f, g: [a, +infinity) -> RR$ continue in $[a, +infinity)$ con $f, g >= 0$. Sia $display(lim_(x -> +infinity)) f(x) / g(x) = L$ dove \
+  $L in [0, +infinity]$. Allora:
+  - se $L in RR \\ {0}$, $integral_a^(+infinity) f(x) dif x$ e $integral_a^(+infinity) g(x) dif x$ hanno lo stesso carattere
+  - se $L = 0$ e $integral_a^(+infinity) g(x) dif x$ converge, anche $integral_a^(+infinity) f(x) dif x$ converge
+  - se $L = +infinity$ e $integral_a^(+infinity) g(x) dif x$ diverge, anche $integral_a^(+infinity) f(x) dif x$ diverge
+])
+Se abbiamo $integral_(-infinity)^a f(x) dif x$, consideriamo il limite per $x -> -infinity$, mentre se abbiamo $(a, b]$ o $[a, b)$, consideriamo il limite per $x$ che tende al valore per il quale l'intervallo è aperto.
+
+=== Convergenza assoluta
+
+Sia $f: [a, +infinity) -> RR$ continua in $[a, +infinity)$. Allora anche $abs(f)$ è continua in $[a, +infinity)$, quindi $integral_a^alpha abs(f(x)) dif x in RR, forall alpha > a$. Diremo che l'integrale $integral_a^(+infinity) f(x) dif x$:
+- *converge assolutamente* se $exists lim_(alpha -> +infinity) integral_a^alpha abs(f(x)) dif x in RR$
+- *diverge assolutamente* se $lim_(alpha -> +infinity) integral_a^alpha abs(f(x)) dif x = +infinity$
+
+#theorem(title: [Carattere di una funzione assolutamente integrabile], [
+  Sia $f: [a, +infinity) -> RR$ continua in $[a, +infinity)$. Se $abs(f)$ è integrabile in senso improprio, allora anche $f$ lo è e risulta che $abs(integral_a^(+infinity) f(x) dif x) <= integral_a^(+infinity) abs(f(x)) dif x$.
+])
+#proof([
+  Siano $f^+ (x) = max {f(x), 0}, f^- (x) = max {-f(x), 0}$. Abbiamo dunque che $0 <= f^+ (x) <= abs(f(x)), 0 <= f^- (x) <= abs(f(x)), forall x in [a, +infinity)$. Per il @int:cfr, poiché $abs(f)$ è integrabile in senso improprio in $[a, +infinity)$, anche $f^+$ e $f^-$ lo sono. Poiché $f(x) = f^+ (x) - f^- (x)$, allora $integral_a^(+infinity) f(x) dif x = integral_a^(+infinity) (f^+ (x) - f^- (x)) dif x = integral_a^(+infinity) f^+ (x) dif x - integral_a^(+infinity) f^- (x) dif x = c_1 - c_2$. Visto che $c_1, c_2 in RR^+, c_1 - c_2 in RR$, quindi $f$ è integrabile in senso improprio. \
+  $abs(integral_a^(+infinity) f(x) dif x) = abs(integral_a^(+infinity) f^+ (x) dif x - integral_a^(+infinity) f^- (x) dif x)$ e $abs(integral_a^(+infinity) f^+ (x) dif x) + abs(integral_a^(+infinity) f^- (x) dif x) = integral_a^(+infinity) f^+ (x) dif x + integral_a^(+infinity) f^- (x) dif x = integral_a^(+infinity) (f^+ (x) + f^- (x)) dif x = integral_a^(+infinity) abs(f(x)) dif x$, poiché \
+  $abs(f(x)) = f^+ (x) + f^- (x)$. Quindi $abs(integral_a^(+infinity) f(x) dif x) <= integral_a^(+infinity) abs(f(x)) dif x$
+])
+
+#theorem(title: [Criterio integrale per serie], [
+  Sia $f: [1, +infinity) -> RR$ continua e decrescente con $f >= 0$. Allora $integral_a^(+infinity) f(x) dif x$ e $display(sum^infinity_(n = 1)) f(n)$ hanno lo stesso carattere.
+])
+#warning-box([
+  La convergenza semplice non implica la convergenza assoluta. Per esempio $integral_0^(+infinity) (sin x) / x dif x$ converge, ma $integral_0^(+infinity) abs((sin x) / x) dif x$.
+])
+
