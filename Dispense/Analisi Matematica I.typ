@@ -1,4 +1,4 @@
-#import "../template.typ": *
+#import "template.typ": *
 #import math: *
 
 #show: polypst(
