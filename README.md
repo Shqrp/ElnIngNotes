@@ -6,7 +6,7 @@ In this repo you will find the notes I produced (in Italian) during my time at P
 | Course | Teacher(s) | Notes | Flashcards |
 | ------------- | ------------- | ------------- | ------------- |
 | Analisi Matematica I <br> _Calculus I_ | Fabio Punzo | ✅ | ✅ 128 |
-| Geometria ed Algebra Lineare <br> _Linear Algebra_ | Emanuele Rodaro | 🏗️ | ✅ 100 |
+| Geometria ed Algebra Lineare <br> _Linear Algebra_ | Emanuele Rodaro | ✅ | ✅ 100 |
 | Fondamenti di Informatica <br> _Computer Science Fundamentals_ | Antonio Rosario Miele | ❌ | ❌ |
 | Economia ed Organizzazione Aziendale <br> _Business and Economics_ | Giovanni Toletti | 🏗️ | ❌ |
 | Fisica <br> _Physics_ | Rossella Yivialin <br> Gianlorenzo Bussetti | 🏗️ | ❌ |
